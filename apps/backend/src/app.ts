@@ -13,7 +13,7 @@ import authRouter from "./modules/auth/auth.routes.js";
 import onboardingRouter from "./modules/onboarding/onboarding.routes.js";
 import teamsRouter from "./modules/team/teams.routes.js";
 import servicesRouter from "./modules/service/services.routes.js";
-import invitationsRouter from "./modules/invitation/invitations.routes.js"
+import invitationsRouter from "./modules/invitation/invitations.routes.js";
 import devRouter from "./modules/dev/dev.routes.js";
 
 const app = express();
