@@ -18,4 +18,11 @@ vi.mock("@resolve-os/database", async (importOriginal) => {
 
 beforeEach(() => {
   mockReset(prismaMock);
+  // $transaction has two real overloads: an array of prisma promises, or an
+  // interactive callback. Only the callback form is used anywhere so far
+  // (acceptInvitation) — route it straight to prismaMock so `tx.x.y(...)`
+  // inside the callback hits the same mocked methods as everywhere else.
+  prismaMock.$transaction.mockImplementation((arg) =>
+    typeof arg === "function" ? arg(prismaMock) : Promise.all(arg),
+  );
 });

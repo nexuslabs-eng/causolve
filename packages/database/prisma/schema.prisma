@@ -46,6 +46,20 @@ enum PrimaryResponsibility {
   OTHER
 }
 
+enum ServiceHealthStatus {
+  HEALTHY
+  DEGRADED
+  UNAVAILABLE
+  UNKNOWN
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+  REVOKED
+}
+
 model User {
   id                        String                 @id @default(uuid())
   fullName                  String
@@ -65,6 +79,7 @@ model User {
   createdAt                 DateTime               @default(now())
   updatedAt                 DateTime               @updatedAt
   memberships               Membership[]
+  sentInvitations           Invitation[]
 }
 
 // Matches connect-pg-simple's expected table exactly (sid/sess/expire),
@@ -88,6 +103,8 @@ model Organization {
   updatedAt   DateTime     @updatedAt
   memberships Membership[]
   teams       Team[]
+  services    Service[]
+  invitations Invitation[]
 }
 
 model Membership {
@@ -111,6 +128,41 @@ model Team {
   updatedAt      DateTime @updatedAt
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  services     Service[]
 
   @@unique([organizationId, name])
+}
+
+model Service {
+  id             String              @id @default(uuid())
+  organizationId String
+  teamId         String?
+  name           String
+  environment    String
+  healthStatus   ServiceHealthStatus @default(UNKNOWN)
+  currentVersion String?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  team         Team?        @relation(fields: [teamId], references: [id], onDelete: SetNull)
+
+  @@unique([organizationId, name])
+}
+
+model Invitation {
+  id             String           @id @default(uuid())
+  organizationId String
+  email          String
+  role           Role
+  status         InvitationStatus @default(PENDING)
+  tokenHash      String           @unique
+  invitedById    String
+  createdAt      DateTime         @default(now())
+  expiresAt      DateTime
+  acceptedAt     DateTime?
+  revokedAt      DateTime?
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  invitedBy    User         @relation(fields: [invitedById], references: [id], onDelete: Cascade)
 }
