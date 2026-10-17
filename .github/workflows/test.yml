@@ -45,6 +45,7 @@ jobs:
     playwright:
       name: Playwright E2E
       runs-on: ubuntu-latest
+      environment: resolveos
       needs: vitest
       timeout-minutes: 45
 
