@@ -71,7 +71,7 @@ jobs:
         GITHUB_CLIENT_SECRET: test-github-client-secret
         GITHUB_REDIRECT_URI: http://localhost:5173/auth/github/callback
 
-        OTP_EXPIRY_MS: 1000
+        OTP_EXPIRY_MS: 30000
         MAILPIT_API_URL: http://127.0.0.1:8025/api/v1
         MAILPIT_BIN: ${{ github.workspace }}/.tools/mailpit
 
