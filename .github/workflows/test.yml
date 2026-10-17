@@ -141,7 +141,7 @@ jobs:
             EOF
 
         - name: Run Playwright E2E tests
-          run: pnpm --filter frontend test:e2e -- e2e/auth
+          run: pnpm --filter frontend test:e2e
 
         - name: Upload Playwright report
           if: always()

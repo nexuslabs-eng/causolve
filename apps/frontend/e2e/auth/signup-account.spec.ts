@@ -4,8 +4,6 @@ import { extractVerificationOtp, waitForMail } from "../support/mailpit";
 const TEST_PASSWORD = "E2eTestPassword123!";
 const createUniqueEmail = () => `signup-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@resolveos.test`;
 
-test.describe.configure({ timeout: 200000 });
-
 async function createAccountAndGetOtp({
     page,
     request,
@@ -43,6 +41,8 @@ async function createAccountAndGetOtp({
 }
 
 test.describe("signup", () => {
+    test.describe.configure({ timeout: 200000 });
+    
     test("creates an account and verifies the email through Mailpit",
         async ({ page, request }) => {
             const { otp } = await createAccountAndGetOtp({

@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
 import { createVerifiedAccount } from "../support/onboarding";
 
-test.describe.configure({ timeout: 200000 });
-
 test.describe("signup workspace", () => {
+    test.describe.configure({ timeout: 200000 });
+
     test("rejects an unavailable workspace slug", async ({
         page,
         request,

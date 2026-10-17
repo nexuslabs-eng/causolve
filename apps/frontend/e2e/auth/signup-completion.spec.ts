@@ -5,9 +5,9 @@ import {
     createVerifiedAccount,
 } from "../support/onboarding";
 
-test.describe.configure({ timeout: 200000 });
-
 test.describe("signup completion", () => {
+    test.describe.configure({ timeout: 200000 });
+
     test("preserves the completion step after refresh", async ({
         page,
         request,
