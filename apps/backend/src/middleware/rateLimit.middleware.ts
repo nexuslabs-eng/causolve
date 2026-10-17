@@ -18,9 +18,7 @@ const makeRateLimitedHandler = (errorCode: string) => (_req: Request, res: Respo
 const rateLimitedHandler = makeRateLimitedHandler('RATE_LIMITED');
 
 export const globalLimiter =
-  env.NODE_ENV === 'test'
-    ? noopMiddleware
-    : rateLimit({
+  rateLimit({
         windowMs: 5 * 60 * 1000, // 5 minutes
         limit: 100, // limit each IP to 100 requests per windowMs
         standardHeaders: true,
@@ -35,9 +33,6 @@ export const customRateLimiter = (
   keyBySession: boolean = false,
   errorCode: string = 'RATE_LIMITED',
 ) => {
-  if (env.NODE_ENV === 'test') {
-    return noopMiddleware;
-  }
 
   return rateLimit({
     windowMs: windowMinutes * 60 * 1000,

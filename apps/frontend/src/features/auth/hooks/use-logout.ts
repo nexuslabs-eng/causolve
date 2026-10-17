@@ -10,11 +10,14 @@ export const useLogout = (redirectTo = "/login") => {
 
     return useMutation({
         mutationFn: logout,
+        onMutate: async () => {
+            await queryClient.cancelQueries({ queryKey: authSessionQueryKey });
+        },
         onSuccess: () => {
             queryClient.setQueryData(authSessionQueryKey, anonymousSession());
             queryClient.removeQueries({ queryKey: signupCompletionQueryKey });
 
-            navigate(redirectTo, { replace: true });
+            navigate(redirectTo, { replace: true, flushSync: true });
         },
     });
 };

@@ -22,12 +22,13 @@ import {
 import { isAuthenticated } from "../../middleware/auth.middleware.js";
 import { googleCallBack, googleSignIn } from "./google.controller.js";
 import { githubCallBack, githubSignIn } from "./github.controller.js";
+import { env } from "../../infrastructure/keys.js";
 
 const router = Router();
 
 router.post(
   "/signup",
-  customRateLimiter(5, 15), // 5 signups per 15 minutes per IP+UA
+  customRateLimiter(env.NODE_ENV === "test" ? 50 : 5, 15), // 5 signups per 15 minutes per IP+UA
   validateFormData(SignupRequestSchema),
   registerUser,
 );
