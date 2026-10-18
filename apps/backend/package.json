@@ -8,6 +8,8 @@
     "test:watch": "vitest",
     "dev": "tsx watch src/server.ts",
     "dev:e2e": "tsx watch --env-file=.env.test src/server.ts",
+    "e2e:prepare": "tsx --env-file=.env.test src/test/e2e/prepare.ts",
+    "mailpit": "node scripts/start-mailpit.mjs",
     "build": "tsc --noEmit",
     "start": "tsx src/server.ts",
     "lint": "eslint ."

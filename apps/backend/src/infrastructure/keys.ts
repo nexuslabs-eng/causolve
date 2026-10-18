@@ -24,6 +24,7 @@ const EnvSchema = z.object({
   GITHUB_CLIENT_ID: z.string().min(1),
   GITHUB_CLIENT_SECRET: z.string().min(1),
   GITHUB_REDIRECT_URI: z.url(),
+  OTP_EXPIRY_MS: z.coerce.number().int().positive().default(15 * 60 * 1000),
 });
 
 export const env = EnvSchema.parse(process.env);

@@ -9,8 +9,12 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: resolveos-e2e-test-database
+  cancel-in-progress: true
+
 jobs:
-    test:
+    vitest:
         name: Vitest
         runs-on: ubuntu-latest
         timeout-minutes: 10
@@ -37,3 +41,118 @@ jobs:
 
           - name: Test backend
             run: pnpm --filter @resolve-os/backend test
+
+    playwright:
+      name: Playwright E2E
+      runs-on: ubuntu-latest
+      environment: resolveos
+      needs: vitest
+      timeout-minutes: 45
+
+      env:
+        NODE_ENV: test
+        VITE_API_URL: http://localhost:5000
+        VITE_ENABLE_MSW: "false"
+        PORT: 5000
+        CLIENT_URL: http://localhost:5173
+        SESSION_SECRET: ${{ secrets.E2E_SESSION_SECRET }}
+
+        SMTP_HOST: 127.0.0.1
+        SMTP_PORT: 1025
+        SMTP_USER: test
+        SMTP_PASSWORD: test
+        EMAIL_FROM: noreply@resolveos.test
+
+        GOOGLE_CLIENT_ID: test-google-client-id
+        GOOGLE_CLIENT_SECRET: test-google-client-secret
+        GOOGLE_REDIRECT_URI: http://localhost:5173/auth/google/callback
+
+        GITHUB_CLIENT_ID: test-github-client-id
+        GITHUB_CLIENT_SECRET: test-github-client-secret
+        GITHUB_REDIRECT_URI: http://localhost:5173/auth/github/callback
+
+        OTP_EXPIRY_MS: 30000
+        MAILPIT_API_URL: http://127.0.0.1:8025/api/v1
+        MAILPIT_BIN: ${{ github.workspace }}/.tools/mailpit
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v6
+
+        - name: Set up pnpm
+          uses: pnpm/action-setup@v6
+
+        - name: Setup Node.js
+          uses: actions/setup-node@v6
+          with:
+            node-version: 24
+            cache: pnpm
+            cache-dependency-path: pnpm-lock.yaml
+
+        - name: Install workspace dependencies
+          run: pnpm install --frozen-lockfile
+
+        - name: Apply Prisma migrations
+          run: pnpm --filter @resolve-os/database exec prisma migrate deploy
+          env:
+            DATABASE_URL: ${{ secrets.E2E_DATABASE_URL }}
+
+        - name: Install Playwright browsers
+          run: pnpm --filter frontend exec playwright install --with-deps chromium
+
+        - name: Install Mailpit
+          shell: bash
+          run: |
+            mkdir -p .tools
+            curl -fsSL \
+              https://github.com/axllent/mailpit/releases/latest/download/mailpit-linux-amd64.tar.gz \
+              -o /tmp/mailpit.tar.gz
+            tar -xzf /tmp/mailpit.tar.gz -C .tools
+            chmod +x .tools/mailpit
+
+        - name: Create backend E2E environment
+          shell: bash
+          env:
+            DATABASE_URL: ${{ secrets.E2E_DATABASE_URL }}
+            SESSION_SECRET: ${{ secrets.E2E_SESSION_SECRET }}
+          run: |
+            cat > apps/backend/.env.test <<EOF
+            NODE_ENV=test
+            DATABASE_URL=${DATABASE_URL}
+            PORT=5000
+            LOG_LEVEL=info
+            CLIENT_URL=http://localhost:5173
+            SESSION_SECRET=${SESSION_SECRET}
+
+            SMTP_HOST=127.0.0.1
+            SMTP_PORT=1025
+            SMTP_USER=test
+            SMTP_PASSWORD=test
+            EMAIL_FROM=noreply@resolveos.test
+
+            GOOGLE_CLIENT_ID=test-google-client-id
+            GOOGLE_CLIENT_SECRET=test-google-client-secret
+            GOOGLE_REDIRECT_URI=http://localhost:5173/auth/google/callback
+
+            GITHUB_CLIENT_ID=test-github-client-id
+            GITHUB_CLIENT_SECRET=test-github-client-secret
+            GITHUB_REDIRECT_URI=http://localhost:5173/auth/github/callback
+
+            OTP_EXPIRY_MS=1000
+            MAILPIT_BIN=${MAILPIT_BIN}
+            MAILPIT_API_URL=http://127.0.0.1:8025/api/v1
+            EOF
+
+        - name: Run Playwright E2E tests
+          run: pnpm --filter frontend test:e2e
+
+        - name: Upload Playwright report
+          if: always()
+          uses: actions/upload-artifact@v4
+          with:
+            name: playwright-report
+            path: |
+              apps/frontend/playwright-report
+              apps/frontend/test-results
+            if-no-files-found: ignore
+
