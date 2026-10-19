@@ -8,7 +8,8 @@ export const MOCK_WORKSPACE_NAME = "Acme Engineering";
 export const MOCK_WORKSPACE_SLUG = "acme-engineering";
 
 export let authSession: AuthSession = AuthSessionSchema.parse({
-    authenticated: false
+    authenticated: false,
+    oauthError: null
 });
 
 export const setAuthSession = (session: unknown) => {
@@ -42,6 +43,6 @@ export const resetMockProfile = () => {
 };
 
 export const resetMockState = () => {
-    setAuthSession({ authenticated: false });
+    setAuthSession({ authenticated: false, oauthError: null });
     resetMockProfile();
 };

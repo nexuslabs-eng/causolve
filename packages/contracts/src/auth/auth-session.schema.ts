@@ -11,8 +11,15 @@ export const AuthenticatedUserSchema = z.object({
   emailVerified: z.boolean(),
 });
 
+export const OAuthErrorCodeSchema = z.enum([
+  "OAUTH_AUTHENTICATION_FAILED",
+  "EMAIL_ALREADY_REGISTERED",
+]);
+
 export const AnonymousAuthSessionSchema = z.object({
   authenticated: z.literal(false),
+  // Set only immediately after a failed OAuth redirect back from Google/GitHub - read once here and cleared server-side, never persists across more than one /auth/session check.
+  oauthError: OAuthErrorCodeSchema.nullable(),
 });
 
 export const AuthenticatedAuthSessionSchema = z.object({
@@ -42,6 +49,7 @@ export const LogoutResponseSchema = z.object({
   loggedOut: z.literal(true),
 });
 
+export type OAuthErrorCode = z.infer<typeof OAuthErrorCodeSchema>;
 export type AuthenticatedUser = z.infer<typeof AuthenticatedUserSchema>;
 export type AnonymousAuthSession = z.infer<typeof AnonymousAuthSessionSchema>;
 export type AuthenticatedAuthSession = z.infer<

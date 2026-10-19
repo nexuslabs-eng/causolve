@@ -19,6 +19,11 @@ declare module 'express-session' {
     // from the same party that started the flow.
     oauthState?: string;
     oauthCodeVerifier?: string;
+    // Set immediately before the redirect back to the frontend on a failed
+    // OAuth attempt - read once by getSession's next /auth/session check
+    // and cleared there, so it never lands in a URL and never persists
+    // past that one check.
+    oauthError?: string;
   }
 }
 

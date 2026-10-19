@@ -13,6 +13,7 @@ import type {
   LogoutResponse,
   OnboardingState,
   AuthSession,
+  OAuthErrorCode,
   ForgotPasswordRequest,
   ForgotPasswordResponse,
   ResetPasswordRequest,
@@ -368,7 +369,9 @@ export const getSession = tryCatchWrapper(
     const userId = req.session.userId;
 
     if (!userId) {
-      const response: AuthSession = { authenticated: false };
+      const oauthError = (req.session.oauthError ?? null) as OAuthErrorCode | null;
+      delete req.session.oauthError;
+      const response: AuthSession = { authenticated: false, oauthError };
       sendSuccess(res, 200, response);
       return;
     }
@@ -394,7 +397,7 @@ export const getSession = tryCatchWrapper(
 
     if (!user) {
       //session points at a deleted account - treat identically to anonymous rather than surfacing an error
-      const response: AuthSession = { authenticated: false };
+      const response: AuthSession = { authenticated: false, oauthError: null };
       sendSuccess(res, 200, response);
       return;
     }
