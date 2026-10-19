@@ -39,14 +39,16 @@ export const googleCallBack = tryCatchWrapper(
       !storedCodeVerifier ||
       state !== storedState
     ) {
-      res.redirect(`${env.CLIENT_URL}/login?error=OAUTH_AUTHENTICATION_FAILED`);
+      req.session.oauthError = "OAUTH_AUTHENTICATION_FAILED";
+      res.redirect(`${env.CLIENT_URL}/login`);
       return;
     }
     let tokens;
     try {
       tokens = await google.validateAuthorizationCode(code, storedCodeVerifier);
     } catch {
-      res.redirect(`${env.CLIENT_URL}/login?error=OAUTH_AUTHENTICATION_FAILED`);
+      req.session.oauthError = "OAUTH_AUTHENTICATION_FAILED";
+      res.redirect(`${env.CLIENT_URL}/login`);
       return;
     }
     const userInfoResponse = await fetch(
@@ -59,14 +61,16 @@ export const googleCallBack = tryCatchWrapper(
       name: string;
     };
     if (!googleUser.email_verified) {
-      res.redirect(`${env.CLIENT_URL}/login?error=OAUTH_AUTHENTICATION_FAILED`);
+      req.session.oauthError = "OAUTH_AUTHENTICATION_FAILED";
+      res.redirect(`${env.CLIENT_URL}/login`);
       return;
     }
     const existingUser = await prisma.user.findUnique({
       where: { email: googleUser.email },
     });
     if (existingUser && existingUser.authProvider !== "GOOGLE") {
-      res.redirect(`${env.CLIENT_URL}/login?error=EMAIL_ALREADY_REGISTERED`);
+      req.session.oauthError = "EMAIL_ALREADY_REGISTERED";
+      res.redirect(`${env.CLIENT_URL}/login`);
       return;
     }
 

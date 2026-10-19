@@ -20,4 +20,4 @@ export const logout = async (): Promise<LogoutResponse> => {
     return LogoutResponseSchema.parse(response);
 };
 
-export const anonymousSession = (): AnonymousAuthSession => AnonymousAuthSessionSchema.parse({ authenticated: false });
+export const anonymousSession = (): AnonymousAuthSession => AnonymousAuthSessionSchema.parse({ authenticated: false, oauthError: null });

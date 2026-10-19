@@ -9,6 +9,7 @@ describe("authentication and onboarding flow", () => {
     it("completes signup and ends the session on logout", async () => {
         expect(await getAuthSession()).toEqual({
             authenticated: false,
+            oauthError: null,
         });
 
         await signupAccount({
@@ -64,6 +65,7 @@ describe("authentication and onboarding flow", () => {
 
         expect(await getAuthSession()).toEqual({
             authenticated: false,
+            oauthError: null,
         });
     });
 });

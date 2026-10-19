@@ -34,14 +34,16 @@ export const githubCallBack = tryCatchWrapper(
       !storedState ||
       state !== storedState
     ) {
-      res.redirect(`${env.CLIENT_URL}/login?error=OAUTH_AUTHENTICATION_FAILED`);
+      req.session.oauthError = "OAUTH_AUTHENTICATION_FAILED";
+      res.redirect(`${env.CLIENT_URL}/login`);
       return;
     }
     let tokens;
     try {
       tokens = await github.validateAuthorizationCode(code);
     } catch {
-      res.redirect(`${env.CLIENT_URL}/login?error=OAUTH_AUTHENTICATION_FAILED`);
+      req.session.oauthError = "OAUTH_AUTHENTICATION_FAILED";
+      res.redirect(`${env.CLIENT_URL}/login`);
       return;
     }
 
@@ -68,7 +70,8 @@ export const githubCallBack = tryCatchWrapper(
     const primaryVerifiedEmail = emails.find((e) => e.primary && e.verified);
 
     if (!primaryVerifiedEmail) {
-      res.redirect(`${env.CLIENT_URL}/login?error=OAUTH_AUTHENTICATION_FAILED`);
+      req.session.oauthError = "OAUTH_AUTHENTICATION_FAILED";
+      res.redirect(`${env.CLIENT_URL}/login`);
       return;
     }
 
@@ -77,7 +80,8 @@ export const githubCallBack = tryCatchWrapper(
     });
 
     if (existingUser && existingUser.authProvider !== "GITHUB") {
-      res.redirect(`${env.CLIENT_URL}/login?error=EMAIL_ALREADY_REGISTERED`);
+      req.session.oauthError = "EMAIL_ALREADY_REGISTERED";
+      res.redirect(`${env.CLIENT_URL}/login`);
       return;
     }
     const user =
