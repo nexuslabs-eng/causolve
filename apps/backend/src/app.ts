@@ -18,12 +18,13 @@ import devRouter from "./modules/dev/dev.routes.js";
 
 const app = express();
 
-// TODO: once a hosting target is chosen, set this to the real number of
-// reverse-proxy hops in front of the app so req.ip/req.ips (used by
-// httpLogger.middleware.ts) resolve to the actual client instead of the
-// nearest proxy. Left unset for now — safe default for local dev.
-// app.set('trust proxy', <hop count>);
+// Render sits exactly one reverse-proxy hop in front of the app, so this makes req.ip/req.ips (used by httpLogger.middleware.ts) and req.secure resolve correctly instead of reporting Render's proxy as the client.
+
+app.set("trust proxy", 1);
 app.disable("x-powered-by");
+// Every response here reflects session/tenant-scoped state (who's logged in, what org they belong to, live list data) — none of it is ever safe for the browser to serve from cache on a repeat GET. Express's default
+// ETag generation was causing exactly that: /auth/session returning a cached 304 (empty body) on repeat checks instead of the real auth state.
+app.disable("etag");
 
 const cleanClientUrl = env.CLIENT_URL.replace(/\/$/, "");
 const allowedOrigins = [cleanClientUrl, env.CLIENT_URL];
