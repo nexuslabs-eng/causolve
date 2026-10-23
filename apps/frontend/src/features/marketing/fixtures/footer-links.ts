@@ -1,4 +1,14 @@
-export const GROUPS = [
+interface Group {
+    title: string;
+    links: {
+        name: string;
+        url: string;
+        target_blank?: boolean;
+        type?: "legal";
+    }[]
+}
+
+export const GROUPS: Group[] = [
     { 
         title: "Product", 
         links: [
@@ -27,8 +37,8 @@ export const GROUPS = [
     { 
         title: "Legal", 
         links: [
-            { name: "Privacy", url: "#top", target_blank: false}, 
-            { name: "Terms", url: "#top", target_blank: false}
+            { name: "Privacy", url: "/privacy", type: "legal" }, 
+            { name: "Terms", url: "/terms", type: "legal" }
         ] 
     },
 ];

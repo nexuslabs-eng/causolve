@@ -1,5 +1,6 @@
 import { ResolutionNode } from "@/components/brand/ResolutionNode";
 import { GROUPS } from "@/features/marketing/fixtures/footer-links";
+import { Link } from "react-router-dom";
 
 const MarketingFooter = () => {
   return (
@@ -24,16 +25,26 @@ const MarketingFooter = () => {
                 <h3 className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-muted-foreground">
                   {group.title}
                 </h3>
+
                 <ul className="mt-3 space-y-2">
                   {group.links.map((link) => (
                     <li key={link.name}>
-                      <a
-                        href={link.url}
-                        target={link.target_blank ? "_blank" : undefined}
-                        className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        {link.name}
-                      </a>
+                      {(link.type && link.type === "legal") 
+                        ? (
+                          <Link to={link.url} className="text-[13px] text-muted-foreground transition-colors hover:text-foreground">
+                            {link.name}
+                          </Link>
+                        )
+                        : (
+                          <a
+                          href={link.url}
+                          target={link.target_blank ? "_blank" : undefined}
+                          className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                          {link.name}
+                        </a>
+                        )
+                      }
                     </li>
                   ))}
                 </ul>

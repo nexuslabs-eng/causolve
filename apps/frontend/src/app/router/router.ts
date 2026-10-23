@@ -13,6 +13,8 @@ import { WorkspaceLayout } from "@/layouts/WorkspaceLayout";
 import { WorkspaceOverview } from "@/features/workspace/pages/WorkspaceOverview";
 
 const NotFound = lazy(() => import("@/features/errors/pages/NotFound"));
+const PrivacyPolicy = lazy(() => import("@/features/legal/pages/PrivacyPolicy"));
+const TermsOfUse = lazy(() => import("@/features/legal/pages/TermsOfUse"));
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +28,11 @@ export const router = createBrowserRouter([
         children: [
           {
             Component: MarketingLayout,
-            children: [{ index: true, Component: HomePage }],
+            children: [
+              { index: true, Component: HomePage },
+              { path: "privacy", Component: PrivacyPolicy },
+              { path: "terms", Component: TermsOfUse },
+            ],
           }
         ]
       },
