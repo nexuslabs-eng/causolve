@@ -18,7 +18,7 @@ describe("POST /auth/signup", () => {
     const response = await request(app).post("/auth/signup").send({
       fullName: fakeUser.fullName,
       email: fakeUser.email,
-      password: "ResolveOS!123",
+      password: "Causolve!123",
     });
 
     expect(response.status).toBe(201);
@@ -41,7 +41,7 @@ describe("POST /auth/signup", () => {
     const response = await request(app).post("/auth/signup").send({
       fullName: fakeUser.fullName,
       email: fakeUser.email,
-      password: "ResolveOS!123",
+      password: "Causolve!123",
     });
 
     expect(response.status).toBe(409);

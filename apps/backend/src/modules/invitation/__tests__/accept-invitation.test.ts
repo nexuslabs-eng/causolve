@@ -18,7 +18,7 @@ vi.mock("../../../infrastructure/email.service.js", () => ({
 }));
 
 const VALID_TOKEN = "a".repeat(64);
-const NEW_PASSWORD = "ResolveOS!123";
+const NEW_PASSWORD = "Causolve!123";
 
 describe("POST /invitations/accept", () => {
   it("creates the account, joins the organization, and logs them in", async () => {
