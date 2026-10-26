@@ -7,7 +7,7 @@ import { prismaMock } from "../../../test/mocks/prisma.js";
 import { buildFakeUser } from "../../../test/fixtures.js";
 import { loginAsFakeUser } from "../../../test/helpers.js";
 
-const CORRECT_PASSWORD = "ResolveOS!123";
+const CORRECT_PASSWORD = "Causolve!123";
 const CORRECT_OTP = "123456";
 let passwordHash: string;
 let hashedOtp: string;
