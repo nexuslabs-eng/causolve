@@ -198,7 +198,7 @@ invitation's real status up front.
 {
   "token": "...",
   "fullName": "New Hire",
-  "password": "ResolveOS!123"
+  "password": "Causolve!123"
 }
 ```
 

@@ -8,7 +8,7 @@ import { prismaMock } from "../../../test/mocks/prisma.js";
 import { buildFakeUser, buildFakeOrganization, buildFakeMembership } from "../../../test/fixtures.js";
 import { loginAsFakeUser } from "../../../test/helpers.js";
 
-const CORRECT_PASSWORD = "ResolveOS!123";
+const CORRECT_PASSWORD = "Causolve!123";
 let passwordHash: string;
 
 beforeAll(async () => {

@@ -21,7 +21,7 @@ vi.mock("../../../infrastructure/email.service.js", () => ({
   sendEmail: sendEmailMock,
 }));
 
-const CORRECT_PASSWORD = "ResolveOS!123";
+const CORRECT_PASSWORD = "Causolve!123";
 let passwordHash: string;
 
 beforeAll(async () => {

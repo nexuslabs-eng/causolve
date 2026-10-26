@@ -6,7 +6,7 @@ import app from "../../../app.js";
 import { prismaMock } from "../../../test/mocks/prisma.js";
 import { buildFakeUser } from "../../../test/fixtures.js";
 
-const CORRECT_PASSWORD = "ResolveOS!123";
+const CORRECT_PASSWORD = "Causolve!123";
 let passwordHash: string;
 
 // A real argon2 hash, computed once, so login tests exercise the actual
