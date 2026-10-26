@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import type { NextFunction, Request, Response } from "express";
-import type { Role } from "@resolve-os/database";
+import type { Role } from "@causolve/database";
 import { requireRole } from "../rbac.middleware.js";
 
 const buildFakeRequest = (role: Role): Request =>

@@ -1,16 +1,16 @@
-# ResolveOS
+# Causolve
 
-ResolveOS is an evidence-aware incident investigation and response
+Causolve is an evidence-aware incident investigation and response
 platform for engineering teams. It is designed for complex failures where
 signals conflict, evidence quality varies, and critical diagnostic
 capabilities may become unavailable.
 
-Instead of treating AI confidence as the final answer, ResolveOS
+Instead of treating AI confidence as the final answer, Causolve
 maintains competing hypotheses, evaluates supporting and contradictory
 evidence, tracks investigation integrity, and requires human
 authorization before consequential remediation.
 
-> **AI recommends. Humans authorize. ResolveOS enforces.**
+> **AI recommends. Humans authorize. Causolve enforces.**
 
 ## Product Direction
 
@@ -38,7 +38,7 @@ Verification
 Resolution + Postmortem
 ```
 
-ResolveOS also uses **progressive degradation** so an investigation can
+Causolve also uses **progressive degradation** so an investigation can
 continue safely when evidence sources, AI services, or automation
 capabilities become unavailable.
 
@@ -59,7 +59,7 @@ capabilities become unavailable.
 
 ## Architecture
 
-ResolveOS is developed as three independently testable domains connected
+Causolve is developed as three independently testable domains connected
 through explicit contracts.
 
 ``` text
@@ -98,7 +98,7 @@ The MVP uses deterministic simulated operational data so the complete
 incident workflow can be developed and tested end to end.
 
 The flagship scenario intentionally begins with a misleading deployment
-hypothesis. Strong contradictory evidence causes ResolveOS to revise its
+hypothesis. Strong contradictory evidence causes Causolve to revise its
 reasoning toward an external provider failure. A diagnostic tool then
 fails, triggering progressive degradation and stricter remediation
 approval before recovery is verified.
@@ -106,7 +106,7 @@ approval before recovery is verified.
 ## Repository
 
 ```text
-resolve-os/
+causolve/
 |-- apps/
 |   |-- frontend/     React and TypeScript PWA
 |   |-- backend/      Express domain API
@@ -134,7 +134,7 @@ After setup, start the required domains in separate terminals:
 
 ```powershell
 pnpm --filter frontend dev
-pnpm --filter @resolve-os/backend dev
+pnpm --filter @causolve/backend dev
 pnpm ai:dev
 ```
 
@@ -149,7 +149,7 @@ Common commands, run from the repository root:
 pnpm --filter frontend test
 pnpm --filter frontend lint
 pnpm --filter frontend build
-pnpm --filter @resolve-os/backend build
+pnpm --filter @causolve/backend build
 
 pnpm ai:test
 pnpm ai:lint
@@ -186,6 +186,6 @@ Zod/Pydantic compatibility checks.
 
 ## Status
 
-ResolveOS is under active development. The current focus is the MVP
+Causolve is under active development. The current focus is the MVP
 investigation workflow, shared contracts, product interface, AI
 reasoning system, and backend foundation.

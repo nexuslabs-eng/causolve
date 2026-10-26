@@ -3,7 +3,7 @@ import tryCatchWrapper from "../../infrastructure/tryCatchWrapper.js";
 import { generateCodeVerifier, generateState } from "arctic";
 import { google } from "../../infrastructure/googleOAuth.js";
 import { env } from "../../infrastructure/keys.js";
-import { prisma } from "@resolve-os/database";
+import { prisma } from "@causolve/database";
 
 export const googleSignIn = tryCatchWrapper(
   async (req: Request, res: Response): Promise<void> => {

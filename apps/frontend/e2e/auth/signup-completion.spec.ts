@@ -36,7 +36,7 @@ test.describe("signup completion", () => {
         await completeWorkspaceStep(page);
         await completeProfileStep(page);
 
-        await page.getByRole("button", { name: "Enter ResolveOS" }).click();
+        await page.getByRole("button", { name: "Enter Causolve" }).click();
 
         await expect(page).toHaveURL(/\/workspace$/, {
             timeout: 60000,

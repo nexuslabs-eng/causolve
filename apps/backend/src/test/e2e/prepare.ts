@@ -1,5 +1,5 @@
 import * as argon2 from "argon2";
-import { prisma } from "@resolve-os/database";
+import { prisma } from "@causolve/database";
 
 const TEST_PASSWORD = "E2eTestPassword123!";
 
@@ -67,7 +67,7 @@ const prepare = async (): Promise<void> => {
     const passwordHash = await argon2.hash(TEST_PASSWORD);
 
     await createCompletedUser(
-        "e2e.completed@resolveos.test",
+        "e2e.completed@causolve.test",
         "Completed E2E User",
         passwordHash,
         "E2E Completed Workspace",
@@ -75,20 +75,20 @@ const prepare = async (): Promise<void> => {
     );
 
     await createUser(
-        "e2e.unverified@resolveos.test",
+        "e2e.unverified@causolve.test",
         "Unverified E2E User",
         passwordHash,
     );
 
     await createUser(
-        "e2e.onboarding@resolveos.test",
+        "e2e.onboarding@causolve.test",
         "Workspace Pending E2E User",
         passwordHash,
         true,
     );
 
     const profilePendingUser = await createUser(
-        "e2e.profile@resolveos.test",
+        "e2e.profile@causolve.test",
         "Profile Pending E2E User",
         passwordHash,
         true,
@@ -108,7 +108,7 @@ const prepare = async (): Promise<void> => {
     });
 
     await createCompletedUser(
-        "e2e.password-reset@resolveos.test",
+        "e2e.password-reset@causolve.test",
         "Password Reset E2E User",
         passwordHash,
         "E2E Password Reset Workspace",

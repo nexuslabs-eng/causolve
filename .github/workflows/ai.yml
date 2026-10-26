@@ -69,7 +69,7 @@ jobs:
 
             - name: Export python contract samples
               working-directory: apps/ai
-              run: uv run --locked python -m scripts.export_contract_samples "$RUNNER_TEMP/resolveos-ai-contract-output.json"
+              run: uv run --locked python -m scripts.export_contract_samples "$RUNNER_TEMP/ai-contract-output.json"
 
             - name: Validate shared fixtures and python output with zod
-              run: pnpm --filter contracts test:ai-contracts "$RUNNER_TEMP/resolveos-ai-contract-output.json"
+              run: pnpm --filter contracts test:ai-contracts "$RUNNER_TEMP/ai-contract-output.json"

@@ -1,12 +1,12 @@
 export const AUDIT = [
     { 
         at: "14:02:11", 
-        actor: "resolveos.agent", 
+        actor: "causolve.agent",
         event: "Recommendation created: shift traffic to secondary provider"
     },
     { 
         at: "14:02:11", 
-        actor: "resolveos.policy", 
+        actor: "causolve.policy",
         event: "Policy matched: medium-risk traffic shift requires incident_commander"
     },
     { 

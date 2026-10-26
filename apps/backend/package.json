@@ -1,5 +1,5 @@
 {
-  "name": "@resolve-os/backend",
+  "name": "@causolve/backend",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.ts",
@@ -19,7 +19,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@resolve-os/database": "workspace:*",
+    "@causolve/database": "workspace:*",
     "arctic": "^3.7.0",
     "argon2": "^0.45.1",
     "connect-pg-simple": "^10.0.0",

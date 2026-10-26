@@ -14,7 +14,7 @@ export const GROUPS: Group[] = [
         links: [
             { name: "Product", url: "#product", target_blank: false },
             { name: "How it works", url: "#how-it-works", target_blank: false },
-            { name: "Why ResolveOS", url: "#why-resolveos", target_blank: false },
+            { name: "Why Causolve", url: "#why-causolve", target_blank: false },
             { name: "Security", url: "#security", target_blank: false }
         ]
     },

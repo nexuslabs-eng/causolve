@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
-import { prisma } from '@resolve-os/database';
+import { prisma } from '@causolve/database';
 import { ErrorResponse } from './error.middleware.js';
 
 export interface AuthenticatedUser {

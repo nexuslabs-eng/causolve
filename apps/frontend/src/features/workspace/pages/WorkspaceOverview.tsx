@@ -29,7 +29,7 @@ export function WorkspaceOverview() {
     <div className="mx-auto w-full max-w-360 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       <div className="flex flex-col gap-2 border-b border-border pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="font-mono text-[10px] uppercase text-primary-bright">ResolveOS workspace</p>
+          <p className="font-mono text-[10px] uppercase text-primary-bright">Causolve workspace</p>
           <h1 className="mt-2 text-2xl font-semibold text-foreground">Overview</h1>
           <p className="mt-1 text-sm text-muted-foreground">Operational context across your workspace.</p>
         </div>

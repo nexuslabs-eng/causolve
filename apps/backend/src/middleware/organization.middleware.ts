@@ -1,6 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { prisma } from "@resolve-os/database";
-import type { Role } from "@resolve-os/database";
+import { prisma, type Role } from "@causolve/database";
 import { ErrorResponse } from "./error.middleware.js";
 
 export interface RequestMembership {

@@ -1,15 +1,15 @@
 const TermsOfUseContent = () => (
   <>
-    <p className="text-base">Welcome to ResolveOS.</p>
-    <p>These Terms of Use govern your access to and use of ResolveOS, including our website, account services, and organization workspaces.</p>
-    <p>By creating an account, signing in, or using ResolveOS, you agree to these Terms and acknowledge our Privacy Policy.</p>
-    <p>If you do not agree to these Terms, you should not use ResolveOS.</p>
+    <p className="text-base">Welcome to Causolve.</p>
+    <p>These Terms of Use govern your access to and use of Causolve, including our website, account services, and organization workspaces.</p>
+    <p>By creating an account, signing in, or using Causolve, you agree to these Terms and acknowledge our Privacy Policy.</p>
+    <p>If you do not agree to these Terms, you should not use Causolve.</p>
 
     <section>
 
-      <h2>1. About ResolveOS</h2>
+      <h2>1. About Causolve</h2>
 
-      <p>ResolveOS is a platform being developed to help engineering teams investigate operational incidents and manage controlled remediation workflows.</p>
+      <p>Causolve is a platform being developed to help engineering teams investigate operational incidents and manage controlled remediation workflows.</p>
 
       <p>The platform is currently under active development, and some features may be incomplete, unavailable, or subject to change.</p>
 
@@ -23,7 +23,7 @@ const TermsOfUseContent = () => (
 
       <h2>2. Eligibility and Account Registration</h2>
 
-      <p>ResolveOS is intended for professional and organizational use.</p>
+      <p>Causolve is intended for professional and organizational use.</p>
 
       <p>To create an account and use the platform, you must:</p>
 
@@ -33,7 +33,7 @@ const TermsOfUseContent = () => (
 
         <li>Provide accurate and current registration information.</li>
 
-        <li>Have the authority to use ResolveOS on behalf of an organization where applicable.</li>
+        <li>Have the authority to use Causolve on behalf of an organization where applicable.</li>
 
         <li>Comply with these Terms and applicable laws.</li>
 
@@ -51,7 +51,7 @@ const TermsOfUseContent = () => (
 
       <h2>3. Authentication and Account Security</h2>
 
-      <p>ResolveOS supports account authentication through email and password, Google, and GitHub.</p>
+      <p>Causolve supports account authentication through email and password, Google, and GitHub.</p>
 
       <p>When using a third-party authentication provider, your use of that provider's services remains subject to its applicable terms and privacy practices.</p>
 
@@ -77,7 +77,7 @@ const TermsOfUseContent = () => (
 
       <h2>4. Organizations and Workspace Membership</h2>
 
-      <p>ResolveOS allows users to create or join organization workspaces.</p>
+      <p>Causolve allows users to create or join organization workspaces.</p>
 
       <p>Your access to an organization workspace depends on your authenticated account, organization membership, and assigned role.</p>
 
@@ -111,7 +111,7 @@ const TermsOfUseContent = () => (
 
       <h2>5. Acceptable Use</h2>
 
-      <p>You agree to use ResolveOS only for lawful and authorized purposes.</p>
+      <p>You agree to use Causolve only for lawful and authorized purposes.</p>
 
       <p>You must not:</p>
 
@@ -127,7 +127,7 @@ const TermsOfUseContent = () => (
 
         <li>Use automated tools to abuse the service or place unreasonable demands on its infrastructure.</li>
 
-        <li>Use ResolveOS to violate applicable laws or the rights of others.</li>
+        <li>Use Causolve to violate applicable laws or the rights of others.</li>
 
         <li>Misrepresent simulated or demonstration information as verified operational evidence.</li>
 
@@ -143,7 +143,7 @@ const TermsOfUseContent = () => (
 
       <h2>6. Workspace Data and Simulated Information</h2>
 
-      <p>ResolveOS currently uses simulated operational data to support the development and demonstration of its workspace experience.</p>
+      <p>Causolve currently uses simulated operational data to support the development and demonstration of its workspace experience.</p>
 
       <p>This information may include simulated incidents, logs, services, and other operational records associated with an organization.</p>
 
@@ -171,7 +171,7 @@ const TermsOfUseContent = () => (
 
       <h2>7. User and Organization Responsibilities</h2>
 
-      <p>You are responsible for information you provide through the available features of ResolveOS and for ensuring that you have the necessary rights and permissions to provide it.</p>
+      <p>You are responsible for information you provide through the available features of Causolve and for ensuring that you have the necessary rights and permissions to provide it.</p>
 
       <p>Where you act on behalf of an organization, you are responsible for complying with that organization's applicable policies and authorization requirements.</p>
 
@@ -185,15 +185,15 @@ const TermsOfUseContent = () => (
 
       <h2>8. Intellectual Property</h2>
 
-      <p>ResolveOS and its associated software, design, branding, interfaces, and other proprietary materials are owned by ResolveOS or its respective licensors, subject to applicable intellectual property laws.</p>
+      <p>Causolve and its associated software, design, branding, interfaces, and other proprietary materials are owned by Causolve or its respective licensors, subject to applicable intellectual property laws.</p>
 
       <p>We grant you a limited, non-exclusive, non-transferable, revocable permission to access and use the available platform features in accordance with these Terms.</p>
 
-      <p>This permission does not transfer ownership of ResolveOS or its underlying intellectual property to you.</p>
+      <p>This permission does not transfer ownership of Causolve or its underlying intellectual property to you.</p>
 
       <p>You may not copy, redistribute, commercially exploit, or create unauthorized derivative works from proprietary parts of the platform, except where permitted by applicable law or an applicable license.</p>
 
-      <p>You retain any rights you or your organization hold in information you lawfully provide to ResolveOS.</p>
+      <p>You retain any rights you or your organization hold in information you lawfully provide to Causolve.</p>
 
       <p>To the extent necessary to provide and maintain the service, you authorize us to host, store, process, and display such information in accordance with these Terms and our Privacy Policy.</p>
 
@@ -203,7 +203,7 @@ const TermsOfUseContent = () => (
 
       <h2>9. Service Availability and Changes</h2>
 
-      <p>ResolveOS is currently under active development.</p>
+      <p>Causolve is currently under active development.</p>
 
       <p>We may introduce, modify, suspend, or discontinue features as development progresses.</p>
 
@@ -251,7 +251,7 @@ const TermsOfUseContent = () => (
 
       <p>Our collection, use, storage, and handling of personal information are described in our Privacy Policy.</p>
 
-      <p>By using ResolveOS, you acknowledge that your personal information will be processed as described in that policy, subject to applicable data protection laws.</p>
+      <p>By using Causolve, you acknowledge that your personal information will be processed as described in that policy, subject to applicable data protection laws.</p>
 
       <p>You can review the Privacy Policy through the link provided on our website.</p>
 
@@ -261,7 +261,7 @@ const TermsOfUseContent = () => (
 
       <h2>12. Disclaimers</h2>
 
-      <p>ResolveOS is provided on an "as available" basis.</p>
+      <p>Causolve is provided on an "as available" basis.</p>
 
       <p>Because the platform is under active development, certain functionality, information, and demonstrations may be incomplete or subject to change.</p>
 
@@ -277,7 +277,7 @@ const TermsOfUseContent = () => (
 
       <h2>13. Limitation of Liability</h2>
 
-      <p>To the extent permitted by applicable law, ResolveOS and its operators will not be liable for indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use the platform, including loss of profits, business opportunities, or data.</p>
+      <p>To the extent permitted by applicable law, Causolve and its operators will not be liable for indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use the platform, including loss of profits, business opportunities, or data.</p>
 
       <p>Nothing in these Terms excludes or limits liability where doing so would be prohibited by applicable law.</p>
 
@@ -291,7 +291,7 @@ const TermsOfUseContent = () => (
 
       <p>These Terms are governed by the laws of the Federal Republic of Nigeria, subject to any mandatory legal protections that may apply.</p>
 
-      <p>Any dispute arising from these Terms or the use of ResolveOS will be handled in accordance with applicable Nigerian law and the jurisdiction of the competent courts.</p>
+      <p>Any dispute arising from these Terms or the use of Causolve will be handled in accordance with applicable Nigerian law and the jurisdiction of the competent courts.</p>
 
     </section>
 
@@ -305,7 +305,7 @@ const TermsOfUseContent = () => (
 
       <p>Where required by applicable law, we will provide additional notice of material changes.</p>
 
-      <p>Your continued use of ResolveOS after updated Terms take effect constitutes acceptance of those changes to the extent permitted by applicable law.</p>
+      <p>Your continued use of Causolve after updated Terms take effect constitutes acceptance of those changes to the extent permitted by applicable law.</p>
 
       <p>If you do not agree to updated Terms, you should discontinue using the platform.</p>
 
@@ -318,8 +318,9 @@ const TermsOfUseContent = () => (
       <p>If you have questions about these Terms or need assistance with your account, you can contact us at:</p>
 
       <p>
-
-      <strong>Email:</strong> [ResolveOS support email]</p>
+        <strong>Email:</strong>
+        <a href="mailto:hello.causolve@gmail.com">hello.causolve@gmail.com</a>
+      </p>
 
       <p>We will review and respond to inquiries as appropriate.</p>
 

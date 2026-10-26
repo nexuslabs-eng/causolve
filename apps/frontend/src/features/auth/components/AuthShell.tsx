@@ -100,7 +100,7 @@ export const AuthShell = ({
 
                 <footer className="relative border-t border-border px-14 py-6">
                     <p className="font-mono text-[10px] tracking-wide text-muted-foreground">
-                    AI recommends. Humans authorize. ResolveOS enforces.
+                    AI recommends. Humans authorize. Causolve enforces.
                     </p>
                 </footer>
             </aside>

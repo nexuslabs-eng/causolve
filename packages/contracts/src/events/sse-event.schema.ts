@@ -96,7 +96,7 @@ export const IncidentResolvedEventSchema = BaseEventSchema.extend({
     payload: IncidentSchema,
 });
 
-export const ResolveOSEventSchema = z.discriminatedUnion("type", [
+export const EventSchema = z.discriminatedUnion("type", [
     IncidentUpdatedEventSchema,
     InvestigationStartedEventSchema,
     ToolStartedEventSchema,
@@ -113,4 +113,4 @@ export const ResolveOSEventSchema = z.discriminatedUnion("type", [
     IncidentResolvedEventSchema,
 ]);
 
-export type ResolveOSEvent = z.infer<typeof ResolveOSEventSchema>;
+export type Event = z.infer<typeof EventSchema>;

@@ -55,7 +55,7 @@ test.describe("signup workspace", () => {
         await expect(page).toHaveURL(/\/signup\/account$/);
         await expect(
             page.getByRole("heading", {
-                name: "Create your ResolveOS account",
+                name: "Create your Causolve account",
             }),
         ).toBeVisible({ timeout: 60000 });
     });

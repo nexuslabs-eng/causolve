@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
-import { Prisma } from '@resolve-os/database';
+import { Prisma } from '@causolve/database';
 import { env } from '../infrastructure/keys.js';
 import { logger } from '../infrastructure/logger.js';
 import { sendError } from '../infrastructure/responseHandler.js';

@@ -28,7 +28,7 @@ test.describe("password recovery", () => {
 
   test("shows the same confirmation page for an unknown email", async ({ page }) => {
     await page.goto("/forgot-password");
-    await page.getByLabel("Email").fill(`unknown-${Date.now()}@resolveos.test`);
+    await page.getByLabel("Email").fill(`unknown-${Date.now()}@causolve.test`);
     await page.getByRole("button", { name: "Send reset link" }).click();
 
     await expect(page).toHaveURL(/\/check-email$/, { timeout: 60000 });

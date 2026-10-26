@@ -52,7 +52,7 @@ const Account = () => {
             <AuthStepProgress currentStep={1} totalSteps={3} label="Account" />
 
             <AuthFormHeader
-                title="Create your ResolveOS account"
+                title="Create your Causolve account"
                 description="Start building a more evidence-aware incident response workflow."
                 className="mb-8"
             />

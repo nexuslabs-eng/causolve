@@ -1,6 +1,6 @@
-# ResolveOS Product Requirements Document
+# Product Requirements Document
 
-**Product:** ResolveOS  
+**Product:** Causolve
 **Category:** B2B Incident Investigation and Response  
 **Primary Users:** Software Engineers, SRE/DevOps Engineers, Incident Commanders, Engineering Managers
 
@@ -8,15 +8,15 @@
 
 ## 1. Product Summary
 
-ResolveOS is an evidence-aware incident investigation and response platform for engineering teams.
+Causolve is an evidence-aware incident investigation and response platform for engineering teams.
 
 It is designed for complex incidents where signals conflict, evidence quality varies, tools may fail, and premature confidence can lead to unsafe remediation.
 
-ResolveOS gathers operational evidence through controlled tools, maintains competing hypotheses, evaluates supporting and contradictory evidence asymmetrically, exposes investigation integrity, recommends remediation, applies RBAC and human approval, verifies recovery, and preserves the full incident record for postmortem learning.
+Causolve gathers operational evidence through controlled tools, maintains competing hypotheses, evaluates supporting and contradictory evidence asymmetrically, exposes investigation integrity, recommends remediation, applies RBAC and human approval, verifies recovery, and preserves the full incident record for postmortem learning.
 
 ### Product Principle
 
-> **AI recommends. Humans authorize. ResolveOS enforces.**
+> **AI recommends. Humans authorize. Causolve enforces.**
 
 ---
 
@@ -33,13 +33,13 @@ Common failure patterns include:
 - AI investigations failing when a required tool or model becomes unavailable;
 - remediation decisions being made without incorporating investigation uncertainty.
 
-ResolveOS treats incident response as an **evidence reasoning problem**, not only a coordination problem.
+Causolve treats incident response as an **evidence reasoning problem**, not only a coordination problem.
 
 ---
 
 ## 3. Product Goals
 
-ResolveOS must:
+Causolve must:
 
 1. Centralize the incident lifecycle.
 2. Gather evidence from controlled diagnostic tools.
@@ -214,7 +214,7 @@ INVALIDATED
 CONFIRMED
 ```
 
-ResolveOS actively searches for evidence that could disprove the leading hypothesis.
+Causolve actively searches for evidence that could disprove the leading hypothesis.
 
 ---
 
@@ -238,7 +238,7 @@ The investigation ends when sufficient evidence exists for a safe recommendation
 
 ## 10. Investigation Integrity
 
-ResolveOS continuously evaluates how trustworthy the investigation is.
+Causolve continuously evaluates how trustworthy the investigation is.
 
 ### Integrity Inputs
 
@@ -275,7 +275,7 @@ Integrity affects remediation policy.
 
 ## 11. Progressive Degradation
 
-ResolveOS must continue safely when capabilities fail.
+Causolve must continue safely when capabilities fail.
 
 ### Capability States
 
@@ -299,13 +299,13 @@ One evidence source is unavailable or stale. Investigation continues with reduce
 Multiple important sources are unavailable. Confirmation thresholds increase.
 
 **Level 3: AI Degraded**  
-AI service is unavailable. ResolveOS falls back to deterministic incident workflow, manual evidence capture, runbooks, RBAC, remediation, and verification.
+AI service is unavailable. Causolve falls back to deterministic incident workflow, manual evidence capture, runbooks, RBAC, remediation, and verification.
 
 **Level 4: Automation Degraded**  
-Investigation works but automated remediation is unavailable. ResolveOS provides the approved manual procedure and continues verification.
+Investigation works but automated remediation is unavailable. Causolve provides the approved manual procedure and continues verification.
 
 **Level 5: Manual Command**  
-ResolveOS preserves incident command, timeline, evidence, roles, decisions, approval records, and verification checklists.
+Causolve preserves incident command, timeline, evidence, roles, decisions, approval records, and verification checklists.
 
 ---
 
@@ -492,4 +492,4 @@ Contradictions, Degradation, and Final Decision
 
 ## 18. Product Positioning
 
-> **ResolveOS is an evidence-aware incident investigation and response platform built for complex failures where signals conflict, tools degrade, and premature confidence is dangerous.**
+> **Causolve is an evidence-aware incident investigation and response platform built for complex failures where signals conflict, tools degrade, and premature confidence is dangerous.**

@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=AI_ROOT / ".env",
         env_file_encoding="utf-8",
-        env_prefix="RESOLVEOS_AI_",
+        env_prefix="AI_",
         extra="forbid",
     )
 

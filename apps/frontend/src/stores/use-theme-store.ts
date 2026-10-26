@@ -9,7 +9,7 @@ interface ThemeState {
   toggleTheme: () => void;
 }
 
-const THEME_STORAGE_KEY = "resolveos-theme";
+const THEME_STORAGE_KEY = "causolve-theme";
 
 const updateBrowserThemeColor = () => {
   const themeColorMeta = document.querySelector<HTMLMetaElement>(

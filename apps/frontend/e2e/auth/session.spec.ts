@@ -52,7 +52,7 @@ test.describe("session and logout", () => {
     await page.getByRole("menuitem", { name: "Sign out" }).click();
 
     const dialog = page.getByRole("dialog");
-    await expect(dialog.getByRole("heading", { name: "Sign out of ResolveOS?" })).toBeVisible();
+    await expect(dialog.getByRole("heading", { name: "Sign out of Causolve?" })).toBeVisible();
     await dialog.getByRole("button", { name: "Cancel" }).click();
 
     await expect(page).toHaveURL(/\/workspace$/, { timeout: 60000 });

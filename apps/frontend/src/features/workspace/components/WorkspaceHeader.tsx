@@ -24,7 +24,7 @@ export const WorkspaceHeader = ({ onOpenNavigation, collapsed, onToggleSidebar }
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const { data: session } = useAuthSession();
   const logout = useLogout("/");
-  const userName = session?.authenticated ? session.user.fullName : "ResolveOS user";
+  const userName = session?.authenticated ? session.user.fullName : "Causolve user";
   
   const initials = userName
     .split(" ")
@@ -34,8 +34,8 @@ export const WorkspaceHeader = ({ onOpenNavigation, collapsed, onToggleSidebar }
     .toUpperCase();
   
     const workspaceName = session?.authenticated
-    ? session.activeWorkspace?.name ?? "ResolveOS workspace"
-    : "ResolveOS workspace";
+    ? session.activeWorkspace?.name ?? "Causolve workspace"
+    : "Causolve workspace";
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background/95 px-3 backdrop-blur sm:px-5">

@@ -1,6 +1,6 @@
-# ResolveOS AI Service
+# AI Service
 
-Python and FastAPI service for ResolveOS AI functionality, with Pydantic
+Python and FastAPI service AI functionality, with Pydantic
 contracts, a Gemini provider, and LangGraph installed for future orchestration.
 
 ## Responsibilities
@@ -51,14 +51,14 @@ pnpm ai:dev
 ```
 
 The service runs at `http://127.0.0.1:8000`. Interactive documentation is
-available at `/docs` when `RESOLVEOS_AI_DOCS_ENABLED=true`.
+available at `/docs` when `AI_DOCS_ENABLED=true`.
 
 The root pnpm scripts delegate Python commands to uv. Python dependencies
 remain managed through `apps/ai/pyproject.toml` and `apps/ai/uv.lock`.
 
 ## Configuration
 
-All variables use the `RESOLVEOS_AI_` prefix.
+All variables use the `AI_` prefix.
 
 | Variable suffix | Purpose |
 |---|---|
@@ -97,7 +97,7 @@ The live Gemini test requires local credentials and makes a real API request:
 pnpm ai:smoke
 ```
 
-Success returns `RESOLVEOS_AI_PROVIDER_OK`. Normal tests skip this test,
+Success returns `AI_PROVIDER_OK`. Normal tests skip this test,
 and ordinary CI excludes it.
 
 ## Shared Contracts
@@ -110,7 +110,7 @@ From the repository root, verify shared fixtures and Python serialization:
 
 ```powershell
 pnpm --filter contracts exec tsc --noEmit
-$contractOutput = Join-Path $env:TEMP 'resolveos-ai-contract-output.json'
+$contractOutput = Join-Path $env:TEMP 'ai-contract-output.json'
 uv run --locked --directory apps/ai python -m scripts.export_contract_samples $contractOutput
 pnpm --filter contracts test:ai-contracts $contractOutput
 ```

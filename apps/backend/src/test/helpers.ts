@@ -1,6 +1,6 @@
 import request from "supertest";
 import type { Express } from "express";
-import type { User } from "@resolve-os/database";
+import type { User } from "@causolve/database";
 import { prismaMock } from "./mocks/prisma.js";
 
 // Routes behind isAuthenticated need a real session cookie — there's no

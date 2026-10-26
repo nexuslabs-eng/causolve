@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import { Request, Response } from "express";
 import argon2 from "argon2";
-import { prisma } from "@resolve-os/database";
+import { prisma } from "@causolve/database";
 import {
   type CreateInvitationRequest,
   type CreateInvitationResponse,

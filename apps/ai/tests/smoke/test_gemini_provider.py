@@ -14,12 +14,12 @@ def test_live_gemini_provider() -> None:
         settings = Settings()
         async with open_gemini_provider(settings) as provider:
             return await provider.generate(
-                "You are the AI provider for ResolveOS. "
-                "Respond with exactly RESOLVEOS_AI_PROVIDER_OK "
+                "You are the AI provider for Causolve. "
+                "Respond with exactly AI_PROVIDER_OK "
                 "and no additional text."
             )
 
     result = asyncio.run(run())
 
-    assert result == "RESOLVEOS_AI_PROVIDER_OK"
-    print("Gemini provider returned RESOLVEOS_AI_PROVIDER_OK")
+    assert result == "AI_PROVIDER_OK"
+    print("Gemini provider returned AI_PROVIDER_OK")

@@ -40,7 +40,7 @@ jobs:
             run: pnpm --filter frontend test
 
           - name: Test backend
-            run: pnpm --filter @resolve-os/backend test
+            run: pnpm --filter @causolve/backend test
 
     playwright:
       name: Playwright E2E
@@ -61,7 +61,7 @@ jobs:
         SMTP_PORT: 1025
         SMTP_USER: test
         SMTP_PASSWORD: test
-        EMAIL_FROM: noreply@resolveos.test
+        EMAIL_FROM: noreply@causolve.test
 
         GOOGLE_CLIENT_ID: test-google-client-id
         GOOGLE_CLIENT_SECRET: test-google-client-secret
@@ -93,7 +93,7 @@ jobs:
           run: pnpm install --frozen-lockfile
 
         - name: Apply Prisma migrations
-          run: pnpm --filter @resolve-os/database exec prisma migrate deploy
+          run: pnpm --filter @causolve/database exec prisma migrate deploy
           env:
             DATABASE_URL: ${{ secrets.E2E_DATABASE_URL }}
 
@@ -128,7 +128,7 @@ jobs:
             SMTP_PORT=1025
             SMTP_USER=test
             SMTP_PASSWORD=test
-            EMAIL_FROM=noreply@resolveos.test
+            EMAIL_FROM=noreply@causolve.test
 
             GOOGLE_CLIENT_ID=test-google-client-id
             GOOGLE_CLIENT_SECRET=test-google-client-secret

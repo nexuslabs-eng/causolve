@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Prisma, prisma } from "@resolve-os/database";
+import { Prisma, prisma } from "@causolve/database";
 import {
   type CreateServiceRequest,
   type UpdateServiceRequest,

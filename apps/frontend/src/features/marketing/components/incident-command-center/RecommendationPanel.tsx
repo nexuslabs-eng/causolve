@@ -67,7 +67,7 @@ export const RecommendationPanel = ({
     </div>
 
     <p className="mt-3 text-center font-mono text-[10.5px] tracking-wide text-muted-foreground">
-      AI recommends · humans authorize · ResolveOS enforces
+      AI recommends · humans authorize · Causolve enforces
     </p>
   </>
 );

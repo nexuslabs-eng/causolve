@@ -106,7 +106,7 @@ export const ProblemSection = () => {
             </div>
 
             <p className="relative mt-7 border-t border-border pt-4 text-[13px] leading-relaxed text-muted-foreground">
-              ResolveOS pulls the operational signals into a single incident record, ranks what
+              Causolve pulls the operational signals into a single incident record, ranks what
               actually matters, and turns it into a decision an engineer can authorize.
             </p>
           </div>

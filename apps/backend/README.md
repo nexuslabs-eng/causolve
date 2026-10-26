@@ -1,6 +1,6 @@
-# ResolveOS Backend API
+# Causolve Backend API
 
-Domain API for ResolveOS: incident lifecycle, tenant-scoped persistence,
+Domain API for Causolve: incident lifecycle, tenant-scoped persistence,
 RBAC, approval/remediation authorization, and the integration surface
 between the frontend and the AI service.
 
@@ -22,8 +22,8 @@ product and architecture context.
 
 ## Stack
 
-Node.js, Express, TypeScript, PostgreSQL via `@resolve-os/database`
-(Prisma ORM), Zod schemas via `@resolve-os/contracts`, Helmet + CORS,
+Node.js, Express, TypeScript, PostgreSQL via `@causolve/database`
+(Prisma ORM), Zod schemas via `@causolve/contracts`, Helmet + CORS,
 SSE, Vitest + Supertest.
 
 ## Structure
@@ -44,14 +44,14 @@ src/
 ```bash
 pnpm install
 cp apps/backend/.env.example apps/backend/.env   # fill in DATABASE_URL, etc.
-pnpm --filter @resolve-os/backend dev
+pnpm --filter @causolve/backend dev
 ```
 
 ## Environment variables
 
 | Variable       | Purpose                                                  |
 | -------------- | --------------------------------------------------------- |
-| `DATABASE_URL` | PostgreSQL (Neon) connection string, used by `@resolve-os/database` |
+| `DATABASE_URL` | PostgreSQL (Neon) connection string, used by `@causolve/database` |
 | `PORT`         | HTTP port                                                 |
 | `NODE_ENV`     | `development` / `production` / `test`                    |
 | `LOG_LEVEL`    | Logger verbosity                                          |

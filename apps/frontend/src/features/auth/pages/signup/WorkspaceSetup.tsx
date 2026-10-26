@@ -80,7 +80,7 @@ const WorkspaceSetup = () => {
 
             <AuthFormHeader
                 title="Create your workspace"
-                description="Set the name and URL your team will use in ResolveOS."
+                description="Set the name and URL your team will use in Causolve."
                 className="mb-8"
             />
 

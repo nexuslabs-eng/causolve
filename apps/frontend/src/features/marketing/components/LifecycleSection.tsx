@@ -11,7 +11,7 @@ export const LifecycleSection = () => {
       <div className="mx-auto w-full max-w-310 px-5 py-20 sm:px-8 lg:py-28">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
           <SectionHeading
-            eyebrow="How ResolveOS works"
+            eyebrow="How Causolve works"
             title="One lifecycle, from first signal to what the team learned."
             description="AI participates where judgment benefits from speed: investigation, hypothesis, and recommendation. Consequential actions stay behind a human decision."
           />

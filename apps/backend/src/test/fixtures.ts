@@ -5,7 +5,7 @@ import type {
   Service,
   Team,
   User,
-} from "@resolve-os/database";
+} from "@causolve/database";
 
 export const MOCK_USER_ID = "99999999-9999-4999-8999-999999999999";
 export const MOCK_ORGANIZATION_ID = "88888888-8888-4888-8888-888888888888";

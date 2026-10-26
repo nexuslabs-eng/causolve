@@ -2,7 +2,7 @@ import { APIRequestContext, expect, Page, test } from "@playwright/test";
 import { extractVerificationOtp, waitForMail } from "../support/mailpit";
 
 const TEST_PASSWORD = "E2eTestPassword123!";
-const createUniqueEmail = () => `signup-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@resolveos.test`;
+const createUniqueEmail = () => `signup-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@causolve.test`;
 
 async function createAccountAndGetOtp(
     page: Page,
@@ -22,7 +22,7 @@ async function createAccountAndGetOtp(
 
     const message = await waitForMail(request, {
         to: email,
-        subject: "Your ResolveOS verification code",
+        subject: "Your Causolve verification code",
     });
 
     return {
@@ -70,7 +70,7 @@ test.describe("signup", () => {
 
         const resentMessage = await waitForMail(request, {
             to: email,
-            subject: "Your ResolveOS verification code",
+            subject: "Your Causolve verification code",
             excludeIds: [originalMessageId],
         });
 
