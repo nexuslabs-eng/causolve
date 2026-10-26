@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: resolveos-e2e-test-database
+  group: e2e-test-database
   cancel-in-progress: true
 
 jobs:
