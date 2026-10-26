@@ -4,8 +4,6 @@ import { useThemeStore } from "@/stores/use-theme-store";
 import { enableMocking } from '@/mocks/enable-mocking';
 import '@/styles/index.css';
 import { AppLoading } from '@/components/loading/AppLoading';
-import { queryClient } from '@/lib/query-client';
-import { authSessionQueryOptions } from '@/features/auth/queries/auth-session-query-options';
 
 const preloadInitialAuthRoutes = () => {
   void import("@/features/auth/pages/Login");
@@ -35,12 +33,7 @@ const startApplication = async () => {
     
     const runtimePromise = import("@/app/AppRuntime");
     
-    const sessionPromise = queryClient.query({
-      ...authSessionQueryOptions(),
-      staleTime: 30_000
-    });
-
-    const [{ default: AppRuntime }] = await Promise.all([ runtimePromise, sessionPromise ]);
+    const { default: AppRuntime } = await runtimePromise;
 
     root.render(
       <StrictMode>

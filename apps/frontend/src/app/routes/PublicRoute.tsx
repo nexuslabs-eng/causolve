@@ -1,4 +1,3 @@
-import { AppLoading } from "@/components/loading/AppLoading";
 import { useAuthSession } from "@/features/auth/hooks/use-auth-session";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { onboardingRoutes, recoveryRoutes } from "@/app/routes/constants";
@@ -8,16 +7,11 @@ export const PublicRoute = () => {
     const session = useAuthSession();
 
     if (session.isPending) {
-        return <AppLoading />;
+        return <Outlet />;
     }
 
     if (session.isError) {
-        return (
-            <AppLoading
-                failed
-                onRetry={() => void session.refetch()}
-            />
-        );
+        return <Outlet />;
     }
 
     if (!session.data?.authenticated) {

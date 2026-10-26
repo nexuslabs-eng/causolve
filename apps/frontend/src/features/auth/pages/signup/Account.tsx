@@ -14,6 +14,7 @@ import { SignupAccountSchema, type SignupAccountValues } from "@/features/auth/s
 import { AuthBackButton } from "@/features/auth/components/AuthBackButton";
 import { useExitToMarketing } from "@/features/auth/hooks/use-exit-to-marketing";
 import { continueWithAccount, getSignupProviderHandles } from "@/features/auth/lib/account";
+import { AuthErrorBanner } from "@/features/auth/components/AuthErrorBanner";
 
 const Account = () => {
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ const Account = () => {
         register,
         handleSubmit,
         setError,
+        clearErrors,
         formState: { errors, isSubmitting, isValid }
     } = useForm<SignupAccountValues>({
         resolver: zodResolver(SignupAccountSchema),
@@ -56,6 +58,12 @@ const Account = () => {
                 description="Start building a more evidence-aware incident response workflow."
                 className="mb-8"
             />
+
+            {errors.root?.message && (
+                <AuthErrorBanner onDismiss={() => clearErrors("root")} >
+                    {errors.root.message}
+                </AuthErrorBanner>
+            )}
 
             <SocialAuthButtons
                 mode="signup"
@@ -142,15 +150,6 @@ const Account = () => {
                     </Link>
                     .
                 </p>
-
-                {errors.root?.message ? (
-                    <p
-                        role="alert"
-                        className="mt-4 text-xs leading-relaxed text-destructive"
-                    >
-                        {errors.root.message}
-                    </p>
-                ) : null}
 
                 <AuthSubmitButton 
                     disabled={!isValid} 

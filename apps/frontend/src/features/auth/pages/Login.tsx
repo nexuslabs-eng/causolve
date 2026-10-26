@@ -13,16 +13,35 @@ import { LoginSchema, type LoginValues } from "@/features/auth/schemas/auth.sche
 import { useState } from "react";
 import { useExitToMarketing } from "@/features/auth/hooks/use-exit-to-marketing";
 import { completeLogin, getAuthProviderHandles } from "@/features/auth/lib/login";
+import { AuthErrorBanner } from "@/features/auth/components/AuthErrorBanner"; 
+import { getOAuthErrorMessage } from "@/features/auth/lib/oauth-errors";
+import { clearOAuthError } from "@/features/auth/queries/auth-session-query-options";
+import { useAuthSession } from "@/features/auth/hooks/use-auth-session";
 
 const Login = () => {
     const navigate = useNavigate();
     const [isProviderLoading, setIsProviderLoading] = useState({ google: false, github: false });
     const { exitToMarketing, isExiting } = useExitToMarketing();
+    const { data: session } = useAuthSession();
+    const [dismissedOAuthErrorCode, setDismissedOAuthErrorCode] = useState<string | null>(null);
+
+    const oauthErrorCode = session?.authenticated === false ? session.oauthError : null;
+
+    const oauthErrorMessage =
+        dismissedOAuthErrorCode === oauthErrorCode
+            ? undefined
+            : getOAuthErrorMessage(oauthErrorCode);
+
+    const dismissOAuthError = () => {
+        setDismissedOAuthErrorCode(oauthErrorCode);
+        clearOAuthError();
+    }
 
     const {
         register,
         handleSubmit,
         setError,
+        clearErrors,
         formState: { errors, isSubmitting, isValid },
     } = useForm<LoginValues>({
         resolver: zodResolver(LoginSchema),
@@ -45,6 +64,16 @@ const Login = () => {
                 title="Welcome back"
                 description="Sign in to your Causolve workspace."
             />
+
+            {errors.root?.message ? (
+                <AuthErrorBanner onDismiss={() => clearErrors("root")} >
+                    {errors.root.message}
+                </AuthErrorBanner>
+            ) : oauthErrorMessage ? (
+                <AuthErrorBanner onDismiss={dismissOAuthError} >
+                    {oauthErrorMessage}
+                </AuthErrorBanner>
+            ) : null}
 
             <SocialAuthButtons
                 mode="login"
@@ -97,12 +126,6 @@ const Login = () => {
                         </FieldError>
                     </Field>
                 </div>
-
-                {errors.root?.message && (
-                    <p role="alert" className="mt-4 text-sm text-destructive">
-                        {errors.root.message}
-                    </p>
-                )}
 
                 <AuthSubmitButton
                     disabled={!isValid}

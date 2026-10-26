@@ -19,6 +19,7 @@ import { resetPassword } from "@/features/auth/api/password-recovery";
 import { isApiClientError } from "@/lib/api/api-client-error";
 import { useQuery } from "@tanstack/react-query";
 import { passwordResetTokenQueryOptions } from "@/features/auth/queries/password-reset-token-query-options";
+import { AuthErrorBanner } from "@/features/auth/components/AuthErrorBanner";
 
 const ResetPassword = () => {
     const [params] = useSearchParams();
@@ -35,7 +36,8 @@ const ResetPassword = () => {
     const { 
         register, 
         handleSubmit, 
-        setError, 
+        setError,
+        clearErrors,
         formState: { errors, isValid, isSubmitting } } = useForm<ResetPasswordForm>({
         resolver: zodResolver(ResetPasswordFormSchema), 
         defaultValues: { password: "", confirmPassword: "" }, 
@@ -139,6 +141,12 @@ const ResetPassword = () => {
                 description="Choose a new password for your account." 
             />
 
+            {errors.root?.message && (
+                <AuthErrorBanner onDismiss={() => clearErrors("root")} >
+                    {errors.root.message}
+                </AuthErrorBanner>
+            )}
+
             <form noValidate onSubmit={handleSubmit(submit)}>
 
                 <div className="space-y-5">
@@ -163,12 +171,6 @@ const ResetPassword = () => {
                         </Field>
                     )}
                 </div>
-                
-                {errors.root && 
-                    <p role="alert" className="mt-4 text-sm text-destructive">
-                        {errors.root.message}
-                    </p>
-                }
 
                 <AuthSubmitButton 
                     loading={isSubmitting}

@@ -9,6 +9,7 @@ import { AuthFormHeader } from "@/features/auth/components/AuthFormHeader";
 import { AuthBackButton } from "@/features/auth/components/AuthBackButton";
 import { AuthSubmitButton } from "@/features/auth/components/AuthSubmitButton";
 import { AuthAlternateAction } from "@/features/auth/components/AuthAlternateAction";
+import { AuthErrorBanner } from "@/features/auth/components/AuthErrorBanner";
 
 export default function ForgotPassword() {
     const navigate = useNavigate()
@@ -16,7 +17,8 @@ export default function ForgotPassword() {
     const { 
         register, 
         handleSubmit, 
-        setError, 
+        setError,
+        clearErrors,
         formState: { errors, isSubmitting } } =
         useForm<ForgotPasswordRequest>({
             resolver: zodResolver(ForgotPasswordRequestSchema),
@@ -39,6 +41,12 @@ export default function ForgotPassword() {
             <AuthBackButton disabled={isSubmitting} />
 
                 <AuthFormHeader title="Forgot your password?" description="Enter your account email to request a reset link." />
+
+                {errors.root?.message && (
+                    <AuthErrorBanner onDismiss={() => clearErrors("root")} >
+                        {errors.root.message}
+                    </AuthErrorBanner>
+                )}
                 
                 <form noValidate onSubmit={handleSubmit(submit)}>
                     <Field name="email" invalid={Boolean(errors.email)}>
@@ -48,10 +56,6 @@ export default function ForgotPassword() {
 
                         <FieldError match={Boolean(errors.email)}>{errors.email?.message}</FieldError>
                     </Field>
-
-                    {errors.root && 
-                        <p role="alert" className="mt-4 text-sm text-destructive">{errors.root.message}</p>
-                    }
 
                     <AuthSubmitButton loading={isSubmitting} loadingLabel="Sending link">Send reset link</AuthSubmitButton>
                 </form>

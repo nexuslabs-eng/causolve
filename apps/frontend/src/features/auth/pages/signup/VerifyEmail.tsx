@@ -17,6 +17,7 @@ import { isApiClientError } from "@/lib/api/api-client-error";
 import { useLogout } from "@/features/auth/hooks/use-logout"; 
 import { cn } from "@/lib/utils";
 import { verifyEmail } from "@/features/auth/lib/email-verification";
+import { AuthErrorBanner } from "@/features/auth/components/AuthErrorBanner";
 
 const VerifyEmail = () => {
     const navigate = useNavigate();
@@ -28,6 +29,7 @@ const VerifyEmail = () => {
         control,
         handleSubmit,
         setError,
+        clearErrors,
         resetField,
         formState: { errors, isSubmitting },
     } = useForm<VerifyEmailOtpRequest>({
@@ -72,6 +74,18 @@ const VerifyEmail = () => {
                     </>
                 }
             />
+
+            {errors.root?.message && (
+                <AuthErrorBanner onDismiss={() => clearErrors("root")} >
+                    {errors.root.message}
+                </AuthErrorBanner>
+            )}
+
+            {resend.isError &&
+                <AuthErrorBanner onDismiss={() => resend.reset()}>
+                    {resendError}
+                </AuthErrorBanner>
+            }
 
             <form
                 noValidate
@@ -123,12 +137,6 @@ const VerifyEmail = () => {
                     </FieldError>
                 </Field>
 
-                {errors.root?.message && 
-                    <p role="alert" className="mt-4 text-sm text-destructive">
-                        {errors.root.message}
-                    </p>
-                }
-
                 <AuthSubmitButton
                     disabled={otp.length !== 6 || resend.isPending}
                     loading={isSubmitting}
@@ -157,12 +165,6 @@ const VerifyEmail = () => {
                         : ""
                     }
                 </p>
-
-                {resend.isError &&
-                    <p role="alert" className="text-sm text-destructive">
-                        {resendError}
-                    </p>
-                }
 
                 <p className="mt-7 text-center text-sm text-muted-foreground">
                     Wrong email address?{" "}
