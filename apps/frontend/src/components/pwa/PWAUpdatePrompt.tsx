@@ -85,11 +85,11 @@ export const PWAUpdatePrompt = () => {
                             id="pwa-update-title"
                             className="text-lg font-semibold text-foreground"
                         >
-                            ResolveOS update available
+                            Causolve update available
                         </h2>
 
                         <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                            A newer version of ResolveOS is available. Update when you are ready to use the latest improvements.
+                            A newer version of Causolve is available. Update when you are ready to use the latest improvements.
                         </p>
                     </div>
                 </div>

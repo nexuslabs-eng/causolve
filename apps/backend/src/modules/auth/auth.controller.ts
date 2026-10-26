@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import argon2 from "argon2";
-import { prisma } from "@resolve-os/database";
-import type { JobRole, TeamSize } from "@resolve-os/database";
+import { prisma } from "@causolve/database";
+import type { JobRole, TeamSize } from "@causolve/database";
 import type {
   SignupRequest,
   SignupResponse,

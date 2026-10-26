@@ -3,7 +3,7 @@ import { http, HttpResponse } from "msw";
 import { apiError, authSession } from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";
 
-const unavailableSlugs = new Set(["resolveos", "incident-command"]);
+const unavailableSlugs = new Set(["causolve", "incident-command"]);
 
 export const workspaceSlugAvailability = http.get(
     apiEndpoint("/onboarding/workspace-slug-availability"),

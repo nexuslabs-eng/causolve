@@ -3,7 +3,7 @@ import tryCatchWrapper from "../../infrastructure/tryCatchWrapper.js";
 import { generateState } from "arctic";
 import { github } from "../../infrastructure/githubOAuth.js";
 import { env } from "../../infrastructure/keys.js";
-import { prisma } from "@resolve-os/database";
+import { prisma } from "@causolve/database";
 
 export const githubSignIn = tryCatchWrapper(
   async (req: Request, res: Response): Promise<void> => {

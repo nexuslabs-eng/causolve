@@ -36,14 +36,14 @@ export default defineConfig({
     },
     {
       command:
-        "pnpm --filter @resolve-os/backend e2e:prepare && pnpm --filter @resolve-os/backend dev:e2e",
+        "pnpm --filter @causolve/backend e2e:prepare && pnpm --filter @causolve/backend dev:e2e",
       cwd: "../..",
       url: "http://localhost:5000/health",
       reuseExistingServer: false,
       timeout: 120_000,
     },
     {
-      command: "pnpm --filter @resolve-os/backend mailpit",
+      command: "pnpm --filter @causolve/backend mailpit",
       url: "http://127.0.0.1:8025/api/v1/messages",
       reuseExistingServer: false,
       timeout: 120_000,

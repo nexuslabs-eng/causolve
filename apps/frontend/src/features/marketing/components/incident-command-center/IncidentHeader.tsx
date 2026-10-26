@@ -16,7 +16,7 @@ export const IncidentHeader = ({ incident, service }: IncidentHeaderProps) => (
         <span className="h-2 w-2 rounded-full bg-muted-foreground/30 animate-pulse delay-2" />
       </div>
       <span className="font-mono text-[11px] tracking-wide text-muted-foreground">
-        resolveos.app / incidents / {incident.reference}
+        causolve.app / incidents / {incident.reference}
       </span>
       <span className="ml-auto hidden items-center gap-1.5 font-mono text-[11px] text-muted-foreground sm:flex">
         <Activity className="h-3 w-3 text-success" />

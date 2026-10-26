@@ -30,7 +30,7 @@ const Complete = () => {
                 }
             >
                 <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
-                    You can now start configuring ResolveOS for your incident response workflow.
+                    You can now start configuring Causolve for your incident response workflow.
                 </p>
 
                 <AuthSummary
@@ -44,7 +44,7 @@ const Complete = () => {
                     type="button"
                     onClick={() => navigate("/workspace", {replace: true})}
                 >
-                    Enter ResolveOS
+                    Enter Causolve
                 </AuthSubmitButton>
             </AuthStatusPanel>
         </>

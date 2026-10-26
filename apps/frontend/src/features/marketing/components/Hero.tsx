@@ -27,7 +27,7 @@ const Hero = () => {
           </h1>
 
           <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-muted-foreground sm:text-base">
-            ResolveOS helps engineering teams investigate incidents, challenge competing root-cause hypotheses, and recommend the safest next action based on evidence quality, contradictions, and system integrity. Humans authorize every consequential remediation.
+            Causolve helps engineering teams investigate incidents, challenge competing root-cause hypotheses, and recommend the safest next action based on evidence quality, contradictions, and system integrity. Humans authorize every consequential remediation.
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">

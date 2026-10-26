@@ -10,8 +10,8 @@ from app.core.config import Settings
 
 @pytest.fixture(autouse=True)
 def clear_settings_environment(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.delenv("RESOLVEOS_AI_APP_ENV", raising=False)
-    monkeypatch.delenv("RESOLVEOS_AI_DOCS_ENABLED", raising=False)
+    monkeypatch.delenv("AI_APP_ENV", raising=False)
+    monkeypatch.delenv("AI_DOCS_ENABLED", raising=False)
 
 
 def test_defaults_without_dotenv() -> None:
@@ -27,13 +27,13 @@ def test_environement_overrides_dotenv(
 ) -> None:
     env_file = tmp_path / ".env"
     env_file.write_text(
-        "RESOLVEOS_AI_APP_ENV=development\nRESOLVEOS_AI_DOCS_ENABLED=true\n",
+        "AI_APP_ENV=development\nAI_DOCS_ENABLED=true\n",
         encoding="utf-8",
     )
-    monkeypatch.setenv("RESOLVEOS_AI_APP_ENV", "production")
-    monkeypatch.delenv("RESOLVEOS_AI_GEMINI_API_KEY", raising=False)
-    monkeypatch.delenv("RESOLVEOS_AI_GEMINI_MODEL", raising=False)
-    monkeypatch.delenv("RESOLVEOS_AI_GEMINI_TIMEOUT_SECONDS", raising=False)
+    monkeypatch.setenv("AI_APP_ENV", "production")
+    monkeypatch.delenv("AI_GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("AI_GEMINI_MODEL", raising=False)
+    monkeypatch.delenv("AI_GEMINI_TIMEOUT_SECONDS", raising=False)
 
     settings = Settings(_env_file=env_file)
 
@@ -44,8 +44,8 @@ def test_environement_overrides_dotenv(
 @pytest.mark.parametrize(
     ("variable", "value", "field"),
     [
-        ("RESOLVEOS_AI_APP_ENV", "staging", "app_env"),
-        ("RESOLVEOS_AI_DOCS_ENABLED", "perhaps", "docs_enabled"),
+        ("AI_APP_ENV", "staging", "app_env"),
+        ("AI_DOCS_ENABLED", "perhaps", "docs_enabled"),
     ],
 )
 def test_invalid_environment_is_rejected(
@@ -64,7 +64,7 @@ def test_invalid_environment_is_rejected(
 
 def test_unknown_dotenv_setting_is_rejected(tmp_path: Path) -> None:
     env_file = tmp_path / ".env"
-    env_file.write_text("RESOLVEOS_AI_DOCS_ENABELD=true\n", encoding="utf-8")
+    env_file.write_text("AI_DOCS_ENABELD=true\n", encoding="utf-8")
 
     with pytest.raises(ValidationError) as error:
         Settings(_env_file=env_file)

@@ -15,7 +15,7 @@ describe("password recovery flow", () => {
 
         const result = await resetPassword({
             token: "0123456789abcdef0123456789abcdef",
-            password: "NewResolveOS!123",
+            password: "NewCausolve!123",
         });
 
         expect(result).toMatchObject({

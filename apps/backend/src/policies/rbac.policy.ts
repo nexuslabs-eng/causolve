@@ -1,4 +1,4 @@
-import type { Role } from "@resolve-os/database";
+import type { Role } from "@causolve/database";
 
 const ROLE_RANKS: Record<Role, number> = {
   OBSERVER: 0,

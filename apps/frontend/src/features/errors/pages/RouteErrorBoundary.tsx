@@ -28,7 +28,7 @@ const RouteErrorBoundary = () => {
                 </p>
 
                 <h1 className="mt-4 text-3xl font-semibold text-foreground sm:text-4xl">
-                    ResolveOS encountered an error
+                    Causolve encountered an error
                 </h1>
 
                 <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
@@ -56,7 +56,7 @@ const RouteErrorBoundary = () => {
                         }
                     >
                         <Home aria-hidden="true" />
-                        Return to ResolveOS
+                        Return to Causolve
                     </Button>
                 </div>
             </section>

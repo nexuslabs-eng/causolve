@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { prisma } from "@resolve-os/database";
+import { prisma } from "@causolve/database";
 
 export const findInvitationByToken = async (rawToken: string) => {
   const tokenHash = crypto.createHash("sha256").update(rawToken).digest("hex");

@@ -17,7 +17,7 @@ export const AuthBrand = ({ className }: AuthBrandProps) => {
                 e.preventDefault();
                 exitToMarketing();
             }}
-            aria-label="ResolveOS home"
+            aria-label="Causolve home"
             aria-disabled={isExiting}
             className={cn(
                 "inline-flex items-center gap-3 text-primary-bright",
@@ -25,7 +25,7 @@ export const AuthBrand = ({ className }: AuthBrandProps) => {
             )}
         >
             <ResolutionNode className="h-6" />
-            <span className="text-lg font-semibold text-foreground">ResolveOS</span>
+            <span className="text-lg font-semibold text-foreground">Causolve</span>
         </Link>
     )
 }

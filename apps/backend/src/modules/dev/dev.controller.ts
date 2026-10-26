@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { z } from "zod";
-import { prisma } from "@resolve-os/database";
+import { prisma } from "@causolve/database";
 import tryCatchWrapper from "../../infrastructure/tryCatchWrapper.js";
 import { sendSuccess, sendError } from "../../infrastructure/responseHandler.js";
 

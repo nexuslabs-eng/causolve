@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import request from "supertest";
 import argon2 from "argon2";
-import { Prisma } from "@resolve-os/database";
+import { Prisma } from "@causolve/database";
 import { ServiceSchema } from "contracts";
 import app from "../../../app.js";
 import { prismaMock } from "../../../test/mocks/prisma.js";

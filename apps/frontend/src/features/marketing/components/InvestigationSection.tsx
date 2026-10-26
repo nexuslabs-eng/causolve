@@ -37,7 +37,7 @@ export const InvestigationSection = () => {
             <SectionHeading   
               eyebrow="AI investigation"
               title="Investigation through controlled capabilities, not open-ended access."
-              description="ResolveOS gives the investigation agent a fixed set of read-only capabilities. It runs them in sequence, records what each returned, and assembles a structured hypothesis from the results."
+              description="Causolve gives the investigation agent a fixed set of read-only capabilities. It runs them in sequence, records what each returned, and assembles a structured hypothesis from the results."
             />
             
             <ul className="mt-8 space-y-3.5">

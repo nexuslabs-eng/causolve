@@ -15,7 +15,7 @@ describe("authentication and onboarding flow", () => {
         await signupAccount({
             fullName: "John Doe",
             email: "johndoe@gmail.com",
-            password: "ResolveOS!123",
+            password: "Causolve!123",
         });
 
         const pendingSession = await getAuthSession();

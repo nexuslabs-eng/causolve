@@ -44,7 +44,7 @@ const NotFound = () => {
                         onClick={() => navigate("/", { replace: true })}
                     >
                         <Home aria-hidden="true" />
-                        ResolveOS home
+                        Causolve home
                     </Button>
                 </div>
             </section>

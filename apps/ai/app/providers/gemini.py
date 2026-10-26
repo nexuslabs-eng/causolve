@@ -51,6 +51,7 @@ class GeminiProvider:
             text = response.text
 
         except errors.APIError as error:
+            print(error.message, error.status, error.details)
             raise translate_api_error(error) from None
         except httpx.TimeoutException:
             raise ProviderError("timeout", "Gemini request timed out.") from None
@@ -80,13 +81,9 @@ async def open_gemini_provider(settings: Settings) -> AsyncGenerator[AIProvider]
     model = settings.gemini_model.strip()
 
     if not key:
-        raise ProviderConfigurationError(
-            "RESOLVEOS_AI_GEMINI_API_KEY must be configured."
-        )
+        raise ProviderConfigurationError("AI_GEMINI_API_KEY must be configured.")
     if not model:
-        raise ProviderConfigurationError(
-            "RESOLVEOS_AI_GEMINI_MODEL must be configured."
-        )
+        raise ProviderConfigurationError("AI_GEMINI_MODEL must be configured.")
 
     try:
         client = genai.Client(

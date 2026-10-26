@@ -1,7 +1,7 @@
 const PrivacyPolicyContent = () => (
   <>
     <p className="text-base">We respects your privacy and is committed to protecting your personal information.</p>
-    <p>This Privacy Policy explains what information we collect, how we use and protect it, when we share it, and the choices and rights you have regarding your information when using ResolveOS.</p>
+    <p>This Privacy Policy explains what information we collect, how we use and protect it, when we share it, and the choices and rights you have regarding your information when using Causolve.</p>
 
     <section>
 
@@ -25,7 +25,7 @@ const PrivacyPolicyContent = () => (
 
       <h3>Third-Party Authentication</h3>
 
-      <p>If you sign in using Google or GitHub, we receive basic profile information needed to identify you and associate your account with ResolveOS.</p>
+      <p>If you sign in using Google or GitHub, we receive basic profile information needed to identify you and associate your account with Causolve.</p>
 
       <p>We do not request access to your contacts, personal files, calendars, or other unrelated information from these providers.</p>
 
@@ -33,7 +33,7 @@ const PrivacyPolicyContent = () => (
 
       <p>When you create or join an organization, we process information associated with your organization and membership, including organization details, assigned roles, and relevant actions performed within the workspace.</p>
 
-      <p>ResolveOS currently uses simulated operational data to support its workspace experience. This data is associated with individual organizations during workspace initialization and does not represent live operational information collected from customer infrastructure.</p>
+      <p>Causolve currently uses simulated operational data to support its workspace experience. This data is associated with individual organizations during workspace initialization and does not represent live operational information collected from customer infrastructure.</p>
 
     </section>
 
@@ -57,7 +57,7 @@ const PrivacyPolicyContent = () => (
 
         <li>Send essential account-related communications, including verification emails, password reset instructions, and organization invitations.</li>
 
-        <li>Maintain the security, reliability, and proper operation of ResolveOS.</li>
+        <li>Maintain the security, reliability, and proper operation of Causolve.</li>
 
       </ul>
 
@@ -85,7 +85,7 @@ const PrivacyPolicyContent = () => (
 
         <li>
 
-        <strong>Session security:</strong> ResolveOS uses session cookies to maintain authenticated sessions and applies security protections to session handling.</li>
+        <strong>Session security:</strong> Causolve uses session cookies to maintain authenticated sessions and applies security protections to session handling.</li>
 
         <li>
 
@@ -103,7 +103,7 @@ const PrivacyPolicyContent = () => (
 
       <p>We do not sell your personal information or share it with third parties for marketing or advertising purposes.</p>
 
-      <p>We may share limited information with service providers when necessary to operate ResolveOS.</p>
+      <p>We may share limited information with service providers when necessary to operate Causolve.</p>
 
       <p>These include:</p>
 
@@ -125,7 +125,7 @@ const PrivacyPolicyContent = () => (
 
       <p>These providers process information as necessary to deliver their respective services, subject to applicable agreements and privacy practices.</p>
 
-      <p>We may also disclose information where required by applicable law or where reasonably necessary to protect the security and integrity of ResolveOS and its users.</p>
+      <p>We may also disclose information where required by applicable law or where reasonably necessary to protect the security and integrity of Causolve and its users.</p>
 
     </section>
 
@@ -133,7 +133,7 @@ const PrivacyPolicyContent = () => (
 
       <h2>5. Data Retention and Deletion</h2>
 
-      <p>We retain account and organization-related information for as long as reasonably necessary to provide ResolveOS, maintain account and workspace operations, protect the service, and comply with applicable legal obligations.</p>
+      <p>We retain account and organization-related information for as long as reasonably necessary to provide Causolve, maintain account and workspace operations, protect the service, and comply with applicable legal obligations.</p>
 
       <p>You may request deletion of your account or personal information using the contact details provided below.</p>
 
@@ -189,7 +189,7 @@ const PrivacyPolicyContent = () => (
 
       <h2>7. Children's Privacy</h2>
 
-      <p>ResolveOS is designed for professional and organizational use and is not intended for individuals under the age of 18.</p>
+      <p>Causolve is designed for professional and organizational use and is not intended for individuals under the age of 18.</p>
 
       <p>We do not knowingly seek to collect personal information from children in circumstances where doing so would be inconsistent with applicable law.</p>
 
@@ -218,8 +218,9 @@ const PrivacyPolicyContent = () => (
       <p>If you have questions about this Privacy Policy, how we handle your information, or would like to exercise your privacy rights, you can contact us at:</p>
 
       <p>
-
-      <strong>Email:</strong> [ResolveOS support/privacy email]</p>
+        <strong>Email:</strong>
+        <a href="mailto:hello.causolve@gmail.com">hello.causolve@gmail.com</a>
+      </p>
 
       <p>We will review and respond to privacy-related inquiries and requests in accordance with applicable law.</p>
 

@@ -34,7 +34,7 @@ export const IncidentCommandCenter = () => {
 
   return (
     <section
-      aria-label="ResolveOS incident command center preview"
+      aria-label="Causolve incident command center preview"
       className="overflow-hidden rounded-xl border border-border bg-surface shadow-(--shadow-elevated)"
     >
       <IncidentHeader incident={INCIDENT} service={SERVICE} />

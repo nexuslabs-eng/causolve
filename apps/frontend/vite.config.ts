@@ -44,8 +44,8 @@ export default defineConfig({
 
       manifest: {
         id: "/",
-        name: "ResolveOS",
-        short_name: "ResolveOS",
+        name: "Causolve",
+        short_name: "Causolve",
         description:
         "Evidence-aware incident investigation and controlled remediation for engineering teams.",
         

@@ -36,4 +36,4 @@ jobs:
             run: pnpm --filter frontend lint
 
           - name: Lint backend
-            run: pnpm --filter @resolve-os/backend lint
+            run: pnpm --filter @causolve/backend lint

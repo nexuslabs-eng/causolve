@@ -2,7 +2,7 @@ import { expect, type APIRequestContext, type Page } from "@playwright/test";
 import { clearMailpit, extractPasswordResetUrl, waitForMail } from "./mailpit";
 
 export const RESET_ACCOUNT = {
-  email: "e2e.password-reset@resolveos.test",
+  email: "e2e.password-reset@causolve.test",
   password: "E2eTestPassword123!",
 } as const;
 
@@ -26,7 +26,7 @@ export const requestPasswordReset = async (
 
   const message = await waitForMail(request, {
     to: email,
-    subject: "Reset your ResolveOS password",
+    subject: "Reset your Causolve password",
     timeoutMs: 60000,
   });
 

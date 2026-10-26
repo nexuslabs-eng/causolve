@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently -n frontend,backend -c blue,green \"pnpm --filter frontend dev\" \"pnpm --filter @resolve-os/backend dev\"",
+    "dev": "concurrently -n frontend,backend -c blue,green \"pnpm --filter frontend dev\" \"pnpm --filter @causolve/backend dev\"",
     "ai:dev": "uv run --locked --directory apps/ai uvicorn app.main:create_app --factory --reload --host 127.0.0.1 --port 8000",
     "ai:test": "uv run --locked --directory apps/ai pytest",
     "ai:lint": "uv run --locked --directory apps/ai ruff check .",

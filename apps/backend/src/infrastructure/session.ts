@@ -1,6 +1,6 @@
 import session from 'express-session';
 import connectPgSimple from 'connect-pg-simple';
-import { prisma } from '@resolve-os/database';
+import { prisma } from '@causolve/database';
 import { env } from './keys.js';
 
 // Extends express-session's SessionData with our own field. userId is the

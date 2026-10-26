@@ -43,7 +43,7 @@ const Login = () => {
 
             <AuthFormHeader
                 title="Welcome back"
-                description="Sign in to your ResolveOS workspace."
+                description="Sign in to your Causolve workspace."
             />
 
             <SocialAuthButtons
@@ -114,7 +114,7 @@ const Login = () => {
             </form>
 
             <AuthAlternateAction
-                message="New to ResolveOS?"
+                message="New to Causolve?"
                 linkLabel="Create an account"
                 to="/signup/account"
             />

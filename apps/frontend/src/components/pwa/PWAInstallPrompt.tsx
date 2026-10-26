@@ -56,11 +56,11 @@ export const PWAInstallPrompt = () => {
         const result = await installEvent.prompt();
 
         if (result.outcome === "accepted") {
-            console.log("ResolveOS installation accepted.");
+            console.log("Causolve installation accepted.");
         }
 
         if (result.outcome === "dismissed") {
-            console.log("ResolveOS installation dismissed.");
+            console.log("Causolve installation dismissed.");
         }
 
         setInstallEvent(null);
@@ -118,11 +118,11 @@ export const PWAInstallPrompt = () => {
 
                     <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold text-foreground">
-                            Install ResolveOS
+                            Install Causolve
                         </p>
 
                         <p className="mt-1 text-sm leading-5 text-muted-foreground">
-                            Add ResolveOS to this device for faster access and a standalone
+                            Add Causolve to this device for faster access and a standalone
                             app experience.
                         </p>
 
@@ -132,7 +132,7 @@ export const PWAInstallPrompt = () => {
                                 onClick={openInstallDialog}
                                 variant="brand"
                             >
-                                Install ResolveOS
+                                Install Causolve
                             </Button>
 
                             <Button
@@ -211,11 +211,11 @@ export const PWAInstallPrompt = () => {
                             id="pwa-install-title"
                             className="text-lg font-semibold text-foreground"
                             >
-                            Install ResolveOS
+                            Install Causolve
                             </h2>
 
                             <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                            Install ResolveOS on this device for quick access and a more
+                            Install Causolve on this device for quick access and a more
                             focused application experience.
                             </p>
                         </div>
@@ -229,7 +229,7 @@ export const PWAInstallPrompt = () => {
                                 <p className="text-sm font-medium text-foreground">Faster access</p>
 
                                 <p className="mt-0.5 text-sm text-muted-foreground">
-                                    Launch ResolveOS directly from your desktop or application launcher.
+                                    Launch Causolve directly from your desktop or application launcher.
                                 </p>
                             </div>
                         </div>
@@ -241,7 +241,7 @@ export const PWAInstallPrompt = () => {
                                 <p className="text-sm font-medium text-foreground">Standalone experience</p>
 
                                 <p className="mt-0.5 text-sm text-muted-foreground">
-                                Use ResolveOS in its own application window without normal browser navigation.
+                                Use Causolve in its own application window without normal browser navigation.
                                 </p>
                             </div>
                         </div>
@@ -273,7 +273,7 @@ export const PWAInstallPrompt = () => {
                             variant="brand"
                             onClick={handleRealInstall}
                         >
-                            Install ResolveOS
+                            Install Causolve
                         </Button>
                     </div>
                 </motion.div>

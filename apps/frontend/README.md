@@ -1,6 +1,6 @@
-# ResolveOS Frontend
+# Causolve Frontend
 
-The ResolveOS frontend is a React and TypeScript PWA for the public marketing experience, authentication and onboarding, and the authenticated incident-response workspace.
+The Causolve frontend is a React and TypeScript PWA for the public marketing experience, authentication and onboarding, and the authenticated incident-response workspace.
 
 ## Responsibilities
 

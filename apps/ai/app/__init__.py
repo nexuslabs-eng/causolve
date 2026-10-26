@@ -1,1 +1,1 @@
-"""ResolveOS AI service application."""
+"""AI service application."""

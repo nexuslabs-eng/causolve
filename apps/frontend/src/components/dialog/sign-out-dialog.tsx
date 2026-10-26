@@ -22,7 +22,7 @@ export const SignOutDialog = ({ open, loading, onOpenChange, onConfirm }: SignOu
       <DialogBackdrop />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <DialogContent>
-          <DialogTitle>Sign out of ResolveOS?</DialogTitle>
+          <DialogTitle>Sign out of Causolve?</DialogTitle>
           <DialogDescription>
             You will need to sign in again to access this workspace.
           </DialogDescription>

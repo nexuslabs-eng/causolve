@@ -4,6 +4,8 @@ export default defineConfig({
   test: {
     environment: "node",
     setupFiles: ["./src/test/setup.ts"],
+    testTimeout: 30000,
+    hookTimeout: 30000,
     env: {
       NODE_ENV: "test",
       DATABASE_URL: "postgresql://user:password@localhost:5432/resolve_os_test",

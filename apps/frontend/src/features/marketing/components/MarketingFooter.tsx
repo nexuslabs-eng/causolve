@@ -9,9 +9,9 @@ const MarketingFooter = () => {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,2fr)]">
           <div className="max-w-xs">
             <div className="flex items-center gap-2.5 text-primary-bright">
-              <ResolutionNode className="h-6" title="ResolveOS" />
+              <ResolutionNode className="h-6" title="Causolve" />
               <span className="text-[15px] font-semibold tracking-[-0.02em] text-foreground">
-                ResolveOS
+                Causolve
               </span>
             </div>
             <p className="mt-4 text-[13px] leading-relaxed text-muted-foreground">
@@ -54,7 +54,7 @@ const MarketingFooter = () => {
         </div>
 
         <p className="mt-12 border-t border-border pt-6 font-mono text-[11px] text-muted-foreground">
-          © {new Date().getFullYear()} ResolveOS. All rights reserved.
+          © {new Date().getFullYear()} Causolve. All rights reserved.
         </p>
       </div>
     </footer>

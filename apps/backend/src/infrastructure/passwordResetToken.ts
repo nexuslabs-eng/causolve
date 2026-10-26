@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { prisma } from "@resolve-os/database";
+import { prisma } from "@causolve/database";
 
 export const findUserByResetToken = async (rawToken: string) => {
   const passwordResetTokenHash = crypto

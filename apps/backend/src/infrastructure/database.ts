@@ -1,4 +1,4 @@
-import { prisma } from '@resolve-os/database';
+import { prisma } from '@causolve/database';
 import { env } from './keys.js';
 import { logger, logError } from './logger.js';
 

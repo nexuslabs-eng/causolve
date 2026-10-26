@@ -115,7 +115,7 @@ importers:
 
   apps/backend:
     dependencies:
-      '@resolve-os/database':
+      '@causolve/database':
         specifier: workspace:*
         version: link:../../packages/database
       arctic:

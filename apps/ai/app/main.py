@@ -12,7 +12,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     resolved_settings = settings if settings is not None else Settings()
 
     application = FastAPI(
-        title="ResolveOS AI Service",
+        title="AI Service",
         version="0.1.0",
         docs_url="/docs" if resolved_settings.docs_enabled else None,
         redoc_url=None,

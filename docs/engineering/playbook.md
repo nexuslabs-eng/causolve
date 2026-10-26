@@ -1,13 +1,13 @@
-# ResolveOS Engineering Playbook
+# Engineering Playbook
 
-**Purpose:** Concise implementation guide for building the ResolveOS MVP
+**Purpose:** Concise implementation guide for building the Causolve MVP
 without coupling progress to one team member.
 
 ------------------------------------------------------------------------
 
 ## 1. Architecture
 
-ResolveOS has three independently developable domains connected through
+Causolve has three independently developable domains connected through
 stable contracts.
 
 ``` text
@@ -136,7 +136,9 @@ resolve-os/
 ├── docs/
 ├── e2e/
 └── packages/
-    └── contracts/
+    ├── contracts/
+    ├── database/
+    └── simulation-data/
 ```
 
 `packages/contracts` defines the shared API shapes used by mocks,
@@ -462,7 +464,7 @@ FAILED
 
 ## 10. Progressive Degradation
 
-ResolveOS continues safely when capabilities fail.
+Causolve continues safely when capabilities fail.
 
 ``` text
 Level 0  Full investigation

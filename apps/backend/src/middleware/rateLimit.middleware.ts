@@ -1,9 +1,6 @@
-import type { Request, Response, NextFunction } from 'express';
+import type { Request, Response } from 'express';
 import { rateLimit, ipKeyGenerator } from 'express-rate-limit';
-import { env } from '../infrastructure/keys.js';
 import { sendError } from '../infrastructure/responseHandler.js';
-
-const noopMiddleware = (_req: Request, _res: Response, next: NextFunction): void => next();
 
 const ipAndUserAgentKey = (req: Request): string =>
   `${ipKeyGenerator(req.ip ?? 'unknown-ip')}-${req.headers['user-agent'] || 'unknown-user-agent'}`;

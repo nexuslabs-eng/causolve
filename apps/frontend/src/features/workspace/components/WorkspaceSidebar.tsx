@@ -23,8 +23,8 @@ import {
 const WorkspaceSwitcher = ({ collapsed }: { collapsed: boolean }) => {
   const { data: session } = useAuthSession();
   const workspaceName = session?.authenticated
-    ? session.activeWorkspace?.name ?? "ResolveOS workspace"
-    : "ResolveOS workspace";
+    ? session.activeWorkspace?.name ?? "Causolve workspace"
+    : "Causolve workspace";
 
   const workspaceInitials = workspaceName
     .split(" ")
@@ -68,7 +68,7 @@ const WorkspaceUserMenu = ({ collapsed }: { collapsed: boolean }) => {
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const { data: session } = useAuthSession();
   const logout = useLogout("/");
-  const userName = session?.authenticated ? session.user.fullName : "ResolveOS user";
+  const userName = session?.authenticated ? session.user.fullName : "Causolve user";
   const userEmail = session?.authenticated ? session.user.email : "";
 
   const initials = userName
@@ -137,8 +137,8 @@ export const WorkspaceSidebar = (
     <aside className="flex h-full min-h-0 flex-col bg-surface-inset" aria-label="Workspace sidebar">
       <div className={cn("flex h-14 shrink-0 items-center border-b border-border px-3", compact ? "justify-center" : "justify-between")}>
         <div className="flex min-w-0 items-center gap-2.5">
-          <ResolutionNode className="h-6 shrink-0 text-primary-bright" title="ResolveOS" />
-          {!compact && <span className="truncate text-sm font-semibold text-foreground">ResolveOS</span>}
+          <ResolutionNode className="h-6 shrink-0 text-primary-bright" title="Causolve" />
+          {!compact && <span className="truncate text-sm font-semibold text-foreground">Causolve</span>}
         </div>
 
         {!mobile && onToggle && !compact && (

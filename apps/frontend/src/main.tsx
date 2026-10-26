@@ -17,7 +17,7 @@ useThemeStore.getState().initializeTheme();
 const container = document.getElementById("root");
 
 if (!container)
-  throw new Error("ResolveOS root element was not found.")
+  throw new Error("Causolve root element was not found.")
 
 const root = createRoot(container);
 
@@ -48,7 +48,7 @@ const startApplication = async () => {
       </StrictMode>
     );
   } catch (error) {
-    console.error(`ResolveOS startup failed: ${error}`);
+    console.error(`Causolve startup failed: ${error}`);
 
     root.render(
       <StrictMode>

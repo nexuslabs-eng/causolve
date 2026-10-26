@@ -2,7 +2,7 @@ import { APIRequestContext, expect, Page, test } from "@playwright/test";
 import { extractVerificationOtp, waitForMail } from "../support/mailpit";
 
 const TEST_PASSWORD = "E2eTestPassword123!";
-const createUniqueEmail = () => `signup-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@resolveos.test`;
+const createUniqueEmail = () => `signup-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@causolve.test`;
 
 async function createAccountAndGetOtp({
     page,
@@ -18,7 +18,7 @@ async function createAccountAndGetOtp({
     await page.goto("/signup/account");
 
     await expect(
-        page.getByRole("heading", { name: "Create your ResolveOS account" }),
+        page.getByRole("heading", { name: "Create your Causolve account" }),
     ).toBeVisible({ timeout: 60000 });
 
     await page.getByLabel("Work email").fill(email);
@@ -31,7 +31,7 @@ async function createAccountAndGetOtp({
 
     const message = await waitForMail(request, {
         to: email,
-        subject: "Your ResolveOS verification code",
+        subject: "Your Causolve verification code",
     });
 
     return {
@@ -62,7 +62,7 @@ test.describe("signup", () => {
     test("rejects a duplicate email", async ({ page }) => {
         await page.goto("/signup/account");
 
-        await page.getByLabel("Work email").fill("e2e.completed@resolveos.test");
+        await page.getByLabel("Work email").fill("e2e.completed@causolve.test");
         await page.getByLabel("Full name").fill("Duplicate E2E User");
         await page.getByLabel("Password", { exact: true }).fill(TEST_PASSWORD);
         await page.getByLabel("Confirm password").fill(TEST_PASSWORD);

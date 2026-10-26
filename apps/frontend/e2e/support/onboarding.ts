@@ -4,7 +4,7 @@ import { extractVerificationOtp, waitForMail } from "./mailpit";
 const TEST_PASSWORD = "E2eTestPassword123!";
 
 const createUniqueEmail = () =>
-    `onboarding-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@resolveos.test`;
+    `onboarding-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@causolve.test`;
 
 export const createVerifiedAccount = async (
     page: Page,
@@ -26,7 +26,7 @@ export const createVerifiedAccount = async (
 
     const verificationEmail = await waitForMail(request, {
         to: email,
-        subject: "Your ResolveOS verification code",
+        subject: "Your Causolve verification code",
     });
 
     await page

@@ -1,8 +1,8 @@
-# ResolveOS deterministic simulation data
+# Causolve deterministic simulation data
 
 Scenario: `payment-provider-degradation`
 
-This package is a reusable operational scenario for testing ResolveOS
+This package is a reusable operational scenario for testing
 investigations. The CSV files define the simulated environment. A real
 organization owns the runtime simulation instance and all actions
 performed during that run.
@@ -41,21 +41,21 @@ The scenario starts at `2026-09-19T13:30:00Z`.
 2.  PayFlow authorization performance begins degrading at `13:58`.
 3.  Payment failures cross the incident threshold and `INC-1042` is
     detected.
-4.  ResolveOS investigates through bounded operational tools.
+4.  Causolve investigates through bounded operational tools.
 5.  The recent payment-api deployment provides a plausible competing
     explanation.
 6.  Provider, database, trace, deployment, runtime, and other
     observations provide evidence for or against competing hypotheses.
 7.  `LOG_SEARCH` fails at `14:23`. Stored logs remain in the database,
     but log search becomes unavailable to the investigation.
-8.  ResolveOS must reduce evidence coverage/integrity as appropriate and
+8.  Causolve must reduce evidence coverage/integrity as appropriate and
     continue using the capabilities that remain available.
-9.  ResolveOS may recommend remediation from the evidence it derived.
+9.  Causolve may recommend remediation from the evidence it derived.
 10. A real authorized user decides whether to approve consequential
     remediation.
 11. Successful simulated remediation may unlock the recovery
     observations associated with that outcome.
-12. ResolveOS verifies recovery from operational data before runtime
+12. Causolve verifies recovery from operational data before runtime
     incident resolution.
 
 The static template does not pre-authorize or pre-complete user actions.
@@ -97,7 +97,7 @@ Operational tools expose bounded views of topology, metrics, logs,
 traces, deployments, changes, runtime state, alerts, incident history,
 and runbooks.
 
-ResolveOS derives evidence, hypotheses, evidence relationships,
+Causolve derives evidence, hypotheses, evidence relationships,
 contradiction pressure, evidence coverage, integrity, recommendations,
 approvals, remediation, and verification during the run. These are not
 seeded from the scenario.

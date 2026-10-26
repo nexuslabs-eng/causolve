@@ -66,7 +66,7 @@ export const AppLoading = ({
                 </div>
 
                 <h1 className="mt-8 text-3xl font-semibold text-foreground">
-                ResolveOS
+                Causolve
                 </h1>
 
                 <p className="mt-3 text-sm text-muted-foreground">
@@ -76,8 +76,8 @@ export const AppLoading = ({
                 <div role={failed ? "alert" : "status"} className="mt-9">
                     <p className="text-sm text-foreground">
                         {failed
-                        ? "ResolveOS could not start."
-                        : "Preparing ResolveOS"}
+                        ? "Causolve could not start."
+                        : "Preparing Causolve"}
                     </p>
 
                     {!failed && (

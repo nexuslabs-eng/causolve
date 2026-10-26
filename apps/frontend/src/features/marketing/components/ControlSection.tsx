@@ -28,7 +28,7 @@ export const ControlSection = () => {
       <div className="mx-auto w-full max-w-310 px-5 py-20 sm:px-8 lg:py-28">
         <SectionHeading
           eyebrow="Human control"
-          title="AI recommends. Humans authorize. ResolveOS enforces."
+          title="AI recommends. Humans authorize. Causolve enforces."
           description="Consequential remediation never runs on model confidence alone. Every action is bound to a policy, a role, an approver, and a permanent record."
         />
 
