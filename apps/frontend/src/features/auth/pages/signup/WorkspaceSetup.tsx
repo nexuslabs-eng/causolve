@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { WorkspaceSetupRequestSchema, type WorkspaceSetupRequest } from "contracts";
-import { useForm } from "react-hook-form";
+import { WorkspaceSetupRequestSchema, WorkspaceSlugSchema, type WorkspaceSetupRequest } from "contracts";
+import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -10,10 +10,12 @@ import { AuthSubmitButton } from "@/features/auth/components/AuthSubmitButton";
 import { AuthBackButton } from "@/features/auth/components/AuthBackButton";
 import { useAuthSession } from "@/features/auth/hooks/use-auth-session";
 import { CheckCircle, Loader, XCircle } from "lucide-react";
-import { continueWithWorkspace, getSlugAvailability } from "@/features/auth/lib/workspace";
+import { continueWithWorkspace } from "@/features/auth/lib/workspace";
 import type { ReactNode } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { checkWorkspaceSlugAvailability } from "@/features/auth/api/onboarding";
+import { useQuery } from "@tanstack/react-query";
+import { AuthErrorBanner } from "@/features/auth/components/AuthErrorBanner";
+import { useDebounced } from "@/hooks/use-debounced-value";
+import { workspaceSlugAvailabilityQueryOptions } from "../../queries/workspace-slug-availability-query-options";
 
 const WorkspaceSetup = () => {
     const navigate = useNavigate();
@@ -22,6 +24,7 @@ const WorkspaceSetup = () => {
     const workspace = session?.authenticated ? session.activeWorkspace : null;
 
     const {
+        control,
         register,
         handleSubmit,
         setError,
@@ -36,24 +39,52 @@ const WorkspaceSetup = () => {
         }
     });
 
-    const slugAvailability = useMutation({ mutationFn: checkWorkspaceSlugAvailability });
+    const slug = useWatch({ control, name: "slug" });
 
-    const slugField = register("slug");
+    const normalizedSlug = slug.trim().toLowerCase();
+
+    const parsedSlug = WorkspaceSlugSchema.safeParse(normalizedSlug);
+
+    const validSlug = parsedSlug.success ? parsedSlug.data : undefined;
+
+    const debouncedSlug = useDebounced(validSlug, 400);
+
+    const slugAvailability = useQuery(workspaceSlugAvailabilityQueryOptions(debouncedSlug));
+
+    const isDebouncing = validSlug !== debouncedSlug;
+
+    const hasCurrentAvailabilityResult =
+        Boolean(validSlug) && validSlug === debouncedSlug;
+
+    const isCheckingAvailability =
+        Boolean(validSlug) &&
+        (isDebouncing ||
+            (hasCurrentAvailabilityResult && slugAvailability.isFetching));
+
+    const currentAvailability = hasCurrentAvailabilityResult
+        ? slugAvailability.data
+        : undefined;
+
+    const availabilityError =
+        !validSlug || isDebouncing || !hasCurrentAvailabilityResult
+            ? undefined
+            : slugAvailability.isError
+                ? "Unable to check this workspace URL."
+                : currentAvailability?.available === false
+                    ? "This workspace URL is already in use."
+                    : undefined;
 
     let slugAvailabilityIcon: ReactNode = null;
     let slugAvailabilityMessage = "";
 
-    switch (slugAvailability.status) {
-        case "pending":
+    if (isCheckingAvailability) {
             slugAvailabilityIcon = (
                 <Loader className="size-4 animate-spin text-muted-foreground" />
             );
             slugAvailabilityMessage =
                 "Checking workspace URL availability.";
-            break;
-
-        case "success":
-            if (slugAvailability.data.available) {
+    } else if (currentAvailability) {
+            if (currentAvailability.available) {
                 slugAvailabilityIcon = (
                     <CheckCircle className="size-4 text-success" />
                 );
@@ -66,10 +97,6 @@ const WorkspaceSetup = () => {
                 slugAvailabilityMessage =
                     "Workspace URL is unavailable.";
             }
-            break;
-
-        default:
-            break;
     }
 
     return (
@@ -83,6 +110,12 @@ const WorkspaceSetup = () => {
                 description="Set the name and URL your team will use in Causolve."
                 className="mb-8"
             />
+
+            {errors.root?.message && (
+                <AuthErrorBanner onDismiss={() => clearErrors("root")} >
+                    {errors.root.message}
+                </AuthErrorBanner>
+            )}
 
             <form
                 noValidate
@@ -99,7 +132,10 @@ const WorkspaceSetup = () => {
                         <FieldError match={Boolean(errors.name)}>{errors.name?.message}</FieldError>
                     </Field>
 
-                    <Field name="slug" invalid={Boolean(errors.slug)}>
+                    <Field
+                        name="slug"
+                        invalid={Boolean(errors.slug || availabilityError)}
+                    >
                         <FieldLabel>Workspace URL</FieldLabel>
 
                         <div className="relative">
@@ -108,16 +144,8 @@ const WorkspaceSetup = () => {
                                 autoComplete="off"
                                 spellCheck={false}
                                 placeholder="acme-engineering"
-                                {...slugField}
-                                onChange={(event) =>
-                                    getSlugAvailability(
-                                        event,
-                                        setError,
-                                        clearErrors,
-                                        slugField,
-                                        slugAvailability
-                                    )
-                                }
+                                {...register("slug")}
+                                
                             />
 
                             <span
@@ -140,16 +168,18 @@ const WorkspaceSetup = () => {
                             Use 3-63 lowercase letters or numbers, separated by single hyphens.
                         </FieldDescription>
 
-                        <FieldError match={Boolean(errors.slug)}>{errors.slug?.message}</FieldError>
+                        <FieldError match={Boolean(errors.slug || availabilityError)}>
+                            {errors.slug?.message ?? availabilityError}
+                        </FieldError>
                     </Field>
                 </div>
 
-                {errors.root?.message ? (
-                    <p role="alert" className="mt-5 text-xs leading-relaxed text-destructive">{errors.root.message}</p>
-                ) : null}
-
                 <AuthSubmitButton
-                    disabled={!isValid || slugAvailability.isPending}
+                    disabled={
+                        !isValid ||
+                        isCheckingAvailability ||
+                        Boolean(availabilityError)
+                    }
                     loading={isSubmitting}
                     loadingLabel="Creating workspace"
                 >

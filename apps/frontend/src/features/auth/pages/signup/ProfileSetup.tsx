@@ -11,6 +11,7 @@ import { AuthSubmitButton } from "@/features/auth/components/AuthSubmitButton";
 import { JOB_ROLES, TEAM_SIZES, RESPONSIBILITIES } from "@/features/auth/fixtures/profile";
 import { AuthBackButton } from "@/features/auth/components/AuthBackButton";
 import { refreshAuthSession } from "@/features/auth/queries/auth-session-query-options";
+import { AuthErrorBanner } from "@/features/auth/components/AuthErrorBanner";
 
 const ProfileSetup = () => {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ const ProfileSetup = () => {
         control,
         handleSubmit,
         setError,
+        clearErrors,
         formState: { errors, isSubmitting, isValid },
     } = useForm<ProfileSetupRequest>({
         resolver: zodResolver(ProfileSetupRequestSchema),
@@ -57,6 +59,12 @@ const ProfileSetup = () => {
                 description="Help us understand your role and engineering team."
                 className="mb-8"
             />
+
+            {errors.root?.message && (
+                <AuthErrorBanner onDismiss={() => clearErrors("root")} >
+                    {errors.root.message}
+                </AuthErrorBanner>
+            )}
 
             <form noValidate onSubmit={handleSubmit(continueWithProfile)}>
                 <div className="space-y-5">
@@ -177,12 +185,6 @@ const ProfileSetup = () => {
                     </FieldError>
                 </Field>
                 </div>
-
-                {errors.root?.message ? (
-                    <p role="alert" className="mt-5 text-xs leading-relaxed text-destructive">
-                        {errors.root.message}
-                    </p>
-                ) : null}
 
                 <AuthSubmitButton
                     disabled={!isValid}

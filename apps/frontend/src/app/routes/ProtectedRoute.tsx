@@ -3,6 +3,7 @@ import { useAuthSession } from "@/features/auth/hooks/use-auth-session";
 import type { AuthenticatedAuthSession } from "contracts";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { onboardingRoutes } from "@/app/routes/constants";
+import { SessionUnavailable } from "@/features/auth/components/SessionUnavailable"; 
 
 const getNextRoute = (session: AuthenticatedAuthSession) => onboardingRoutes[session.onboarding.nextStep];
 
@@ -16,15 +17,15 @@ export const ProtectedRoute = () => {
 
     if (session.isError) {
         return (
-            <AppLoading
-                failed
+            <SessionUnavailable
+                retrying={session.isFetching}
                 onRetry={() => void session.refetch()}
             />
         );
     }
 
     if (!session.data?.authenticated) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/login" replace state={{ from: location.pathname }} />;
     }
 
     const authSession = session.data;

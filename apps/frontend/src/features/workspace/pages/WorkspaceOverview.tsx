@@ -36,9 +36,9 @@ export function WorkspaceOverview() {
           <p className="font-mono text-[11px] text-muted-foreground">Updated moments ago</p>
       </div>
 
-      <section aria-label="Operational summary" className="grid border-b border-border sm:grid-cols-2 xl:grid-cols-4">
+      <section aria-label="Operational summary" className="grid border-b border-border grid-cols-2 xl:grid-cols-4">
         {summary.map(({ label, value, detail, icon: Icon, tone }, index) => (
-          <div key={label} className={`py-5 sm:px-5 ${index > 0 ? "border-t border-border sm:border-t-0" : ""} ${index % 2 === 1 ? "sm:border-l" : ""} ${index > 1 ? "sm:border-t xl:border-t-0" : ""} ${index > 0 ? "xl:border-l" : ""}`}>
+          <div key={label} className={`py-5 px-5 ${index > 0 ? "border-border border-t-0" : ""} ${index % 2 === 1 ? "sm:border-l" : ""} ${index > 1 ? "sm:border-t xl:border-t-0" : ""} ${index > 0 ? "xl:border-l" : ""}`}>
             <div className="flex items-center justify-between gap-3">
               <p className="text-xs font-medium text-muted-foreground">{label}</p>
               <Icon className={`size-4 ${tone}`} />

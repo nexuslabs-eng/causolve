@@ -49,13 +49,15 @@ export const getSignupCompletion =
 
 export const checkWorkspaceSlugAvailability = async (
     slug: WorkspaceSlug,
+    signal?: AbortSignal,
 ): Promise<WorkspaceSlugAvailabilityResponse> => {
     const validSlug = WorkspaceSlugSchema.parse(slug);
 
     const response = await axiosClient.get<unknown, unknown>(
         "/onboarding/workspace-slug-availability",
         {
-            params: { slug: validSlug }
+            params: { slug: validSlug },
+            signal,
         },
     );
 
