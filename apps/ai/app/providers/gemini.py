@@ -51,7 +51,6 @@ class GeminiProvider:
             text = response.text
 
         except errors.APIError as error:
-            print(error.message, error.status, error.details)
             raise translate_api_error(error) from None
         except httpx.TimeoutException:
             raise ProviderError("timeout", "Gemini request timed out.") from None

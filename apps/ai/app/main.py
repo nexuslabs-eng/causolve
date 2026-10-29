@@ -4,12 +4,15 @@ from fastapi import FastAPI
 
 from app.api.investigations import router as investigations_router
 from app.core.config import Settings
+from app.core.logging import configure_logging
+from app.graph.provider_workflow import ProviderGraphRunner
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     """Create an application using validated settings."""
 
     resolved_settings = settings if settings is not None else Settings()
+    configure_logging(resolved_settings.log_level)
 
     application = FastAPI(
         title="AI Service",
@@ -19,6 +22,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         openapi_url="/openapi.json" if resolved_settings.docs_enabled else None,
     )
     application.state.settings = resolved_settings
+    application.state.provider_graph_runner = ProviderGraphRunner()
 
     application.include_router(investigations_router)
 

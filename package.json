@@ -8,8 +8,10 @@
     "ai:test": "uv run --locked --directory apps/ai pytest",
     "ai:lint": "uv run --locked --directory apps/ai ruff check .",
     "ai:format": "uv run --locked --directory apps/ai ruff format .",
-    "ai:format:check": "uv run --locked --directory apps/ai ruff format --check .",
-    "ai:smoke": "uv run --locked --directory apps/ai pytest tests/smoke/test_gemini_provider.py --run-external -s",
+    "ai:contracts": "pnpm --filter contracts exec tsc --noEmit && uv run --locked --directory apps/ai python -m scripts.export_contract_samples .venv/ai-contract-output.json && pnpm --filter contracts test:ai-contracts ../../apps/ai/.venv/ai-contract-output.json",
+    "ai:check": "pnpm ai:lint && uv run --locked --directory apps/ai ruff format --check . && pnpm ai:test && pnpm ai:contracts",
+    "ai:test:gemini": "uv run --locked --directory apps/ai pytest tests/smoke/test_gemini_provider.py --run-external -s",
+    "ai:smoke": "uv run --locked --directory apps/ai pytest tests/smoke/test_live_investigation.py --run-external -s",
     "generate:manifest": "node packages/simulation-data/scripts/generate-manifest.mjs"
   },
   "devEngines": {

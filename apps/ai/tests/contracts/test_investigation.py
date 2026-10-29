@@ -15,6 +15,11 @@ from app.contracts.investigation import (
 from app.core.config import Settings
 from app.main import create_app
 
+TEST_INTERNAL_API_KEY = "test-internal-api-key-0000000000000001"
+AUTH_HEADERS = {
+    "Authorization": f"Bearer {TEST_INTERNAL_API_KEY}",
+}
+
 REPO_ROOT = Path(__file__).resolve().parents[4]
 FIXTURES = REPO_ROOT / "packages/contracts/fixtures/internal-ai"
 BOUNDARY = json.loads((FIXTURES / "boundary.json").read_text(encoding="utf-8"))
@@ -81,36 +86,18 @@ def test_proposal_text_and_references_are_trimmed() -> None:
     assert model.model_dump(mode="json", by_alias=True) == BOUNDARY["result"]
 
 
-def test_endpoint_returns_deterministic_scaffold_result() -> None:
-    settings = Settings(_env_file=None, app_env="test", docs_enabled=False)
-
-    with TestClient(create_app(settings)) as client:
-        first = client.post("/investigations/run", json=BOUNDARY["request"])
-        second = client.post("/investigations/run", json=BOUNDARY["request"])
-
-    expected = {
-        "investigationId": BOUNDARY["request"]["investigationId"],
-        "status": "FAILED",
-        "hypothesisProposals": [],
-        "evidenceInterpretations": [],
-        "recommendationProposal": None,
-        "error": "Investigation execution is not implemented.",
-    }
-
-    assert first.status_code == second.status_code == 200
-    assert first.json() == second.json() == expected
-
-    result = AIInvestigationResult.model_validate(first.json())
-    assert result.model_dump(mode="json", by_alias=True) == expected
-
-
 def test_endpoint_rejects_invalid_request() -> None:
-    settings = Settings(_env_file=None, app_env="test", docs_enabled=False)
+    settings = Settings(
+        _env_file=None,
+        app_env="test",
+        docs_enabled=False,
+        internal_api_key=TEST_INTERNAL_API_KEY,
+    )
     value = deepcopy(BOUNDARY["request"])
     del value["incident"]["description"]
 
     with TestClient(create_app(settings)) as client:
-        response = client.post("/investigations/run", json=value)
+        response = client.post("/investigations/run", json=value, headers=AUTH_HEADERS)
 
     assert response.status_code == 422
 
