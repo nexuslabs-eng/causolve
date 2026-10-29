@@ -21,6 +21,7 @@ app/
 |-- api/         Internal HTTP routes and scaffold response
 |-- contracts/   Pydantic models mirroring shared Zod contracts
 |-- core/        Validated configuration and application errors
+|-- graph/       Internal state, deterministic workflow, and async runner
 |-- providers/   Provider interface and Gemini implementation
 `-- main.py      FastAPI application factory
 
@@ -28,8 +29,25 @@ scripts/         Export Python samples for Zod compatibility checks
 tests/           API, contract, configuration, provider, and smoke tests
 ```
 
-Future graph state and orchestration will live in `app/graph/`. No
-investigation graph is implemented yet.
+The deterministic foundation workflow executes:
+
+`START → initialize → check_foundation → END`
+
+The provider-enabled investigation workflow executes:
+
+`START → initialize → check_foundation → verify_provider → END`
+
+`GraphRunner` provides provider-independent foundation execution.
+`ProviderGraphRunner` adds asynchronous provider verification through
+runtime context.
+
+`POST /investigations/run` now executes the provider-enabled workflow.
+It does not generate hypotheses, interpret evidence, or propose
+recommendations. Successful provider verification returns a `DEGRADED`
+result until investigation intelligence is implemented.
+
+Execution remains in memory without checkpoint persistence. An
+interrupted run cannot resume after a process restart.
 
 ## Development
 
@@ -64,9 +82,12 @@ All variables use the `AI_` prefix.
 |---|---|
 | `APP_ENV` | `development`, `test`, or `production` |
 | `DOCS_ENABLED` | Enable `/docs` and `/openapi.json`; defaults to false |
+| `LOG_LEVEL` | `DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL` |
+| `INTERNAL_API_KEY` | Shared backend-to-AI bearer secret |
 | `GEMINI_API_KEY` | Provider credential; keep blank in `.env.example` |
 | `GEMINI_MODEL` | Gemini model identifier |
 | `GEMINI_TIMEOUT_SECONDS` | Request timeout, 1–300 seconds; defaults to 60 |
+| `EXECUTION_TIMEOUT_SECONDS` | Overall graph deadline; must exceed provider timeout |
 
 Settings load from `apps/ai/.env`, with process environment variables taking
 precedence. Restart the service after changing configuration.
@@ -78,27 +99,25 @@ or scaffold endpoints.
 
 Run from the repository root:
 
-```powershell
-pnpm ai:test
-pnpm ai:lint
-pnpm ai:format:check
+```text
+pnpm ai:check
 ```
 
 Apply safe lint fixes and formatting:
 
-```powershell
+```text
 pnpm ai:lint --fix
 pnpm ai:format
 ```
 
 The live Gemini test requires local credentials and makes a real API request:
 
-```powershell
+```text
 pnpm ai:smoke
 ```
 
-Success returns `AI_PROVIDER_OK`. Normal tests skip this test,
-and ordinary CI excludes it.
+Success verifies the complete FastAPI, LangGraph, and Gemini path. Normal
+tests skip live tests, and ordinary CI excludes them.
 
 ## Shared Contracts
 
@@ -106,27 +125,56 @@ and ordinary CI excludes it.
 Pydantic mirrors their JSON shapes using snake_case Python attributes and
 camelCase JSON aliases.
 
-From the repository root, verify shared fixtures and Python serialization:
-
-```powershell
-pnpm --filter contracts exec tsc --noEmit
-$contractOutput = Join-Path $env:TEMP 'ai-contract-output.json'
-uv run --locked --directory apps/ai python -m scripts.export_contract_samples $contractOutput
-pnpm --filter contracts test:ai-contracts $contractOutput
-```
+Run `pnpm ai:contracts` from the repository root to verify shared fixtures
+and Python serialization.
 
 The AI workflow in `.github/workflows/ai.yml` checks locked dependencies,
 Ruff, deterministic tests, LangGraph imports, and contract compatibility.
 
 ## Current Scope
 
-- `GET /health` returns HTTP 200 with `{"status":"ok"}`.
-- `POST /investigations/run` returns a deterministic scaffold result:
-  HTTP 200, status `FAILED`, and an explicit not-implemented message.
-- Gemini connectivity has been verified through a real smoke-test response.
-  External availability can vary.
-- LangGraph is installed; its workflow implementation remains deferred.
+- `POST /investigations/run` executes initialization, the foundation
+  check, and asynchronous provider verification through LangGraph.
+- Successful provider verification returns `DEGRADED` because actual
+  investigation intelligence remains unimplemented.
+- Responses contain empty proposal collections and no recommendation.
+- Provider and execution failures return controlled `FAILED` results.
+- Invalid requests return HTTP 422 before opening a provider.
+- Normal automated tests inject fake providers and make no Gemini calls.
+- `POST /investigations/run` requires internal bearer authentication.
+- `GET /health` remains public for platform health checks.
 
 Hypothesis generation, evidence collection, contradiction evaluation,
 progressive degradation, recommendations, remediation reasoning, and
 production deployment belong to later milestones.
+
+## Internal Authentication
+
+`POST /investigations/run` requires a bearer token shared only between the
+Express backend and AI service:
+
+```text
+Authorization: Bearer <AI_INTERNAL_API_KEY>
+```
+
+The AI service does not perform user authentication, tenant authorization,
+RBAC, persistence, or remediation authorization. Those remain backend
+responsibilities.
+
+## Execution Lifecycle
+
+The current graph is a short, linear request-response workflow. It does not
+pause for human input or resume across requests, so no checkpointer is
+configured for the initial deployment.
+
+A process restart can interrupt an active execution. Durable checkpointing
+will be introduced only when workflows require pause, resume, or recovery
+across processes.
+
+## Logging
+
+The service emits structured JSON logs for authentication rejection,
+execution start, completion, timeout, and provider failure. Logs contain
+request IDs, investigation IDs, outcome categories, and durations. They do
+not contain credentials, prompts, provider responses, incident descriptions,
+or exception messages.

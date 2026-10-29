@@ -7,11 +7,22 @@ from pydantic import ValidationError
 
 from app.core.config import Settings
 
+TEST_INTERNAL_API_KEY = "test-internal-api-key-0000000000000001"
+
 
 @pytest.fixture(autouse=True)
 def clear_settings_environment(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.delenv("AI_APP_ENV", raising=False)
-    monkeypatch.delenv("AI_DOCS_ENABLED", raising=False)
+    for variable in [
+        "AI_APP_ENV",
+        "AI_DOCS_ENABLED",
+        "AI_LOG_LEVEL",
+        "AI_INTERNAL_API_KEY",
+        "AI_GEMINI_API_KEY",
+        "AI_GEMINI_MODEL",
+        "AI_GEMINI_TIMEOUT_SECONDS",
+        "AI_EXECUTION_TIMEOUT_SECONDS",
+    ]:
+        monkeypatch.delenv(variable, raising=False)
 
 
 def test_defaults_without_dotenv() -> None:
@@ -30,14 +41,11 @@ def test_environement_overrides_dotenv(
         "AI_APP_ENV=development\nAI_DOCS_ENABLED=true\n",
         encoding="utf-8",
     )
-    monkeypatch.setenv("AI_APP_ENV", "production")
-    monkeypatch.delenv("AI_GEMINI_API_KEY", raising=False)
-    monkeypatch.delenv("AI_GEMINI_MODEL", raising=False)
-    monkeypatch.delenv("AI_GEMINI_TIMEOUT_SECONDS", raising=False)
+    monkeypatch.setenv("AI_APP_ENV", "test")
 
     settings = Settings(_env_file=env_file)
 
-    assert settings.app_env == "production"
+    assert settings.app_env == "test"
     assert settings.docs_enabled is True
 
 
@@ -85,3 +93,73 @@ def test_provider_timeout_is_bounded(timeout: int) -> None:
     assert detail["type"] == (
         "greater_than_equal" if timeout == 0 else "less_than_equal"
     )
+
+
+def test_execution_timeout_must_exceed_provider_timeout() -> None:
+    with pytest.raises(ValidationError, match="must be greater"):
+        Settings(
+            _env_file=None,
+            gemini_timeout_seconds=60,
+            execution_timeout_seconds=60,
+        )
+
+
+@pytest.mark.parametrize("timeout", [0, 601])
+def test_execution_timeout_is_bounded(timeout: int) -> None:
+    with pytest.raises(ValidationError):
+        Settings(
+            _env_file=None,
+            execution_timeout_seconds=timeout,
+        )
+
+
+def test_short_internal_api_key_is_rejected() -> None:
+    with pytest.raises(ValidationError, match="at least 32"):
+        Settings(
+            _env_file=None,
+            internal_api_key="too-short",
+        )
+
+
+def test_valid_production_configuration() -> None:
+    settings = Settings(
+        _env_file=None,
+        app_env="production",
+        docs_enabled=False,
+        internal_api_key=TEST_INTERNAL_API_KEY,
+        gemini_api_key="production-gemini-key",
+        gemini_model="configured-model",
+        gemini_timeout_seconds=60,
+        execution_timeout_seconds=180,
+    )
+
+    assert settings.app_env == "production"
+    assert settings.docs_enabled is False
+
+
+@pytest.mark.parametrize(
+    "overrides",
+    [
+        {"internal_api_key": None},
+        {"gemini_api_key": None},
+        {"gemini_model": ""},
+        {"docs_enabled": True},
+    ],
+)
+def test_invalid_production_configuration_is_rejected(
+    overrides: dict[str, object],
+) -> None:
+    values: dict[str, object] = {
+        "_env_file": None,
+        "app_env": "production",
+        "docs_enabled": False,
+        "internal_api_key": TEST_INTERNAL_API_KEY,
+        "gemini_api_key": "production-gemini-key",
+        "gemini_model": "configured-model",
+        "gemini_timeout_seconds": 60,
+        "execution_timeout_seconds": 180,
+    }
+    values.update(overrides)
+
+    with pytest.raises(ValidationError):
+        Settings(**values)

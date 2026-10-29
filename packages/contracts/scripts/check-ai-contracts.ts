@@ -4,19 +4,19 @@ import { StartAIInvestigationRequestSchema } from "../src/internal-ai/investigat
 import { AIInvestigationResultSchema } from "../src/internal-ai/investigation-result.schema.js";
 
 const readFixture = (name: string) =>
-  JSON.parse(
-    readFileSync(
-      new URL(`../fixtures/internal-ai/${name}`, import.meta.url),
-      "utf8",
-    ),
-  );
+    JSON.parse(
+        readFileSync(
+            new URL(`../fixtures/internal-ai/${name}`, import.meta.url),
+            "utf8",
+        ),
+    );
 
 const boundary = readFixture("boundary.json");
 const invalid = readFixture("invalid.json");
 
 const schemas = {
-  request: StartAIInvestigationRequestSchema,
-  result: AIInvestigationResultSchema,
+    request: StartAIInvestigationRequestSchema,
+    result: AIInvestigationResultSchema,
 };
 
 assert.deepStrictEqual(
@@ -81,17 +81,32 @@ assert.deepStrictEqual(
     schemas.result.parse(output.result),
     boundary.result,
 );
-assert.deepStrictEqual(
-    schemas.result.parse(output.scaffold),
-    output.scaffold,
-);
-assert.deepStrictEqual(output.scaffold, {
+
+for (const sample of [output.execution, output.failure]) {
+    assert.deepStrictEqual(
+        schemas.result.parse(sample),
+        sample,
+    );
+}
+
+assert.deepStrictEqual(output.execution, {
+    investigationId: boundary.request.investigationId,
+    status: "DEGRADED",
+    hypothesisProposals: [],
+    evidenceInterpretations: [],
+    recommendationProposal: null,
+    error:
+        "Graph and provider verification succeeded. " +
+        "Investigation intelligence is not implemented.",
+});
+
+assert.deepStrictEqual(output.failure, {
     investigationId: boundary.request.investigationId,
     status: "FAILED",
     hypothesisProposals: [],
     evidenceInterpretations: [],
     recommendationProposal: null,
-    error: "Investigation execution is not implemented.",
+    error: "AI provider execution failed (unavailable).",
 });
 
 console.log(
