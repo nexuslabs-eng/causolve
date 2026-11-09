@@ -1,4 +1,7 @@
 import type {
+  Incident,
+  IncidentEvent,
+  Investigation,
   Invitation,
   Membership,
   Organization,
@@ -13,6 +16,9 @@ export const MOCK_MEMBERSHIP_ID = "77777777-7777-4777-8777-777777777777";
 export const MOCK_TEAM_ID = "66666666-6666-4666-8666-666666666666";
 export const MOCK_SERVICE_ID = "55555555-5555-4555-8555-555555555555";
 export const MOCK_INVITATION_ID = "44444444-4444-4444-8444-444444444444";
+export const MOCK_INCIDENT_ID = "33333333-3333-4333-8333-333333333333";
+export const MOCK_INCIDENT_EVENT_ID = "22222222-2222-4222-8222-222222222222";
+export const MOCK_INVESTIGATION_ID = "11111111-1111-4111-8111-111111111111";
 
 export const buildFakeUser = (overrides: Partial<User> = {}): User => ({
   id: MOCK_USER_ID,
@@ -22,7 +28,6 @@ export const buildFakeUser = (overrides: Partial<User> = {}): User => ({
   authProvider: "PASSWORD",
   emailVerified: false,
   jobRole: null,
-  teamSize: null,
   primaryResponsibility: null,
   onboardingCompletedAt: null,
   verificationCode: "hashed-otp",
@@ -41,6 +46,8 @@ export const buildFakeOrganization = (
   id: MOCK_ORGANIZATION_ID,
   name: "Acme Engineering",
   slug: "acme-engineering",
+  teamSize: null,
+  incidentSequence: 0,
   createdAt: new Date(),
   updatedAt: new Date(),
   ...overrides,
@@ -81,12 +88,62 @@ export const buildFakeService = (
   ...overrides,
 });
 
+export const buildFakeIncident = (
+  overrides: Partial<Incident> = {},
+): Incident => ({
+  id: MOCK_INCIDENT_ID,
+  reference: "INC-1",
+  organizationId: MOCK_ORGANIZATION_ID,
+  serviceId: MOCK_SERVICE_ID,
+  title: "Checkout API elevated error rate",
+  description: null,
+  severity: "HIGH",
+  status: "DETECTED",
+  commanderId: null,
+  startedAt: new Date(),
+  acknowledgedAt: null,
+  resolvedAt: null,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  ...overrides,
+});
+
+export const buildFakeIncidentEvent = (
+  overrides: Partial<IncidentEvent> = {},
+): IncidentEvent => ({
+  id: MOCK_INCIDENT_EVENT_ID,
+  incidentId: MOCK_INCIDENT_ID,
+  actorType: "USER",
+  actorId: MOCK_USER_ID,
+  type: "incident.created",
+  message: "Incident reported: Checkout API elevated error rate",
+  metadata: null,
+  createdAt: new Date(),
+  ...overrides,
+});
+
+export const buildFakeInvestigation = (
+  overrides: Partial<Investigation> = {},
+): Investigation => ({
+  id: MOCK_INVESTIGATION_ID,
+  incidentId: MOCK_INCIDENT_ID,
+  status: "PENDING",
+  integrity: "HIGH",
+  evidenceCoverage: 0,
+  leadingHypothesisId: null,
+  hypothesisSequence: 0,
+  evidenceSequence: 0,
+  startedAt: new Date(),
+  completedAt: null,
+  ...overrides,
+});
+
 // Every endpoint that returns an Invitation does so with `invitedBy`
 // included, so the fixture carries it too even though it's not part of
 // Prisma's own Invitation scalar type. `organization` is only present on
 // the token-lookup path (findInvitationByToken), hence optional here.
 type FakeInvitation = Invitation & {
-  invitedBy: { id: string; fullName: string };
+  invitedBy: { id: string; fullName: string } | null;
   organization?: { id: string; name: string; slug: string };
 };
 
@@ -97,6 +154,7 @@ export const buildFakeInvitation = (
   organizationId: MOCK_ORGANIZATION_ID,
   email: "newhire@acme.com",
   role: "ENGINEER",
+  inviteeJobRole: "SOFTWARE_ENGINEER",
   status: "PENDING",
   tokenHash: "irrelevant-because-prisma-is-mocked",
   invitedById: MOCK_USER_ID,

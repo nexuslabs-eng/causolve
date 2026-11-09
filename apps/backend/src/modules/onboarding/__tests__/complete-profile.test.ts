@@ -27,7 +27,6 @@ describe("POST /onboarding/profile", () => {
 
     const response = await agent.post("/onboarding/profile").send({
       jobRole: "SOFTWARE_ENGINEER",
-      teamSize: "SIX_TO_TWENTY",
       primaryResponsibility: "APPLICATION_ENGINEERING",
     });
 
@@ -38,7 +37,6 @@ describe("POST /onboarding/profile", () => {
       expect.objectContaining({
         data: expect.objectContaining({
           jobRole: "SOFTWARE_ENGINEER",
-          teamSize: "SIX_TO_TWENTY",
           primaryResponsibility: "APPLICATION_ENGINEERING",
         }),
       }),
@@ -53,7 +51,6 @@ describe("POST /onboarding/profile", () => {
 
     const response = await agent.post("/onboarding/profile").send({
       jobRole: "SOFTWARE_ENGINEER",
-      teamSize: "SIX_TO_TWENTY",
     });
 
     expect(response.status).toBe(409);
@@ -68,7 +65,7 @@ describe("POST /onboarding/profile", () => {
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
     const response = await agent.post("/onboarding/profile").send({
-      teamSize: "SIX_TO_TWENTY",
+      primaryResponsibility: "APPLICATION_ENGINEERING",
     });
 
     expect(response.status).toBe(400);
@@ -78,7 +75,6 @@ describe("POST /onboarding/profile", () => {
   it("rejects an unauthenticated request", async () => {
     const response = await request(app).post("/onboarding/profile").send({
       jobRole: "SOFTWARE_ENGINEER",
-      teamSize: "SIX_TO_TWENTY",
     });
 
     expect(response.status).toBe(401);

@@ -45,7 +45,7 @@ export const createWorkspace = tryCatchWrapper(
       );
       return;
     }
-    const { name, slug } = req.body;
+    const { name, slug, teamSize } = req.body;
 
     let organization;
     try {
@@ -53,6 +53,7 @@ export const createWorkspace = tryCatchWrapper(
         data: {
           name,
           slug,
+          teamSize,
           memberships: { create: { userId: req.user!.id, role: "ADMIN" } },
         },
       });
@@ -131,14 +132,13 @@ export const completeProfile = tryCatchWrapper(
       );
       return;
     }
-    const { jobRole, teamSize, primaryResponsibility } = req.body;
+    const { jobRole, primaryResponsibility } = req.body;
     const onboardingCompletedAt = new Date();
 
     await prisma.user.update({
       where: { id: req.user!.id },
       data: {
         jobRole,
-        teamSize,
         primaryResponsibility,
         onboardingCompletedAt,
       },
@@ -172,17 +172,12 @@ export const getSignupCompletion = tryCatchWrapper(
         user: {
           select: {
             jobRole: true,
-            teamSize: true,
             primaryResponsibility: true,
           },
         },
       },
     });
-    if (
-      !membership ||
-      membership.user.jobRole === null ||
-      membership.user.teamSize === null
-    ) {
+    if (!membership || membership.user.jobRole === null) {
       sendError(
         res,
         409,
@@ -201,10 +196,10 @@ export const getSignupCompletion = tryCatchWrapper(
         organizationId: membership.organization.id,
         name: membership.organization.name,
         slug: membership.organization.slug,
+        teamSize: membership.organization.teamSize,
       },
       profile: {
         jobRole: membership.user.jobRole,
-        teamSize: membership.user.teamSize,
         primaryResponsibility:
           membership.user.primaryResponsibility ?? undefined,
       },

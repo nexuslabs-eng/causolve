@@ -3,6 +3,7 @@ import { RoleSchema } from "../common/enums.js";
 import { NonEmptyStringSchema, IdSchema } from "../common/primitives.js";
 import { OnboardingStateSchema } from "../onboarding/onboarding-state.schema.js";
 import { WorkspaceSlugSchema } from "../onboarding/workspace-setup.schema.js";
+import { TeamSizeSchema } from "../onboarding/onboarding.enums.js";
 
 export const AuthenticatedUserSchema = z.object({
   id: IdSchema,
@@ -30,6 +31,7 @@ export const AuthenticatedAuthSessionSchema = z.object({
       organizationId: IdSchema,
       name: NonEmptyStringSchema,
       slug: WorkspaceSlugSchema,
+      teamSize: TeamSizeSchema.nullable(),
     })
     .nullable(),
   membership: z

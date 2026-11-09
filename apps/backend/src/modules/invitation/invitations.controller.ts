@@ -32,13 +32,19 @@ import {
 
 const INVITATION_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000;
 
+const DELETED_INVITER_PLACEHOLDER = {
+  id: "00000000-0000-0000-0000-000000000000",
+  fullName: "A former member",
+};
+
 const toInvitationResponse = (invitation: {
   id: string;
   organizationId: string;
   email: string;
   role: string;
+  inviteeJobRole: string | null;
   status: string;
-  invitedBy: { id: string; fullName: string };
+  invitedBy: { id: string; fullName: string } | null;
   createdAt: Date;
   expiresAt: Date;
   acceptedAt: Date | null;
@@ -47,8 +53,9 @@ const toInvitationResponse = (invitation: {
   id: invitation.id,
   organizationId: invitation.organizationId,
   email: invitation.email,
-  invitedBy: invitation.invitedBy,
+  invitedBy: invitation.invitedBy ?? DELETED_INVITER_PLACEHOLDER,
   role: invitation.role as Invitation["role"],
+  jobRole: (invitation.inviteeJobRole ?? "OTHER") as Invitation["jobRole"],
   status: getEffectiveInvitationStatus(
     invitation.status,
     invitation.expiresAt,
@@ -67,7 +74,7 @@ export const createInvitation = tryCatchWrapper(
     res: Response,
   ): Promise<void> => {
     const { organizationId } = req.params;
-    const { email, role } = req.body;
+    const { email, role, jobRole } = req.body;
 
     const existingMember = await prisma.membership.findFirst({
       where: { organizationId, user: { email } },
@@ -105,6 +112,7 @@ export const createInvitation = tryCatchWrapper(
         organizationId,
         email,
         role,
+        inviteeJobRole: jobRole,
         tokenHash,
         expiresAt,
         invitedById: req.user!.id,
@@ -123,6 +131,8 @@ export const createInvitation = tryCatchWrapper(
     const { subject, text, html } = invitationTemplate(
       req.user!.fullName,
       organization.name,
+      role,
+      jobRole,
       inviteUrl,
     );
     await sendEmail({ to: email, subject, text, html });
@@ -214,8 +224,10 @@ export const resendInvitation = tryCatchWrapper(
 
     const inviteUrl = `${env.CLIENT_URL}/invite?token=${rawToken}`;
     const { subject, text, html } = invitationTemplate(
-      existingInvitation.invitedBy.fullName,
+      existingInvitation.invitedBy?.fullName ?? "A former member",
       organization.name,
+      existingInvitation.role,
+      existingInvitation.inviteeJobRole ?? "OTHER",
       inviteUrl,
     );
     await sendEmail({ to: existingInvitation.email, subject, text, html });
@@ -257,7 +269,7 @@ export const previewInvitation = tryCatchWrapper(
       email: invitation.email,
       organization: invitation.organization,
       role: invitation.role,
-      invitedBy: invitation.invitedBy,
+      invitedBy: invitation.invitedBy ?? DELETED_INVITER_PLACEHOLDER,
       expiresAt: invitation.expiresAt.toISOString(),
       status: status as InvitationPreview["status"],
     };
@@ -343,6 +355,7 @@ export const acceptInvitation = tryCatchWrapper(
       );
       return;
     }
+
     const passwordHash = await argon2.hash(password);
 
     const { user, membership } = await prisma.$transaction(async (tx) => {
@@ -353,6 +366,8 @@ export const acceptInvitation = tryCatchWrapper(
           passwordHash,
           authProvider: "PASSWORD",
           emailVerified: true,
+          jobRole: invitation.inviteeJobRole,
+          onboardingCompletedAt: new Date(),
         },
       });
 
