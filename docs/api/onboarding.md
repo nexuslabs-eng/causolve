@@ -17,10 +17,11 @@ Creates an `Organization` and makes the current user its `ADMIN`
 
 **Request body** (`WorkspaceSetupRequestSchema`)
 
-| Field  | Type   | Notes                                                    |
-| ------ | ------ | ---------------------------------------------------------- |
-| `name` | string | non-empty                                                   |
-| `slug` | string | 3–63 chars, lowercase letters/digits/hyphens, globally unique |
+| Field      | Type   | Notes                                                    |
+| ---------- | ------ | ---------------------------------------------------------- |
+| `name`     | string | non-empty                                                   |
+| `slug`     | string | 3–63 chars, lowercase letters/digits/hyphens, globally unique |
+| `teamSize` | enum   | required — describes the organization, not the creating user; shared by every member, including anyone who joins later via invitation |
 
 **Success — `201`**
 
@@ -71,10 +72,13 @@ your own already-created workspace's URL).
 | Field                   | Type   | Notes                            |
 | ------------------------ | ------ | ----------------------------------- |
 | `jobRole`                | enum   | required                            |
-| `teamSize`                | enum   | required                            |
 | `primaryResponsibility`   | enum   | optional                            |
 
-Sets the three profile fields on the user, stamps
+`teamSize` is **not** part of this step — it's captured earlier, at
+`POST /onboarding/workspace`, since it describes the organization, not
+this one user's profile.
+
+Sets the two profile fields on the user, stamps
 `onboardingCompletedAt`, and emails a confirmation
 (best-effort — a failed send doesn't fail the request).
 
@@ -104,8 +108,8 @@ a read of already-completed state, not a step in the flow itself.
 ```json
 {
   "user": { "id": "...", "fullName": "...", "email": "..." },
-  "workspace": { "organizationId": "...", "name": "...", "slug": "..." },
-  "profile": { "jobRole": "...", "teamSize": "...", "primaryResponsibility": "..." },
+  "workspace": { "organizationId": "...", "name": "...", "slug": "...", "teamSize": "..." },
+  "profile": { "jobRole": "...", "primaryResponsibility": "..." },
   "membership": { "role": "ADMIN" }
 }
 ```

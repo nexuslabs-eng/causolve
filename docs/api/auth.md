@@ -186,11 +186,17 @@ Authenticated:
 {
   "authenticated": true,
   "user": { "id": "...", "fullName": "...", "email": "...", "emailVerified": true },
-  "activeWorkspace": null,
+  "activeWorkspace": { "organizationId": "...", "name": "...", "slug": "...", "teamSize": "SIX_TO_TWENTY" },
   "membership": null,
   "onboarding": { "status": "...", "nextStep": "..." }
 }
 ```
+
+`activeWorkspace` is `null` until a workspace exists. `teamSize` lives
+on the organization, not the individual user — it's set once at
+workspace creation (`POST /onboarding/workspace`) and shared by every
+member, including anyone who joined later via invitation. It's
+nullable only for organizations created before this field existed.
 
 A session pointing at a since-deleted account is treated identically to
 having no session at all (`{ "authenticated": false }`), not an error.

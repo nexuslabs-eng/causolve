@@ -17,6 +17,12 @@ Every route in this group additionally requires the `ADMIN` role
 invitations is admin-only, since the list exposes other people's email
 addresses and who invited whom.
 
+`invitedBy` can be a placeholder (`{ "id": "00000000-0000-0000-0000-000000000000", "fullName": "A former member" }`)
+if the admin who sent the invitation has since had their account
+deleted — deleting an admin never deletes invitations they sent
+(`Invitation.invitedById` is nullable, `onDelete: SetNull`), it just
+loses the attribution.
+
 ---
 
 ### POST /organizations/:organizationId/invitations
@@ -28,9 +34,15 @@ addresses and who invited whom.
 ```json
 {
   "email": "newhire@acme.com",
-  "role": "ENGINEER"
+  "role": "ENGINEER",
+  "jobRole": "SITE_RELIABILITY_ENGINEER"
 }
 ```
+
+`jobRole` is the invitee's job title (purely descriptive profile
+metadata — distinct from `role`, which is their permission level in
+this organization). It's required: the admin sets it on the invitee's
+behalf, since the invitee never gets to choose it themselves.
 
 Generates a random token, emails an invite link to `email`, and creates a
 `PENDING` invitation that expires in 7 days.
@@ -44,6 +56,7 @@ Generates a random token, emails an invite link to `email`, and creates a
     "organizationId": "...",
     "email": "newhire@acme.com",
     "role": "ENGINEER",
+    "jobRole": "SITE_RELIABILITY_ENGINEER",
     "status": "PENDING",
     "invitedBy": { "id": "...", "fullName": "..." },
     "createdAt": "...",
@@ -80,6 +93,7 @@ Generates a random token, emails an invite link to `email`, and creates a
       "organizationId": "...",
       "email": "...",
       "role": "ENGINEER",
+      "jobRole": "SITE_RELIABILITY_ENGINEER",
       "status": "PENDING",
       "invitedBy": { "id": "...", "fullName": "..." },
       "createdAt": "...",
@@ -114,7 +128,8 @@ automatically; every read path recomputes this the same way.
 
 Rotates the token (old link stops working), extends `expiresAt` by another
 7 days, and re-sends the invite email — reusing the *original* inviter's
-name in the email copy, not whoever triggered the resend.
+name and the invitation's stored `role`/`jobRole` in the email copy, not
+whoever triggered the resend.
 
 **Success — `200`**: `{ "invitationId": "...", "expiresAt": "..." }`
 
@@ -204,9 +219,16 @@ invitation's real status up front.
 
 Creates the `User` (already `emailVerified: true` — the invite link itself
 is treated as proof of email ownership, so there's no separate OTP step),
-creates the `Membership` with the role from the invitation, marks the
-invitation `ACCEPTED`, and logs the new user in. `fullName`/`password`
-follow the same validation rules as `/auth/signup`.
+copies the invitation's `jobRole` onto the new user, creates the
+`Membership` with the role from the invitation, marks the invitation
+`ACCEPTED`, and logs the new user in. `fullName`/`password` follow the
+same validation rules as `/auth/signup`.
+
+Onboarding is marked complete immediately (`onboardingCompletedAt` is
+set at creation) — an invited member joins an existing workspace, so
+there's no profile-setup step for them to go through; `GET
+/auth/session`'s `onboarding.nextStep` reports `"COMPLETE"` right away
+rather than `"PROFILE"`.
 
 If the invited email **already has an account**, this is rejected rather
 than reused or overwritten — see errors below. There's no "log in to
