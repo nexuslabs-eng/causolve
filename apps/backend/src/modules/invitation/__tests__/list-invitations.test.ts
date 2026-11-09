@@ -68,6 +68,29 @@ describe("GET /organizations/:organizationId/invitations", () => {
     expect(body.invitations[0]).toMatchObject({ status: "EXPIRED" });
   });
 
+  it("falls back to a placeholder when the inviting admin's account has been deleted", async () => {
+    const fakeUser = buildFakeUser({ passwordHash });
+    const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
+
+    prismaMock.membership.findFirst.mockResolvedValue(
+      buildFakeMembership({ role: "ADMIN" }),
+    );
+    const orphanedInvitation = buildFakeInvitation({
+      invitedById: null,
+      invitedBy: null,
+    });
+    prismaMock.invitation.findMany.mockResolvedValue([orphanedInvitation]);
+    prismaMock.invitation.count.mockResolvedValue(1);
+
+    const response = await agent.get(
+      `/organizations/${MOCK_ORGANIZATION_ID}/invitations`,
+    );
+
+    expect(response.status).toBe(200);
+    const body = InvitationListResponseSchema.parse(response.body);
+    expect(body.invitations[0]?.invitedBy.fullName).toBe("A former member");
+  });
+
   it("respects explicit page and limit query params", async () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);

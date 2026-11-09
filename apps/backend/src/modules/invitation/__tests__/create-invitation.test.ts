@@ -44,13 +44,18 @@ describe("POST /organizations/:organizationId/invitations", () => {
 
     const response = await agent
       .post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`)
-      .send({ email: fakeInvitation.email, role: fakeInvitation.role });
+      .send({
+        email: fakeInvitation.email,
+        role: fakeInvitation.role,
+        jobRole: fakeInvitation.inviteeJobRole,
+      });
 
     expect(response.status).toBe(201);
     const body = CreateInvitationResponseSchema.parse(response.body);
     expect(body.invitation).toMatchObject({
       id: fakeInvitation.id,
       email: fakeInvitation.email,
+      jobRole: fakeInvitation.inviteeJobRole,
       status: "PENDING",
     });
     expect(sendEmailMock).toHaveBeenCalled();
@@ -66,7 +71,11 @@ describe("POST /organizations/:organizationId/invitations", () => {
 
     const response = await agent
       .post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`)
-      .send({ email: "existing@acme.com", role: "ENGINEER" });
+      .send({
+        email: "existing@acme.com",
+        role: "ENGINEER",
+        jobRole: "SOFTWARE_ENGINEER",
+      });
 
     expect(response.status).toBe(409);
     expect(response.body).toMatchObject({ error: { code: "ALREADY_A_MEMBER" } });
@@ -88,7 +97,11 @@ describe("POST /organizations/:organizationId/invitations", () => {
 
     const response = await agent
       .post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`)
-      .send({ email: "newhire@acme.com", role: "ENGINEER" });
+      .send({
+        email: "newhire@acme.com",
+        role: "ENGINEER",
+        jobRole: "SOFTWARE_ENGINEER",
+      });
 
     expect(response.status).toBe(409);
     expect(response.body).toMatchObject({
@@ -117,7 +130,11 @@ describe("POST /organizations/:organizationId/invitations", () => {
 
     const response = await agent
       .post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`)
-      .send({ email: fakeInvitation.email, role: fakeInvitation.role });
+      .send({
+        email: fakeInvitation.email,
+        role: fakeInvitation.role,
+        jobRole: fakeInvitation.inviteeJobRole,
+      });
 
     expect(response.status).toBe(201);
     expect(prismaMock.invitation.create).toHaveBeenCalled();

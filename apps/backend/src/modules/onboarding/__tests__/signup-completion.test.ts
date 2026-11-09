@@ -23,14 +23,15 @@ describe("GET /onboarding/completion", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const fakeOrganization = buildFakeOrganization();
+    const fakeOrganization = buildFakeOrganization({
+      teamSize: "SIX_TO_TWENTY",
+    });
     const fakeMembership = buildFakeMembership();
     const membershipWithRelations = {
       ...fakeMembership,
       organization: fakeOrganization,
       user: {
         jobRole: "SOFTWARE_ENGINEER",
-        teamSize: "SIX_TO_TWENTY",
         primaryResponsibility: "APPLICATION_ENGINEERING",
       },
     };
@@ -42,8 +43,12 @@ describe("GET /onboarding/completion", () => {
     const body = SignupCompletionSchema.parse(response.body);
     expect(body).toMatchObject({
       user: { id: fakeUser.id, email: fakeUser.email },
-      workspace: { organizationId: fakeOrganization.id, slug: fakeOrganization.slug },
-      profile: { jobRole: "SOFTWARE_ENGINEER", teamSize: "SIX_TO_TWENTY" },
+      workspace: {
+        organizationId: fakeOrganization.id,
+        slug: fakeOrganization.slug,
+        teamSize: "SIX_TO_TWENTY",
+      },
+      profile: { jobRole: "SOFTWARE_ENGINEER" },
       membership: { role: "ADMIN" },
     });
   });
@@ -69,7 +74,7 @@ describe("GET /onboarding/completion", () => {
     const membershipWithIncompleteProfile = {
       ...buildFakeMembership(),
       organization: buildFakeOrganization(),
-      user: { jobRole: null, teamSize: null, primaryResponsibility: null },
+      user: { jobRole: null, primaryResponsibility: null },
     };
     prismaMock.membership.findFirst.mockResolvedValue(membershipWithIncompleteProfile);
 

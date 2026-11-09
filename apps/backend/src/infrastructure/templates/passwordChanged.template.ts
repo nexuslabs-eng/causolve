@@ -18,15 +18,20 @@ export const passwordChangedTemplate = (
         <span style="font-size: 20px; font-weight: 800; letter-spacing: -0.3px; color: #ffffff;">Causolve</span>
       </div>
       <div style="padding: 32px; background-color: #ffffff;">
-        <p style="margin: 0 0 4px; font-size: 15px; color: #1b1e27;">Hi ${fullName},</p>
-        <p style="margin: 0 0 20px; font-size: 15px; color: #1b1e27;">Your Causolve password was just changed. If this was you, no action is needed.</p>
-        <p style="margin: 0 0 20px; font-size: 14.5px; color: #1b1e27;">If you didn't make this change, secure your account immediately:</p>
-        <div style="text-align: center; margin: 0 0 24px;">
-          <a href="${forgotPasswordUrl}" style="display: inline-block; padding: 12px 28px; font-size: 14px; font-weight: 700; color: #ffffff; background-color: #6355e0; border-radius: 8px; text-decoration: none;">
+        <h1 style="margin: 0 0 12px; font-size: 20px; font-weight: 800; color: #1b1e27;">Your password was changed</h1>
+        <p style="margin: 0 0 20px; font-size: 15px; color: #1b1e27;">Hi ${fullName}, this confirms your Causolve password was just changed. If this was you, no action is needed.</p>
+        <div style="margin: 0 0 24px; padding: 16px 20px; background-color: #fdf0ee; border: 1px solid #f6d9d3; border-radius: 10px;">
+          <p style="margin: 0 0 10px; font-size: 14px; font-weight: 700; color: #9a3b2e;">Wasn't you?</p>
+          <p style="margin: 0 0 14px; font-size: 13.5px; color: #7a3a30;">Secure your account immediately by resetting your password below.</p>
+          <a href="${forgotPasswordUrl}" style="display: inline-block; padding: 10px 20px; font-size: 13.5px; font-weight: 700; color: #ffffff; background-color: #c4473a; border-radius: 8px; text-decoration: none;">
             Reset your password
           </a>
         </div>
-        <p style="margin: 0; font-size: 13px; color: #6b7280;">If the button doesn't work, copy and paste this link: ${forgotPasswordUrl}</p>
+        <p style="margin: 0 0 6px; font-size: 13px; color: #6b7280;">Or copy and paste this link into your browser:</p>
+        <p style="margin: 0; font-size: 13px; word-break: break-all;"><a href="${forgotPasswordUrl}" style="color: #6355e0;">${forgotPasswordUrl}</a></p>
+      </div>
+      <div style="padding: 18px 32px; background-color: #fafafa; border-top: 1px solid #e5e5ec;">
+        <p style="margin: 0; font-size: 12px; color: #9ca3af;">Causolve — evidence-aware incident investigation.</p>
       </div>
     </div>
   `.trim();

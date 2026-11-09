@@ -1,10 +1,9 @@
 import { z } from "zod";
 import { DateTimeSchema } from "../common/primitives.js";
-import { JobRoleSchema, PrimaryResponsibilitySchema, TeamSizeSchema } from "./onboarding.enums.js";
+import { JobRoleSchema, PrimaryResponsibilitySchema } from "./onboarding.enums.js";
 
 export const ProfileSetupRequestSchema = z.object({
     jobRole: JobRoleSchema,
-    teamSize: TeamSizeSchema,
     primaryResponsibility: PrimaryResponsibilitySchema.optional(),
 });
 

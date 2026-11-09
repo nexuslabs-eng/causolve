@@ -141,6 +141,9 @@ jobs:
             OTP_EXPIRY_MS=1000
             MAILPIT_BIN=${MAILPIT_BIN}
             MAILPIT_API_URL=http://127.0.0.1:8025/api/v1
+
+            AI_SERVICE_URL=http://localhost:8000
+            AI_INTERNAL_API_KEY=test-ai-internal-api-key
             EOF
 
         - name: Run Playwright E2E tests

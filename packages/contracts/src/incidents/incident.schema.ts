@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { IncidentSeveritySchema, IncidentStatusSchema } from "../common/enums.js";
 import { DateTimeSchema, IdSchema } from "../common/primitives.js";
+import { paginatedResponseSchema } from "../common/pagination.schema.js";
 
 export const IncidentSchema = z.object({
     id: IdSchema,
@@ -26,5 +27,16 @@ export const CreateIncidentRequestSchema = z.object({
     severity: IncidentSeveritySchema,
 });
 
+export const UpdateIncidentRequestSchema = z.object({
+    status: IncidentStatusSchema.optional(),
+    severity: IncidentSeveritySchema.optional(),
+    commanderId: IdSchema.nullable().optional(),
+})
+
+export const IncidentListResponseSchema = paginatedResponseSchema(IncidentSchema);
+
+
 export type Incident = z.infer<typeof IncidentSchema>;
 export type CreateIncidentRequest = z.infer<typeof CreateIncidentRequestSchema>
+export type UpdateIncidentRequest = z.infer<typeof UpdateIncidentRequestSchema>;
+export type IncidentListResponse = z.infer<typeof IncidentListResponseSchema>;

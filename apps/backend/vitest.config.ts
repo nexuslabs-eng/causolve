@@ -23,6 +23,8 @@ export default defineConfig({
       GITHUB_CLIENT_ID: "test-github-client-id",
       GITHUB_CLIENT_SECRET: "test-github-client-secret",
       GITHUB_REDIRECT_URI: "http://localhost:4000/auth/github/callback",
+      AI_SERVICE_URL: "http://localhost:8000",
+      AI_INTERNAL_API_KEY: "test-ai-internal-api-key",
     },
   },
 });

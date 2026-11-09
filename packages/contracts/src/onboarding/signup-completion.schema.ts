@@ -14,10 +14,10 @@ export const SignupCompletionSchema = z.object({
         organizationId: IdSchema,
         name: NonEmptyStringSchema,
         slug: WorkspaceSlugSchema,
+        teamSize: TeamSizeSchema.nullable(),
     }),
     profile: z.object({
         jobRole: JobRoleSchema,
-        teamSize: TeamSizeSchema,
         primaryResponsibility: PrimaryResponsibilitySchema.optional(),
     }),
     membership: z.object({

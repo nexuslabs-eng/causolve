@@ -27,6 +27,7 @@ describe("POST /onboarding/workspace", () => {
     const response = await agent.post("/onboarding/workspace").send({
       name: fakeOrganization.name,
       slug: fakeOrganization.slug,
+      teamSize: "SIX_TO_TWENTY",
     });
 
     expect(response.status).toBe(201);
@@ -46,6 +47,7 @@ describe("POST /onboarding/workspace", () => {
     const response = await agent.post("/onboarding/workspace").send({
       name: "Acme Engineering",
       slug: "acme-engineering",
+      teamSize: "SIX_TO_TWENTY",
     });
 
     expect(response.status).toBe(409);
@@ -64,6 +66,7 @@ describe("POST /onboarding/workspace", () => {
     const response = await agent.post("/onboarding/workspace").send({
       name: "Acme Engineering",
       slug: "acme-engineering",
+      teamSize: "SIX_TO_TWENTY",
     });
 
     expect(response.status).toBe(409);
@@ -89,6 +92,7 @@ describe("POST /onboarding/workspace", () => {
     const response = await agent.post("/onboarding/workspace").send({
       name: "Acme Engineering",
       slug: "acme-engineering",
+      teamSize: "SIX_TO_TWENTY",
     });
 
     expect(response.status).toBe(409);

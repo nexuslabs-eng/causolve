@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import argon2 from "argon2";
 import { prisma } from "@causolve/database";
-import type { JobRole, TeamSize } from "@causolve/database";
 import type {
   SignupRequest,
   SignupResponse,
@@ -235,13 +234,11 @@ export const resendVerificationCode = tryCatchWrapper(
 
 const getOnboardingProgress = (user: {
   emailVerified: boolean;
-  jobRole: JobRole | null;
-  teamSize: TeamSize | null;
   hasWorkspace: boolean;
   onboardingCompletedAt: Date | null;
 }): OnboardingState => {
   const workspaceCreated = user.hasWorkspace;
-  const profileCompleted = user.jobRole !== null && user.teamSize !== null;
+  const profileCompleted = user.onboardingCompletedAt !== null;
   if (!user.emailVerified)
     return {
       status: "IN_PROGRESS",
@@ -294,8 +291,6 @@ export const loginUser = tryCatchWrapper(
         email: true,
         passwordHash: true,
         emailVerified: true,
-        jobRole: true,
-        teamSize: true,
         onboardingCompletedAt: true,
         _count: { select: { memberships: true } },
       },
@@ -369,7 +364,8 @@ export const getSession = tryCatchWrapper(
     const userId = req.session.userId;
 
     if (!userId) {
-      const oauthError = (req.session.oauthError ?? null) as OAuthErrorCode | null;
+      const oauthError = (req.session.oauthError ??
+        null) as OAuthErrorCode | null;
       delete req.session.oauthError;
       const response: AuthSession = { authenticated: false, oauthError };
       sendSuccess(res, 200, response);
@@ -382,14 +378,14 @@ export const getSession = tryCatchWrapper(
         fullName: true,
         email: true,
         emailVerified: true,
-        jobRole: true,
-        teamSize: true,
         onboardingCompletedAt: true,
         memberships: {
           take: 1,
           select: {
             role: true,
-            organization: { select: { id: true, name: true, slug: true } },
+            organization: {
+              select: { id: true, name: true, slug: true, teamSize: true },
+            },
           },
         },
       },
@@ -416,6 +412,7 @@ export const getSession = tryCatchWrapper(
             organizationId: membership.organization.id,
             name: membership.organization.name,
             slug: membership.organization.slug,
+            teamSize: membership.organization.teamSize,
           }
         : null,
       membership: membership ? { role: membership.role } : null,

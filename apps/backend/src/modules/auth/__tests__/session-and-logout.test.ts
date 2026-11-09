@@ -47,12 +47,13 @@ describe("GET /auth/session", () => {
       passwordHash,
       emailVerified: true,
       jobRole: "SOFTWARE_ENGINEER",
-      teamSize: "SIX_TO_TWENTY",
       onboardingCompletedAt: completedAt,
     });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const fakeOrganization = buildFakeOrganization();
+    const fakeOrganization = buildFakeOrganization({
+      teamSize: "SIX_TO_TWENTY",
+    });
     const fakeMembership = buildFakeMembership();
     const userWithMembership = {
       ...fakeUser,
@@ -70,6 +71,7 @@ describe("GET /auth/session", () => {
         organizationId: fakeOrganization.id,
         name: fakeOrganization.name,
         slug: fakeOrganization.slug,
+        teamSize: "SIX_TO_TWENTY",
       },
       membership: { role: fakeMembership.role },
       onboarding: {

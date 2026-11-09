@@ -72,6 +72,35 @@ describe("POST /invitations/accept", () => {
     expect(sendEmailMock).toHaveBeenCalled();
   });
 
+  it("copies the invitee's job role onto the new user", async () => {
+    const fakeInvitation = {
+      ...buildFakeInvitation({ inviteeJobRole: "SITE_RELIABILITY_ENGINEER" }),
+      organization: buildFakeOrganization(),
+    };
+    prismaMock.invitation.findUnique.mockResolvedValue(fakeInvitation);
+    prismaMock.user.findUnique.mockResolvedValue(null);
+    const fakeUser = buildFakeUser({ fullName: "New Hire" });
+    prismaMock.user.create.mockResolvedValue(fakeUser);
+    const fakeMembership = buildFakeMembership({ role: fakeInvitation.role });
+    prismaMock.membership.create.mockResolvedValue(fakeMembership);
+
+    const response = await request(app).post("/invitations/accept").send({
+      token: VALID_TOKEN,
+      fullName: "New Hire",
+      password: NEW_PASSWORD,
+    });
+
+    expect(response.status).toBe(201);
+    expect(prismaMock.user.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          jobRole: "SITE_RELIABILITY_ENGINEER",
+          onboardingCompletedAt: expect.any(Date),
+        }),
+      }),
+    );
+  });
+
   it("returns 404 when the token matches no invitation", async () => {
     prismaMock.invitation.findUnique.mockResolvedValue(null);
 
