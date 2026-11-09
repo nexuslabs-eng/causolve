@@ -14,6 +14,8 @@ import onboardingRouter from "./modules/onboarding/onboarding.routes.js";
 import teamsRouter from "./modules/team/teams.routes.js";
 import servicesRouter from "./modules/service/services.routes.js";
 import invitationsRouter from "./modules/invitation/invitations.routes.js";
+import incidentsRouter from "./modules/incidents/incident.routes.js";
+import investigationsRouter from "./modules/investigations/investigation.routes.js";
 import devRouter from "./modules/dev/dev.routes.js";
 
 const app = express();
@@ -69,6 +71,8 @@ app.use("/onboarding", onboardingRouter);
 app.use(teamsRouter);
 app.use(servicesRouter);
 app.use(invitationsRouter);
+app.use(incidentsRouter);
+app.use(investigationsRouter);
 
 // Dev/test-only cleanup tooling — never reachable once deployed.
 if (env.NODE_ENV !== "production") {
