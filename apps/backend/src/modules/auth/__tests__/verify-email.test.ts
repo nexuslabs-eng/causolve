@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import request from "supertest";
 import argon2 from "argon2";
 import { VerifyEmailOtpResponseSchema } from "contracts";
@@ -11,6 +11,14 @@ const CORRECT_PASSWORD = "Causolve!123";
 const CORRECT_OTP = "123456";
 let passwordHash: string;
 let hashedOtp: string;
+
+const { sendEmailMock } = vi.hoisted(() => ({
+  sendEmailMock: vi.fn().mockResolvedValue(undefined),
+}));
+
+vi.mock("../../../infrastructure/email.service.ts", () => ({
+  sendEmail: sendEmailMock,
+}));
 
 // Real hashes, computed once — verifyEmail runs a genuine argon2.verify()
 // comparison against the submitted OTP, same reasoning as login.test.ts.
@@ -30,11 +38,16 @@ describe("POST /auth/verify-email", () => {
     });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const response = await agent.post("/auth/verify-email").send({ otp: CORRECT_OTP });
+    const response = await agent
+      .post("/auth/verify-email")
+      .send({ otp: CORRECT_OTP });
 
     expect(response.status).toBe(200);
     const body = VerifyEmailOtpResponseSchema.parse(response.body);
-    expect(body).toMatchObject({ verified: true, nextStep: "CREATE_WORKSPACE" });
+    expect(body).toMatchObject({
+      verified: true,
+      nextStep: "CREATE_WORKSPACE",
+    });
   });
 
   it("rejects an incorrect code and records the attempt", async () => {
@@ -47,10 +60,14 @@ describe("POST /auth/verify-email", () => {
     });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const response = await agent.post("/auth/verify-email").send({ otp: "000000" });
+    const response = await agent
+      .post("/auth/verify-email")
+      .send({ otp: "000000" });
 
     expect(response.status).toBe(400);
-    expect(response.body).toMatchObject({ error: { code: "INVALID_VERIFICATION_CODE" } });
+    expect(response.body).toMatchObject({
+      error: { code: "INVALID_VERIFICATION_CODE" },
+    });
     expect(prismaMock.user.update).toHaveBeenCalledWith(
       expect.objectContaining({
         data: { verificationAttempts: { increment: 1 } },
@@ -68,10 +85,14 @@ describe("POST /auth/verify-email", () => {
     });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const response = await agent.post("/auth/verify-email").send({ otp: CORRECT_OTP });
+    const response = await agent
+      .post("/auth/verify-email")
+      .send({ otp: CORRECT_OTP });
 
     expect(response.status).toBe(400);
-    expect(response.body).toMatchObject({ error: { code: "VERIFICATION_CODE_EXPIRED" } });
+    expect(response.body).toMatchObject({
+      error: { code: "VERIFICATION_CODE_EXPIRED" },
+    });
   });
 
   it("rejects once too many incorrect attempts have been made", async () => {
@@ -84,10 +105,14 @@ describe("POST /auth/verify-email", () => {
     });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const response = await agent.post("/auth/verify-email").send({ otp: CORRECT_OTP });
+    const response = await agent
+      .post("/auth/verify-email")
+      .send({ otp: CORRECT_OTP });
 
     expect(response.status).toBe(429);
-    expect(response.body).toMatchObject({ error: { code: "VERIFICATION_ATTEMPTS_EXCEEDED" } });
+    expect(response.body).toMatchObject({
+      error: { code: "VERIFICATION_ATTEMPTS_EXCEEDED" },
+    });
   });
 
   it("rejects an already-verified account", async () => {
@@ -100,14 +125,20 @@ describe("POST /auth/verify-email", () => {
     });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const response = await agent.post("/auth/verify-email").send({ otp: CORRECT_OTP });
+    const response = await agent
+      .post("/auth/verify-email")
+      .send({ otp: CORRECT_OTP });
 
     expect(response.status).toBe(409);
-    expect(response.body).toMatchObject({ error: { code: "EMAIL_ALREADY_VERIFIED" } });
+    expect(response.body).toMatchObject({
+      error: { code: "EMAIL_ALREADY_VERIFIED" },
+    });
   });
 
   it("rejects an unauthenticated request", async () => {
-    const response = await request(app).post("/auth/verify-email").send({ otp: CORRECT_OTP });
+    const response = await request(app)
+      .post("/auth/verify-email")
+      .send({ otp: CORRECT_OTP });
 
     expect(response.status).toBe(401);
     expect(response.body).toMatchObject({ error: { code: "UNAUTHENTICATED" } });

@@ -269,6 +269,7 @@ export const previewInvitation = tryCatchWrapper(
       email: invitation.email,
       organization: invitation.organization,
       role: invitation.role,
+      jobRole: invitation.inviteeJobRole ?? "OTHER",
       invitedBy: invitation.invitedBy ?? DELETED_INVITER_PLACEHOLDER,
       expiresAt: invitation.expiresAt.toISOString(),
       status: status as InvitationPreview["status"],

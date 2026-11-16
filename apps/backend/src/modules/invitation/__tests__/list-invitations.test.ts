@@ -42,7 +42,14 @@ describe("GET /organizations/:organizationId/invitations", () => {
       limit: 10,
       totalCount: 1,
       totalPages: 1,
-      invitations: [{ id: fakeInvitation.id, email: fakeInvitation.email }],
+      invitations: [
+        {
+          id: fakeInvitation.id,
+          email: fakeInvitation.email,
+          role: fakeInvitation.role,
+          jobRole: fakeInvitation.inviteeJobRole,
+        },
+      ],
     });
   });
 

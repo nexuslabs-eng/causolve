@@ -17,7 +17,7 @@ type NavigationItem = {
   label: string;
   icon: ComponentType<{ className?: string }>;
   active?: boolean;
-  to?: "/workspace";
+  to?: string;
 };
 
 const primaryItems: NavigationItem[] = [
@@ -130,12 +130,21 @@ export const WorkspaceSettingsLink = ({
 }: {
   collapsed?: boolean;
   onNavigate?: (() => void) | undefined;
-}) => (
-  <NavigationSection
-    label="Administration"
-    items={[{ label: "Settings", icon: Settings }]}
-    collapsed={collapsed}
-    onNavigate={onNavigate}
-  />
-);
+}) => {
+  const location = useLocation();
+
+  return (
+    <NavigationSection
+      label="Administration"
+      items={[{
+        label: "Settings",
+        icon: Settings,
+        to: "/workspace/settings",
+        active: location.pathname.startsWith("/workspace/settings"),
+      }]}
+      collapsed={collapsed}
+      onNavigate={onNavigate}
+    />
+  );
+};
 

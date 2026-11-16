@@ -27,7 +27,6 @@ describe("POST /onboarding/profile", () => {
 
     const response = await agent.post("/onboarding/profile").send({
       jobRole: "SOFTWARE_ENGINEER",
-      primaryResponsibility: "APPLICATION_ENGINEERING",
     });
 
     expect(response.status).toBe(200);
@@ -37,7 +36,6 @@ describe("POST /onboarding/profile", () => {
       expect.objectContaining({
         data: expect.objectContaining({
           jobRole: "SOFTWARE_ENGINEER",
-          primaryResponsibility: "APPLICATION_ENGINEERING",
         }),
       }),
     );
@@ -64,9 +62,7 @@ describe("POST /onboarding/profile", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const response = await agent.post("/onboarding/profile").send({
-      primaryResponsibility: "APPLICATION_ENGINEERING",
-    });
+    const response = await agent.post("/onboarding/profile").send({});
 
     expect(response.status).toBe(400);
     expect(prismaMock.membership.findFirst).not.toHaveBeenCalled();

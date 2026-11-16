@@ -34,9 +34,9 @@ export const invitationTemplate = (
         <div style="margin: 0 0 24px; padding: 16px 20px; background-color: #f4f4f8; border-radius: 10px;">
           <p style="margin: 0 0 2px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Workspace</p>
           <p style="margin: 0 0 14px; font-size: 15px; font-weight: 700; color: #1b1e27;">${organizationName}</p>
-          <p style="margin: 0 0 2px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Role</p>
+          <p style="margin: 0 0 2px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Workspace Role</p>
           <p style="margin: 0 0 14px; font-size: 15px; font-weight: 700; color: #1b1e27;">${roleLabel}</p>
-          <p style="margin: 0 0 2px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Job Role</p>
+          <p style="margin: 0 0 2px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Professional Job Role</p>
           <p style="margin: 0; font-size: 15px; font-weight: 700; color: #1b1e27;">${jobRoleLabel}</p>
         </div>
         <div style="text-align: center; margin: 0 0 24px;">

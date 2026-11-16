@@ -132,14 +132,13 @@ export const completeProfile = tryCatchWrapper(
       );
       return;
     }
-    const { jobRole, primaryResponsibility } = req.body;
+    const { jobRole } = req.body;
     const onboardingCompletedAt = new Date();
 
     await prisma.user.update({
       where: { id: req.user!.id },
       data: {
         jobRole,
-        primaryResponsibility,
         onboardingCompletedAt,
       },
     });
@@ -172,7 +171,6 @@ export const getSignupCompletion = tryCatchWrapper(
         user: {
           select: {
             jobRole: true,
-            primaryResponsibility: true,
           },
         },
       },
@@ -200,8 +198,6 @@ export const getSignupCompletion = tryCatchWrapper(
       },
       profile: {
         jobRole: membership.user.jobRole,
-        primaryResponsibility:
-          membership.user.primaryResponsibility ?? undefined,
       },
       membership: {
         role: membership.role,
