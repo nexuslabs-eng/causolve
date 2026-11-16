@@ -22,7 +22,11 @@ describe("GET /invitations/preview", () => {
 
     expect(response.status).toBe(200);
     const body = InvitationPreviewSchema.parse(response.body);
-    expect(body).toMatchObject({ status: "PENDING" });
+    expect(body).toMatchObject({
+      status: "PENDING",
+      role: "ENGINEER",
+      jobRole: "SOFTWARE_ENGINEER",
+    });
   });
 
   it("reports an expired-but-still-pending invitation as EXPIRED", async () => {

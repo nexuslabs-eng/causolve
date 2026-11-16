@@ -32,7 +32,6 @@ describe("GET /onboarding/completion", () => {
       organization: fakeOrganization,
       user: {
         jobRole: "SOFTWARE_ENGINEER",
-        primaryResponsibility: "APPLICATION_ENGINEERING",
       },
     };
     prismaMock.membership.findFirst.mockResolvedValue(membershipWithRelations);
@@ -74,9 +73,11 @@ describe("GET /onboarding/completion", () => {
     const membershipWithIncompleteProfile = {
       ...buildFakeMembership(),
       organization: buildFakeOrganization(),
-      user: { jobRole: null, primaryResponsibility: null },
+      user: { jobRole: null },
     };
-    prismaMock.membership.findFirst.mockResolvedValue(membershipWithIncompleteProfile);
+    prismaMock.membership.findFirst.mockResolvedValue(
+      membershipWithIncompleteProfile,
+    );
 
     const response = await agent.get("/onboarding/completion");
 

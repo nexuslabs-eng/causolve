@@ -72,13 +72,12 @@ your own already-created workspace's URL).
 | Field                   | Type   | Notes                            |
 | ------------------------ | ------ | ----------------------------------- |
 | `jobRole`                | enum   | required                            |
-| `primaryResponsibility`   | enum   | optional                            |
 
 `teamSize` is **not** part of this step — it's captured earlier, at
 `POST /onboarding/workspace`, since it describes the organization, not
 this one user's profile.
 
-Sets the two profile fields on the user, stamps
+Sets the user's professional job role, stamps
 `onboardingCompletedAt`, and emails a confirmation
 (best-effort — a failed send doesn't fail the request).
 
@@ -109,7 +108,7 @@ a read of already-completed state, not a step in the flow itself.
 {
   "user": { "id": "...", "fullName": "...", "email": "..." },
   "workspace": { "organizationId": "...", "name": "...", "slug": "...", "teamSize": "..." },
-  "profile": { "jobRole": "...", "primaryResponsibility": "..." },
+  "profile": { "jobRole": "..." },
   "membership": { "role": "ADMIN" }
 }
 ```

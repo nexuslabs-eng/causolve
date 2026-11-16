@@ -15,9 +15,11 @@ const PasswordUpdated = lazy(() =>
     })),
 );
 const CheckEmail = lazy(() => import("@/features/auth/pages/CheckEmail"));
+const AcceptInvitation = lazy(() => import("@/features/auth/pages/AcceptInvitation"));
 
 export const publicAuthRoutes: RouteObject[] = [
     { path: "login", Component: Login },
+    { path: "invite", Component: AcceptInvitation },
     { path: "signup", loader: () => redirect("/signup/account") },
     { path: "signup/account", Component: Account },
     { path: "forgot-password", Component: ForgotPassword },

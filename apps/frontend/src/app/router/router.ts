@@ -11,6 +11,7 @@ import { PublicRoute } from "@/app/routes/PublicRoute";
 import { ProtectedRoute } from "@/app/routes/ProtectedRoute";
 import { WorkspaceLayout } from "@/layouts/WorkspaceLayout";
 import { WorkspaceOverview } from "@/features/workspace/pages/WorkspaceOverview";
+import { WorkspaceSettings } from "@/features/workspace/pages/WorkspaceSettings";
 
 const NotFound = lazy(() => import("@/features/errors/pages/NotFound"));
 const PrivacyPolicy = lazy(() => import("@/features/legal/pages/PrivacyPolicy"));
@@ -49,7 +50,10 @@ export const router = createBrowserRouter([
         children: [
           {
             Component: WorkspaceLayout,
-            children: [{ path: "workspace", Component: WorkspaceOverview }],
+            children: [
+              { path: "workspace", Component: WorkspaceOverview },
+              { path: "workspace/settings", Component: WorkspaceSettings },
+            ],
           }
         ]
       },

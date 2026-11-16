@@ -6,11 +6,13 @@ import {
   IdSchema,
 } from "../common/primitives.js";
 import { InvitationStatusSchema } from "./invitation.enums.js";
+import { JobRoleSchema } from "../onboarding/onboarding.enums.js";
 
 export const InvitationListItemSchema = z.object({
   id: IdSchema,
   email: z.email(),
   role: RoleSchema,
+  jobRole: JobRoleSchema,
   status: InvitationStatusSchema,
   invitedBy: z.object({
     id: IdSchema,

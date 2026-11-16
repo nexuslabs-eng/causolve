@@ -3,128 +3,128 @@ import { prisma } from "@causolve/database";
 
 const TEST_PASSWORD = "E2eTestPassword123!";
 
-
-
 const completedUserData = {
-    authProvider: "PASSWORD" as const,
-    emailVerified: true,
-    jobRole: "SOFTWARE_ENGINEER" as const,
-    teamSize: "SIX_TO_TWENTY" as const,
-    primaryResponsibility: "APPLICATION_ENGINEERING" as const,
-    onboardingCompletedAt: new Date(),
+  authProvider: "PASSWORD" as const,
+  emailVerified: true,
+  jobRole: "SOFTWARE_ENGINEER" as const,
+  onboardingCompletedAt: new Date(),
 };
 
 const createUser = async (
-    email: string,
-    fullName: string,
-    passwordHash: string,
-    emailVerified = false
-) => prisma.user.create({
+  email: string,
+  fullName: string,
+  passwordHash: string,
+  emailVerified = false,
+) =>
+  prisma.user.create({
     data: {
-        email,
-        fullName,
-        passwordHash,
-        authProvider: "PASSWORD",
-        emailVerified
+      email,
+      fullName,
+      passwordHash,
+      authProvider: "PASSWORD",
+      emailVerified,
     },
-});
+  });
 
 const createCompletedUser = async (
-    email: string,
-    fullName: string,
-    passwordHash: string,
-    workspaceName: string,
-    workspaceSlug: string,
+  email: string,
+  fullName: string,
+  passwordHash: string,
+  workspaceName: string,
+  workspaceSlug: string,
 ) => {
-    const user = await prisma.user.create({
-        data: {
-            email,
-            fullName,
-            passwordHash,
-            ...completedUserData,
-        },
-    });
+  const user = await prisma.user.create({
+    data: {
+      email,
+      fullName,
+      passwordHash,
+      ...completedUserData,
+    },
+  });
 
-    await prisma.organization.create({
-        data: {
-            name: workspaceName,
-            slug: workspaceSlug,
-            memberships: {
-                create: { userId: user.id, role: "ADMIN" },
-            },
-        },
-    });
+  await prisma.organization.create({
+    data: {
+      name: workspaceName,
+      slug: workspaceSlug,
+      teamSize: "SIX_TO_TWENTY",
+      memberships: {
+        create: { userId: user.id, role: "ADMIN" },
+      },
+    },
+  });
 
-    return user;
+  return user;
 };
 
 const prepare = async (): Promise<void> => {
-    await prisma.session.deleteMany();
-    await prisma.membership.deleteMany();
-    await prisma.organization.deleteMany();
-    await prisma.user.deleteMany();
+  await prisma.session.deleteMany();
+  await prisma.membership.deleteMany();
+  await prisma.organization.deleteMany();
+  await prisma.user.deleteMany();
 
-    const passwordHash = await argon2.hash(TEST_PASSWORD);
+  const passwordHash = await argon2.hash(TEST_PASSWORD);
 
-    await createCompletedUser(
-        "e2e.completed@causolve.test",
-        "Completed E2E User",
-        passwordHash,
-        "E2E Completed Workspace",
-        "e2e-completed-workspace",
-    );
+  await createCompletedUser(
+    "e2e.completed@causolve.test",
+    "Completed E2E User",
+    passwordHash,
+    "E2E Completed Workspace",
+    "e2e-completed-workspace",
+  );
 
-    await createUser(
-        "e2e.unverified@causolve.test",
-        "Unverified E2E User",
-        passwordHash,
-    );
+  await createUser(
+    "e2e.unverified@causolve.test",
+    "Unverified E2E User",
+    passwordHash,
+  );
 
-    await createUser(
-        "e2e.onboarding@causolve.test",
-        "Workspace Pending E2E User",
-        passwordHash,
-        true,
-    );
+  await createUser(
+    "e2e.onboarding@causolve.test",
+    "Workspace Pending E2E User",
+    passwordHash,
+    true,
+  );
 
-    const profilePendingUser = await createUser(
-        "e2e.profile@causolve.test",
-        "Profile Pending E2E User",
-        passwordHash,
-        true,
-    );
+  const profilePendingUser = await createUser(
+    "e2e.profile@causolve.test",
+    "Profile Pending E2E User",
+    passwordHash,
+    true,
+  );
 
-    await prisma.organization.create({
-        data: {
-            name: "E2E Profile Workspace",
-            slug: "e2e-profile-workspace",
-            memberships: {
-                create: {
-                    userId: profilePendingUser.id,
-                    role: "ADMIN",
-                },
-            },
+  await prisma.organization.create({
+    data: {
+      name: "E2E Profile Workspace",
+      slug: "e2e-profile-workspace",
+      teamSize: "SIX_TO_TWENTY",
+      memberships: {
+        create: {
+          userId: profilePendingUser.id,
+          role: "ADMIN",
         },
-    });
+      },
+    },
+  });
 
-    await createCompletedUser(
-        "e2e.password-reset@causolve.test",
-        "Password Reset E2E User",
-        passwordHash,
-        "E2E Password Reset Workspace",
-        "e2e-password-reset-workspace",
-    );
+  await createCompletedUser(
+    "e2e.password-reset@causolve.test",
+    "Password Reset E2E User",
+    passwordHash,
+    "E2E Password Reset Workspace",
+    "e2e-password-reset-workspace",
+  );
 
-    await prisma.organization.create({
-        data: {
-            name: "E2E Reserved Workspace",
-            slug: "e2e-reserved-slug",
-        },
-    });
+  await prisma.organization.create({
+    data: {
+      name: "E2E Reserved Workspace",
+      slug: "e2e-reserved-slug",
+      teamSize: "SIX_TO_TWENTY",
+    },
+  });
 };
 
 try {
-    await prepare();
+  await prepare();
 } finally {
-    await prisma.$disconnect();
+  await prisma.$disconnect();
 }

@@ -1,16 +1,15 @@
 import { z } from "zod";
 import { DateTimeSchema } from "../common/primitives.js";
-import { JobRoleSchema, PrimaryResponsibilitySchema } from "./onboarding.enums.js";
+import { JobRoleSchema } from "./onboarding.enums.js";
 
 export const ProfileSetupRequestSchema = z.object({
-    jobRole: JobRoleSchema,
-    primaryResponsibility: PrimaryResponsibilitySchema.optional(),
+  jobRole: JobRoleSchema,
 });
 
 export const ProfileSetupResponseSchema = z.object({
-    completed: z.literal(true),
-    onboardingCompletedAt: DateTimeSchema,
-    nextStep: z.literal("COMPLETE"),
+  completed: z.literal(true),
+  onboardingCompletedAt: DateTimeSchema,
+  nextStep: z.literal("COMPLETE"),
 });
 
 export type ProfileSetupRequest = z.infer<typeof ProfileSetupRequestSchema>;

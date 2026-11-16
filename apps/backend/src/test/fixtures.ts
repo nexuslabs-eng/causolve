@@ -28,7 +28,6 @@ export const buildFakeUser = (overrides: Partial<User> = {}): User => ({
   authProvider: "PASSWORD",
   emailVerified: false,
   jobRole: null,
-  primaryResponsibility: null,
   onboardingCompletedAt: null,
   verificationCode: "hashed-otp",
   verificationAttempts: 0,
