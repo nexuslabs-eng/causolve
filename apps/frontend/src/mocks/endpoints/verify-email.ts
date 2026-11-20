@@ -1,6 +1,11 @@
 import { VerifyEmailOtpRequestSchema, VerifyEmailOtpResponseSchema } from "contracts";
 import { http, HttpResponse } from "msw";
-import { apiError, authSession, MOCK_EMAIL_OTP, setAuthSession } from "@/mocks/utils";
+import {
+    apiError,
+    authSession,
+    setAuthSession,
+    verifyMockEmailCode,
+} from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";
 
 export const verifyEmail = http.post(
@@ -10,7 +15,11 @@ export const verifyEmail = http.post(
         await request.json(),
         );
 
-        if (!result.success || result.data.otp !== MOCK_EMAIL_OTP)
+        if (
+            !result.success ||
+            !authSession.authenticated ||
+            !verifyMockEmailCode(authSession.user.email, result.data.otp)
+        )
             return HttpResponse.json(
                 apiError(
                 "INVALID_VERIFICATION_CODE",
@@ -18,16 +27,6 @@ export const verifyEmail = http.post(
                 ),
                 { status: 400 },
             );
-
-        if (!authSession.authenticated) {
-            return HttpResponse.json(
-                apiError(
-                    "ONBOARDING_STEP_NOT_ALLOWED",
-                    "Start signup before verifying an email.",
-                ),
-                { status: 409 },
-            );
-        }
 
         setAuthSession({
             ...authSession,

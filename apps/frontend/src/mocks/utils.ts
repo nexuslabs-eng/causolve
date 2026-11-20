@@ -1,48 +1,97 @@
-import { ApiErrorSchema, AuthSessionSchema, ProfileSetupRequestSchema, type AuthSession, type ProfileSetupRequest } from "contracts";
+import {
+  ApiErrorSchema,
+  NotificationPreferencesSchema,
+  ProfileSetupRequestSchema,
+  type NotificationPreferences,
+  type ProfileSetupRequest,
+} from "contracts";
+import {
+  authSession,
+  authenticateMockAccount,
+  clearMockSession,
+  hasMockAccount,
+  getMockPasswordResetToken,
+  getMockVerificationCode,
+  issuePasswordResetToken,
+  issueVerificationCode,
+  registerMockAccount,
+  resetMockAuthState,
+  resetMockPassword,
+  setAuthSession,
+  updateMockPassword,
+  validatePasswordResetToken,
+  verifyMockEmailCode,
+} from "@/mocks/auth-state";
 
-export const MOCK_EMAIL_OTP = "123456";
+export {
+  authSession,
+  authenticateMockAccount,
+  clearMockSession,
+  hasMockAccount,
+  getMockPasswordResetToken,
+  getMockVerificationCode,
+  issuePasswordResetToken,
+  issueVerificationCode,
+  registerMockAccount,
+  resetMockPassword,
+  setAuthSession,
+  updateMockPassword,
+  validatePasswordResetToken,
+  verifyMockEmailCode,
+};
+
 export const MOCK_USER_ID = "16161616-1616-4616-8616-161616161616";
 export const MOCK_ORGANIZATION_ID = "17171717-1717-4717-8717-171717171717";
-export const RESET_PASSWORD_TOKEN = "0123456789abcdef0123456789abcdef";
 export const MOCK_WORKSPACE_NAME = "Acme Engineering";
 export const MOCK_WORKSPACE_SLUG = "acme-engineering";
 
-export let authSession: AuthSession = AuthSessionSchema.parse({
-    authenticated: false,
-    oauthError: null
-});
+export const DEFAULT_NOTIFICATION_PREFERENCES: NotificationPreferences = {
+  emailNotifications: true,
+  incidentAlerts: true,
+  investigationUpdates: true,
+  workspaceInvitations: true,
+};
 
-export const setAuthSession = (session: unknown) => {
-    authSession = AuthSessionSchema.parse(session);
-}
+export let notificationPreferences = NotificationPreferencesSchema.parse(
+  DEFAULT_NOTIFICATION_PREFERENCES,
+);
 
 interface Error {
-    error: {
-        code: string;
-        message: string;
-        details?: Record<string, unknown> | undefined;
-        requestId?: string | undefined;
-    };
-};
+  error: {
+    code: string;
+    message: string;
+    details?: Record<string, unknown> | undefined;
+    requestId?: string | undefined;
+  };
+}
 
 type ApiError = (code: string, message: string) => Error;
 
 export const apiError: ApiError = (code, message) =>
-    ApiErrorSchema.parse({
-        error: { code, message },
-    });
+  ApiErrorSchema.parse({
+    error: { code, message },
+  });
 
 export let mockProfile: ProfileSetupRequest | null = null;
 
 export const setMockProfile = (profile: unknown) => {
-    mockProfile = ProfileSetupRequestSchema.parse(profile);
+  mockProfile = ProfileSetupRequestSchema.parse(profile);
 };
 
 export const resetMockProfile = () => {
-    mockProfile = null;
+  mockProfile = null;
 };
 
 export const resetMockState = () => {
-    setAuthSession({ authenticated: false, oauthError: null });
-    resetMockProfile();
+  resetMockAuthState();
+  resetMockProfile();
+  resetNotificationPreferences();
+};
+
+export const setNotificationPreferences = (preferences: unknown) => {
+  notificationPreferences = NotificationPreferencesSchema.parse(preferences);
+};
+
+export const resetNotificationPreferences = () => {
+  setNotificationPreferences(DEFAULT_NOTIFICATION_PREFERENCES);
 };

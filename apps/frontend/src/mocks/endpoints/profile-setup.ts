@@ -34,6 +34,12 @@ export const profileSetup = http.post(
 
         setAuthSession({
             ...authSession,
+            membership: authSession.membership
+                ? {
+                    ...authSession.membership,
+                    jobRole: result.data.jobRole,
+                }
+                : authSession.membership,
             onboarding: {
                 status: "COMPLETED",
                 nextStep: "COMPLETE",

@@ -1,49 +1,66 @@
-import { 
-    ForgotPasswordRequestSchema,
-    ForgotPasswordResponseSchema,
-    ResetPasswordRequestSchema,
-    ResetPasswordResponseSchema,
-    ValidateResetTokenResponseSchema,
-    type ForgotPasswordRequest,
-    type ForgotPasswordResponse,
-    type ResetPasswordResponse,
-    type ResetPasswordRequest,
-    type ValidateResetTokenResponse,
-    type PasswordResetToken
+import {
+  ForgotPasswordRequestSchema,
+  ForgotPasswordResponseSchema,
+  ResetPasswordRequestSchema,
+  ResetPasswordResponseSchema,
+  ValidateResetTokenResponseSchema,
+  ChangePasswordRequestSchema,
+  ChangePasswordResponseSchema,
+  type ForgotPasswordRequest,
+  type ForgotPasswordResponse,
+  type ResetPasswordResponse,
+  type ResetPasswordRequest,
+  type ValidateResetTokenResponse,
+  type PasswordResetToken,
+  type ChangePasswordRequest,
+  type ChangePasswordResponse,
 } from "contracts";
 import { axiosClient } from "@/lib/api/axios-client";
 
 export const forgotPassword = async (
-    input: ForgotPasswordRequest,
+  input: ForgotPasswordRequest,
 ): Promise<ForgotPasswordResponse> => {
-    const response = await axiosClient.post<unknown, unknown>(
-        "/auth/forgot-password",
-        ForgotPasswordRequestSchema.parse(input),
-    );
+  const response = await axiosClient.post<unknown, unknown>(
+    "/auth/forgot-password",
+    ForgotPasswordRequestSchema.parse(input),
+  );
 
-    return ForgotPasswordResponseSchema.parse(response);
+  return ForgotPasswordResponseSchema.parse(response);
 };
 
 export const validateResetToken = async (
-    token: PasswordResetToken,
+  token: PasswordResetToken,
 ): Promise<ValidateResetTokenResponse> => {
-    const response = await axiosClient.get<unknown, unknown>(
-        "/auth/reset-password/validate",
-        {
-            params: { token }
-        }
-    );
+  const response = await axiosClient.get<unknown, unknown>(
+    "/auth/reset-password/validate",
+    {
+      params: { token },
+    },
+  );
 
-    return ValidateResetTokenResponseSchema.parse(response);
-}
+  return ValidateResetTokenResponseSchema.parse(response);
+};
 
 export const resetPassword = async (
-    input: ResetPasswordRequest,
+  input: ResetPasswordRequest,
 ): Promise<ResetPasswordResponse> => {
-    const response = await axiosClient.post<unknown, unknown>(
-        "/auth/reset-password",
-        ResetPasswordRequestSchema.parse(input),
-    );
+  const response = await axiosClient.post<unknown, unknown>(
+    "/auth/reset-password",
+    ResetPasswordRequestSchema.parse(input),
+  );
 
-    return ResetPasswordResponseSchema.parse(response);
+  return ResetPasswordResponseSchema.parse(response);
+};
+
+export const changePassword = async (
+  input: ChangePasswordRequest,
+): Promise<ChangePasswordResponse> => {
+  const payload = ChangePasswordRequestSchema.parse(input);
+
+  const response = await axiosClient.post<unknown, unknown>(
+    "/auth/change-password",
+    payload,
+  );
+
+  return ChangePasswordResponseSchema.parse(response);
 };

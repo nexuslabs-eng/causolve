@@ -26,23 +26,36 @@ type ContentProps = Omit<ComponentProps<typeof Menu.Popup>, "ref"> & {
   side?: ComponentProps<typeof Menu.Positioner>["side"];
   align?: ComponentProps<typeof Menu.Positioner>["align"];
   sideOffset?: number;
+  container?: ComponentProps<typeof Menu.Portal>["container"];
 };
 
 const DropdownMenuContent = forwardRef<HTMLDivElement, ContentProps>(
-  ({ className, side = "bottom", align = "center", sideOffset = 4, ...props }, ref) => (
-    <Menu.Portal>
+  (
+    {
+      className,
+      side = "bottom",
+      align = "center",
+      sideOffset = 4,
+      container,
+      ...props
+    },
+    ref,
+  ) => {
+    const content = (
       <Menu.Positioner side={side} align={align} sideOffset={sideOffset}>
         <Menu.Popup
           ref={ref}
           className={cn(
-            "z-50 max-h-(--available-height) min-w-32 overflow-y-auto overflow-x-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95",
+            "z-[60] max-h-(--available-height) min-w-32 overflow-y-auto overflow-x-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95",
             className,
           )}
           {...props}
         />
       </Menu.Positioner>
-    </Menu.Portal>
-  ),
+    );
+
+    return <Menu.Portal container={container}>{content}</Menu.Portal>;
+  },
 );
 
 const DropdownMenuItem = forwardRef<HTMLDivElement, ComponentProps<typeof Menu.Item>>(

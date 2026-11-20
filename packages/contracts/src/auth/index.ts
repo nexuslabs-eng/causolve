@@ -6,3 +6,4 @@ export * from "./email-verification.schema.js";
 export * from "./password-reset.schema.js";
 export * from "./auth-session.schema.js";
 export * from "./auth-error-codes.js";
+export * from "./password-change.schema.js";

@@ -2,11 +2,7 @@ import { LoginRequestSchema, LoginResponseSchema } from "contracts";
 import { http, HttpResponse } from "msw";
 import {
   apiError,
-  MOCK_ORGANIZATION_ID,
-  MOCK_USER_ID,
-  MOCK_WORKSPACE_NAME,
-  MOCK_WORKSPACE_SLUG,
-  setAuthSession,
+  authenticateMockAccount,
 } from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";
 
@@ -22,41 +18,26 @@ export const login = http.post(
       );
     }
 
-    const user = {
-      id: MOCK_USER_ID,
-      fullName: "Samuel Adeyemi",
-      email: result.data.email,
-      emailVerified: true,
-    };
+    const session = authenticateMockAccount(result.data.email, result.data.password);
 
-    setAuthSession({
-      authenticated: true,
-      user,
-      activeWorkspace: {
-        organizationId: MOCK_ORGANIZATION_ID,
-        name: MOCK_WORKSPACE_NAME,
-        slug: MOCK_WORKSPACE_SLUG,
-        teamSize: "SIX_TO_TWENTY",
-      },
-      membership: {
-        role: "ADMIN",
-      },
-      onboarding: {
-        status: "COMPLETED",
-        nextStep: "COMPLETE",
-        emailVerified: true,
-        workspaceCreated: true,
-        profileCompleted: true,
-        completedAt: new Date().toISOString(),
-      },
-    });
+    if (!session)
+      return HttpResponse.json(
+        apiError("INVALID_CREDENTIALS", "Invalid email or password."),
+        { status: 401 },
+      );
+
+    if (!session.authenticated) {
+      throw new Error("Unable to authenticate the mock account.");
+    }
+
+    const user = session.user;
 
     return HttpResponse.json(
       LoginResponseSchema.parse({
         user,
         onboarding: {
-          status: "COMPLETED",
-          nextStep: "COMPLETE",
+          status: session.onboarding.status,
+          nextStep: session.onboarding.nextStep,
         },
       }),
     );
