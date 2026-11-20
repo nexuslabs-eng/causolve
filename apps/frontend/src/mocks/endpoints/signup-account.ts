@@ -1,6 +1,11 @@
 import { SignupRequestSchema, SignupResponseSchema } from "contracts";
 import { http, HttpResponse } from "msw";
-import { apiError, MOCK_USER_ID, resetMockProfile, setAuthSession } from "@/mocks/utils";
+import {
+    apiError,
+    hasMockAccount,
+    registerMockAccount,
+    resetMockProfile,
+} from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";
 
 export const signupAccount = http.post(
@@ -14,31 +19,19 @@ export const signupAccount = http.post(
                 { status: 422 },
             );
 
+        if (hasMockAccount(result.data.email))
+            return HttpResponse.json(
+                apiError("EMAIL_ALREADY_REGISTERED", "Email is already registered."),
+                { status: 409 },
+            );
+
         resetMockProfile();
 
-        setAuthSession({
-            authenticated: true,
-            user: {
-                id: MOCK_USER_ID,
-                fullName: result.data.fullName,
-                email: result.data.email,
-                emailVerified: false,
-            },
-            activeWorkspace: null,
-            membership: null,
-            onboarding: {
-                status: "IN_PROGRESS",
-                nextStep: "VERIFY_EMAIL",
-                emailVerified: false,
-                workspaceCreated: false,
-                profileCompleted: false,
-                completedAt: null,
-            }
-        })
+        const session = registerMockAccount(result.data);
 
         const response = SignupResponseSchema.parse({
-        userId: MOCK_USER_ID,
-        email: result.data.email,
+        userId: session.authenticated ? session.user.id : "",
+        email: session.authenticated ? session.user.email : result.data.email,
         emailVerified: false,
         nextStep: "VERIFY_EMAIL",
         });

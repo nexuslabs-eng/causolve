@@ -3,6 +3,7 @@
 import { describe, expect, it } from "vitest";
 import { signupAccount, verifyEmailOtp } from "@/features/auth/api/auth";
 import { getAuthSession, logout } from "@/features/auth/api/auth-session";
+import { getMockVerificationCode } from "@/mocks/utils";
 import {
   completeProfile,
   createWorkspace,
@@ -32,7 +33,10 @@ describe("authentication and onboarding flow", () => {
       },
     });
 
-    await verifyEmailOtp({ otp: "123456" });
+    const verificationCode = getMockVerificationCode("johndoe@gmail.com");
+
+    expect(verificationCode).toEqual(expect.stringMatching(/^\d{6}$/));
+    await verifyEmailOtp({ otp: verificationCode! });
 
     await createWorkspace({
       name: "Acme Engineering",

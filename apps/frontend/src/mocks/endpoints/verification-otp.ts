@@ -1,6 +1,6 @@
 import { ResendVerificationCodeResponseSchema } from "contracts";
 import { http, HttpResponse } from "msw";
-import { apiError, authSession } from "@/mocks/utils";
+import { apiError, authSession, issueVerificationCode } from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";
 
 export const resendVerificationOtp = http.post(
@@ -16,6 +16,8 @@ export const resendVerificationOtp = http.post(
             );
         }
         
+        issueVerificationCode(authSession.user.email);
+
         return HttpResponse.json(
             ResendVerificationCodeResponseSchema.parse({ 
                 accepted: true

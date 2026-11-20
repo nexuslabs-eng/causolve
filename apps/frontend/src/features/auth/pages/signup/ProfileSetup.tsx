@@ -61,7 +61,7 @@ const ProfileSetup = () => {
 
       <AuthFormHeader
         title="Tell us about your professional role"
-        description="Select the professional rrole you have in your organization."
+        description="Select the professional role you have in your organization."
         className="mb-8"
       />
 

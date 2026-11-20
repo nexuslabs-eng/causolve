@@ -35,3 +35,7 @@ export * from "./internal-ai/investigation-result.schema.js";
 export * from "./auth/index.js";
 export * from "./onboarding/index.js";
 export * from "./invitations/index.js";
+
+export * from "./profile/profile.schema.js";
+export * from "./settings/notification-preferences.schema.js";
+export * from "./settings/user-preferences.schema.js";

@@ -1,55 +1,93 @@
-import { ForgotPasswordRequestSchema, ForgotPasswordResponseSchema, ResetPasswordRequestSchema, ResetPasswordResponseSchema } from "contracts";
+import {
+  ForgotPasswordRequestSchema,
+  ForgotPasswordResponseSchema,
+  ResetPasswordRequestSchema,
+  ResetPasswordResponseSchema,
+  ValidateResetTokenResponseSchema,
+} from "contracts";
 import { http, HttpResponse } from "msw";
-import { apiError, RESET_PASSWORD_TOKEN } from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";
-
-let resetExpiresAt = 0;
+import {
+  apiError,
+  issuePasswordResetToken,
+  resetMockPassword,
+  validatePasswordResetToken,
+} from "@/mocks/utils";
 
 export const forgotPassword = http.post(
-    apiEndpoint("/auth/forgot-password"), 
-    async ({ request }) => {
-        const result = ForgotPasswordRequestSchema.safeParse(await request.json());
-        
-        if (!result.success) 
-            return HttpResponse.json(
-                apiError(
-                    "INVALID_REQUEST", 
-                    "Enter a valid email."
-                ), 
-                { status: 422 }
-            );
+  apiEndpoint("/auth/forgot-password"),
+  async ({ request }) => {
+    const result = ForgotPasswordRequestSchema.safeParse(await request.json());
 
-        resetExpiresAt = Date.now() + 15 * 60_000;
-        
-        return HttpResponse.json(ForgotPasswordResponseSchema.parse({ accepted: true }));
+    if (!result.success) {
+      return HttpResponse.json(
+        apiError("INVALID_REQUEST", "Enter a valid email."),
+        { status: 422 },
+      );
     }
+
+    issuePasswordResetToken(result.data.email);
+
+    return HttpResponse.json(
+      ForgotPasswordResponseSchema.parse({ accepted: true }),
+    );
+  },
+);
+
+export const validateResetToken = http.get(
+  apiEndpoint("/auth/reset-password/validate"),
+  ({ request }) => {
+    const token = new URL(request.url).searchParams.get("token");
+
+    if (!token) {
+      return HttpResponse.json(
+        apiError("PASSWORD_RESET_TOKEN_INVALID", "Request a new reset link."),
+        { status: 400 },
+      );
+    }
+
+    const status = validatePasswordResetToken(token);
+
+    if (status === "EXPIRED") {
+      return HttpResponse.json(
+        apiError("PASSWORD_RESET_TOKEN_EXPIRED", "Request a new reset link."),
+        { status: 400 },
+      );
+    }
+
+    if (status === "INVALID") {
+      return HttpResponse.json(
+        apiError("PASSWORD_RESET_TOKEN_INVALID", "Request a new reset link."),
+        { status: 400 },
+      );
+    }
+
+    return HttpResponse.json(
+      ValidateResetTokenResponseSchema.parse({ valid: true }),
+    );
+  },
 );
 
 export const resetPassword = http.post(
-    apiEndpoint("/auth/reset-password"), 
-    async ({ request }) => {
-        const result = ResetPasswordRequestSchema.safeParse(await request.json());
-                
-        if (
-                !result.success || 
-                result.data.token !== RESET_PASSWORD_TOKEN || 
-                Date.now() >= resetExpiresAt
-            )
-                return HttpResponse.json(
-                    apiError(
-                        "PASSWORD_RESET_TOKEN_INVALID", 
-                        "Request a new reset link."
-                    ), 
-                    { status: 400 }
-                );
+  apiEndpoint("/auth/reset-password"),
+  async ({ request }) => {
+    const result = ResetPasswordRequestSchema.safeParse(await request.json());
 
-        resetExpiresAt = 0;
-    
-        return HttpResponse.json(
-            ResetPasswordResponseSchema.parse({ 
-                reset: true, 
-                completedAt: new Date().toISOString() 
-            })
-        );
+    if (
+      !result.success ||
+      !resetMockPassword(result.data.token, result.data.password)
+    ) {
+      return HttpResponse.json(
+        apiError("PASSWORD_RESET_TOKEN_INVALID", "Request a new reset link."),
+        { status: 400 },
+      );
     }
+
+    return HttpResponse.json(
+      ResetPasswordResponseSchema.parse({
+        reset: true,
+        completedAt: new Date().toISOString(),
+      }),
+    );
+  },
 );
