@@ -1,6 +1,8 @@
-import { RoleSchema, JobRoleSchema, type Role, type JobRole } from "contracts";
+import { RoleSchema } from "contracts/common/enums";
+import { JobRoleSchema, type JobRole } from "contracts/onboarding/onboarding.enums";
+import type { Role } from "contracts/common/enums";
 import { z } from "zod";
-import { CreateInvitationRequestSchema } from "contracts";
+import { CreateInvitationRequestSchema } from "contracts/invitations/create-invitation.schema";
 
 export const InviteMembersFormSchema = z
   .object({

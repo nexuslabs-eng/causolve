@@ -1,5 +1,5 @@
 import { SettingsLayout } from "@/features/workspace/components/SettingsLayout";
 
-export const Settings = () => {
+export const WorkspaceSettings = () => {
   return <SettingsLayout scope="workspace" />;
 };

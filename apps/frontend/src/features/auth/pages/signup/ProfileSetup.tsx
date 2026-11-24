@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ProfileSetupRequestSchema, type ProfileSetupRequest } from "contracts";
+import { ProfileSetupRequestSchema, type ProfileSetupRequest } from "contracts/onboarding/profile-setup.schema";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";

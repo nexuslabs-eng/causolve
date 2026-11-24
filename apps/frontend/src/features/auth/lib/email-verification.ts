@@ -1,4 +1,4 @@
-import type { VerifyEmailOtpRequest } from "contracts";
+import type { VerifyEmailOtpRequest } from "contracts/auth/email-verification.schema";
 import { verifyEmailOtp } from "@/features/auth/api/auth";
 import { refreshAuthSession } from "@/features/auth/queries/auth-session-query-options";
 import { isApiClientError } from "@/lib/api/api-client-error";

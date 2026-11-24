@@ -1,9 +1,10 @@
 import { Loader2 } from "lucide-react";
-import { RoleSchema } from "contracts";
+import { RoleSchema } from "contracts/common/enums";
 
 import { Input } from "@/components/ui/input";
 import { useAuthSession } from "@/features/auth/hooks/use-auth-session";
-import { ProfileForms } from "../components/ProfileForms";
+import { ProfileForms } from "@/features/workspace/components/ProfileForms";
+import { SettingsLoadError } from "@/features/workspace/components/SettingsLoadError";
 
 const WORKSPACE_ROLE_LABELS: Record<
   (typeof RoleSchema.options)[number],
@@ -16,7 +17,13 @@ const WORKSPACE_ROLE_LABELS: Record<
 };
 
 export const ProfileSettings = () => {
-  const { data: session, isPending, isError } = useAuthSession();
+  const {
+    data: session,
+    isPending,
+    isError,
+    isFetching,
+    refetch,
+  } = useAuthSession();
 
   if (isPending) {
     return (
@@ -31,10 +38,25 @@ export const ProfileSettings = () => {
 
   if (isError || !session?.authenticated) {
     return (
-      <div className="py-8">
-        <p className="text-sm text-muted-foreground">
-          Unable to load your profile.
-        </p>
+      <div>
+        <header className="border-b border-border pb-6">
+          <h1 className="mt-2 text-2xl font-semibold text-foreground">
+            My profile
+          </h1>
+
+          <p className="mt-2 text-sm text-muted-foreground">
+            Manage your personal account information.
+          </p>
+        </header>
+
+        <SettingsLoadError
+          message="Unable to load your profile"
+          reason="We could not load your account information. Try again shortly."
+          retrying={isFetching}
+          onRetry={() => {
+            void refetch();
+          }}
+        />
       </div>
     );
   }
@@ -44,10 +66,6 @@ export const ProfileSettings = () => {
   return (
     <div>
       <header className="border-b border-border pb-6">
-        <p className="font-mono text-[10px] uppercase text-primary-bright">
-          Personal settings
-        </p>
-
         <h1 className="mt-2 text-2xl font-semibold text-foreground">
           My profile
         </h1>

@@ -2,9 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useChangePassword } from "@/features/auth/hooks/use-change-password";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChangePasswordFormSchema, type ChangePasswordForm } from "contracts";
+import { ChangePasswordFormSchema, type ChangePasswordForm } from "contracts/auth/password-change.schema";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export const PasswordForm = () => {
   const changePassword = useChangePassword();
@@ -29,8 +30,13 @@ export const PasswordForm = () => {
       });
 
       passwordForm.reset();
-    } catch {
-      // The mutation error is rendered below the form.
+      toast.success("Password changed successfully.");
+    } catch (error: unknown) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Unable to change your password.",
+      );
     }
   };
 
@@ -162,19 +168,6 @@ export const PasswordForm = () => {
         Change password
       </Button>
 
-      {changePassword.isSuccess && (
-        <p className="text-sm text-emerald-500" role="status">
-          Password changed successfully.
-        </p>
-      )}
-
-      {changePassword.isError && (
-        <p className="text-sm text-destructive" role="alert">
-          {changePassword.error instanceof Error
-            ? changePassword.error.message
-            : "Unable to change your password."}
-        </p>
-      )}
     </form>
   );
 };

@@ -1,4 +1,5 @@
-import type { Incident, Service } from "contracts";
+import type { Incident } from "contracts/incidents/incident.schema";
+import type { Service } from "contracts/services/service.schema";
 import { Activity, CircleDot, ShieldAlert } from "lucide-react";
 import { getIncidentOpenedLabel } from "@/features/marketing/fixtures/incident-mock";
 

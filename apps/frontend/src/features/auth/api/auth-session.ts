@@ -5,7 +5,7 @@ import {
     type AnonymousAuthSession,
     type AuthSession,
     type LogoutResponse
-} from "contracts";
+} from "contracts/auth/auth-session.schema";
 import { axiosClient } from "@/lib/api/axios-client";
 
 export const getAuthSession = async (): Promise<AuthSession> => {

@@ -1,17 +1,15 @@
-import type {
-  ApprovalPolicy,
-  CapabilityState,
-  Evidence,
-  EvidenceHypothesisRelation,
-  Hypothesis,
-  HypothesisRankingChange,
-  Incident,
-  Investigation,
-  InvestigationIntegrity,
-  Recommendation,
-  Service,
-  Verification,
-} from "contracts";
+import type { Incident } from "contracts/incidents/incident.schema";
+import type { Service } from "contracts/services/service.schema";
+import type { CapabilityState } from "contracts/investigations/capability-state.schema";
+import type { Evidence } from "contracts/investigations/evidence.schema";
+import type { EvidenceHypothesisRelation } from "contracts/investigations/evidence-relation.schema";
+import type { Hypothesis } from "contracts/investigations/hypothesis.schema";
+import type { InvestigationIntegrity } from "contracts/investigations/investigation-integrity.schema";
+import type { Investigation } from "contracts/investigations/investigation.schema";
+import type { HypothesisRankingChange } from "contracts/investigations/ranking-change.schema";
+import type { ApprovalPolicy } from "contracts/recommendations/approval-policy.schema";
+import type { Recommendation } from "contracts/recommendations/recommendation.schema";
+import type { Verification } from "contracts/recommendations/verification.schema";
 
 type EvidenceQuality = "LOW" | "MODERATE" | "HIGH";
 

@@ -1,4 +1,4 @@
-import { ApiErrorSchema } from "contracts";
+import { ApiErrorSchema } from "contracts/common/api-error.schema";
 import axios, { AxiosError } from "axios";
 
 import { ApiClientError } from "@/lib/api/api-client-error";

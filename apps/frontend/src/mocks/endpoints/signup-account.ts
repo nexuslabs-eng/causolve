@@ -1,4 +1,4 @@
-import { SignupRequestSchema, SignupResponseSchema } from "contracts";
+import { SignupRequestSchema, SignupResponseSchema } from "contracts/auth/signup.schema";
 import { http, HttpResponse } from "msw";
 import {
     apiError,

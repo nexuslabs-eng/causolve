@@ -3,7 +3,7 @@ import {
   UpdateUserPreferencesRequestSchema,
   type ServerUserPreferences,
   type UpdateUserPreferencesRequest,
-} from "contracts";
+} from "contracts/settings/user-preferences.schema";
 import { axiosClient } from "@/lib/api/axios-client";
 
 export const getUserPreferences = async (): Promise<ServerUserPreferences> => {

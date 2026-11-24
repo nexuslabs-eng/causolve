@@ -4,7 +4,7 @@ import {
   notificationPreferencesQueryKey,
   notificationPreferencesQueryOptions,
 } from "@/features/workspace/queries/notification-preferences-query";
-import type { UpdateNotificationPreferencesRequest } from "contracts";
+import type { UpdateNotificationPreferencesRequest } from "contracts/settings/notification-preferences.schema";
 import { updateNotificationPreferences } from "@/features/workspace/api/notification-preferences";
 
 export const useNotificationPreferences = () =>

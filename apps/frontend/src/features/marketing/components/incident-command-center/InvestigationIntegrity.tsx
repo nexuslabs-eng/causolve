@@ -1,4 +1,4 @@
-import type { InvestigationIntegrity as InvestigationIntegrityData } from "contracts";
+import type { InvestigationIntegrity as InvestigationIntegrityData } from "contracts/investigations/investigation-integrity.schema";
 import { AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
 

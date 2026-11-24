@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Check, UserPlus } from "lucide-react";
 import { useNavigate } from "react-router-dom"; 
-import type { CreateInvitationRequest } from "contracts";
+import type { CreateInvitationRequest } from "contracts/invitations/create-invitation.schema";
 
 import { Button } from "@/components/ui/button";
 import { AuthStatusPanel } from "@/features/auth/components/AuthStatusPanel";

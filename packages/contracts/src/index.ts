@@ -5,6 +5,7 @@ export * from "./common/pagination.schema.js";
 
 export * from "./organizations/organization.schema.js";
 export * from "./teams/team.schema.js";
+export * from "./teams/team-members.schema.js";
 export * from "./services/service.schema.js";
 
 export * from "./incidents/incident.schema.js";
@@ -39,3 +40,10 @@ export * from "./invitations/index.js";
 export * from "./profile/profile.schema.js";
 export * from "./settings/notification-preferences.schema.js";
 export * from "./settings/user-preferences.schema.js";
+export * from "./settings/workspace-settings.schema.js";
+export * from "./settings/investigation-settings.schema.js";
+export * from "./settings/approval-settings.schema.js";
+export * from "./settings/audit-settings.schema.js";
+export * from "./settings/ai-evidence-settings.schema.js";
+
+export * from "./integrations/integration.schema.js";

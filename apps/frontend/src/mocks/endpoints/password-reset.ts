@@ -4,7 +4,7 @@ import {
   ResetPasswordRequestSchema,
   ResetPasswordResponseSchema,
   ValidateResetTokenResponseSchema,
-} from "contracts";
+} from "contracts/auth/password-reset.schema";
 import { http, HttpResponse } from "msw";
 import { apiEndpoint } from "@/lib/api/api-config";
 import {

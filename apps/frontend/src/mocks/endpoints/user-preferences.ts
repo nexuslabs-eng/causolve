@@ -3,7 +3,7 @@ import {
   ServerUserPreferencesSchema,
   UpdateUserPreferencesRequestSchema,
   type UpdateUserPreferencesRequest,
-} from "contracts";
+} from "contracts/settings/user-preferences.schema";
 import { http, HttpResponse } from "msw";
 import { apiEndpoint } from "@/lib/api/api-config";
 import { apiError, authSession } from "@/mocks/utils";

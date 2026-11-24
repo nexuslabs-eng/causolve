@@ -1,4 +1,4 @@
-import { ProfileSetupRequestSchema, ProfileSetupResponseSchema } from "contracts";
+import { ProfileSetupRequestSchema, ProfileSetupResponseSchema } from "contracts/onboarding/profile-setup.schema";
 import { http, HttpResponse } from "msw";
 import { apiError, authSession, setAuthSession, setMockProfile } from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";

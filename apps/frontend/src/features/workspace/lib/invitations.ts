@@ -1,4 +1,4 @@
-import type { CreateInvitationRequest, CreateInvitationResponse } from "contracts";
+import type { CreateInvitationRequest, CreateInvitationResponse } from "contracts/invitations/create-invitation.schema";
 import { createInvitation } from "@/features/workspace/api/invitations";
 
 export const sendInvitations = async (

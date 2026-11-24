@@ -19,7 +19,7 @@ const App = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <ScrollToTop />
 
       <Suspense
@@ -34,7 +34,7 @@ const App = () => {
       >
         <Outlet />
       </Suspense>
-    </div>
+    </>
   );
 };
 

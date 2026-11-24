@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AcceptInvitationRequestSchema } from "contracts";
+import { AcceptInvitationRequestSchema } from "contracts/invitations/accept-invitation.schema";
 
 export const InvitationAcceptanceFormSchema =
     AcceptInvitationRequestSchema

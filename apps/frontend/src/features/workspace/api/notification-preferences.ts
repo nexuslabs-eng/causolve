@@ -3,7 +3,7 @@ import {
   UpdateNotificationPreferencesRequestSchema,
   type NotificationPreferences,
   type UpdateNotificationPreferencesRequest,
-} from "contracts";
+} from "contracts/settings/notification-preferences.schema";
 
 import { axiosClient } from "@/lib/api/axios-client";
 

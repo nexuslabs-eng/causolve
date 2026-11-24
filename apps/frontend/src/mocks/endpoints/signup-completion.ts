@@ -1,4 +1,4 @@
-import { SignupCompletionSchema } from "contracts";
+import { SignupCompletionSchema } from "contracts/onboarding/signup-completion.schema";
 import { http, HttpResponse } from "msw";
 import { apiError, authSession, mockProfile } from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";

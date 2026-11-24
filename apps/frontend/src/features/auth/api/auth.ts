@@ -13,7 +13,7 @@ import {
     type VerifyEmailOtpRequest,
     type VerifyEmailOtpResponse,
     type ResendVerificationCodeResponse,
-} from "contracts";
+} from "contracts/auth/index";
 import { axiosClient } from "@/lib/api/axios-client";
 import { API_BASE_URL } from "@/lib/api/api-config";
 

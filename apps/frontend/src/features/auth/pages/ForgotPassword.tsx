@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ForgotPasswordRequestSchema, type ForgotPasswordRequest } from "contracts";
+import { ForgotPasswordRequestSchema, type ForgotPasswordRequest } from "contracts/auth/password-reset.schema";
 import { Input } from "@/components/ui/input";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { forgotPassword } from "@/features/auth/api/password-recovery";

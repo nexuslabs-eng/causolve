@@ -2,7 +2,7 @@ import {
   AuthSessionSchema,
   type AuthSession,
   type AuthenticatedAuthSession,
-} from "contracts";
+} from "contracts/auth/auth-session.schema";
 
 type MockAccount = {
   password: string;
@@ -21,6 +21,7 @@ const SESSION_STORAGE_KEY = "causolve_mock_session";
 const PASSWORD_RESETS_STORAGE_KEY = "causolve_mock_password_resets";
 const accounts = new Map<string, MockAccount>();
 const passwordResets = new Map<string, MockPasswordReset>();
+
 const anonymousSession = () =>
   AuthSessionSchema.parse({ authenticated: false, oauthError: null });
 

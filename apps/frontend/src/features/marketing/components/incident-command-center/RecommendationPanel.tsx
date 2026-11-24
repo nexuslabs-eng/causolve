@@ -1,4 +1,6 @@
-import type { ApprovalPolicy, Hypothesis, Recommendation } from "contracts";
+import type { Hypothesis } from "contracts/investigations/hypothesis.schema";
+import type { ApprovalPolicy } from "contracts/recommendations/approval-policy.schema";
+import type { Recommendation } from "contracts/recommendations/recommendation.schema";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getApprovalSummary } from "@/features/marketing/fixtures/incident-mock";

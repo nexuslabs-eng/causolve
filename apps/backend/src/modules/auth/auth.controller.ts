@@ -378,6 +378,7 @@ export const getSession = tryCatchWrapper(
         fullName: true,
         email: true,
         emailVerified: true,
+        jobRole: true,
         onboardingCompletedAt: true,
         memberships: {
           take: 1,
@@ -415,7 +416,9 @@ export const getSession = tryCatchWrapper(
             teamSize: membership.organization.teamSize,
           }
         : null,
-      membership: membership ? { role: membership.role } : null,
+      membership: membership
+        ? { role: membership.role, jobRole: user.jobRole }
+        : null,
       onboarding: getOnboardingProgress({
         ...user,
         hasWorkspace: membership !== null,

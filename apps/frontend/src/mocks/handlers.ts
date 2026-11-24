@@ -1,4 +1,4 @@
-import { AuthSessionSchema } from "contracts";
+import { AuthSessionSchema } from "contracts/auth/auth-session.schema";
 import { http, HttpResponse } from "msw";
 import { getAuthSession } from "@/mocks/auth-state";
 import { login } from "@/mocks/endpoints/login";
@@ -27,6 +27,26 @@ import {
   getUserPreferences,
   updateUserPreferences,
 } from "@/mocks/endpoints/user-preferences";
+import {
+  getWorkspaceSettings,
+  updateWorkspaceSettings,
+} from "@/mocks/endpoints/workspace-settings";
+import {
+  createTeam,
+  deleteTeam,
+  listTeams,
+  updateTeam,
+} from "@/mocks/endpoints/teams";
+import {
+  getAiEvidenceSettings,
+  getApprovalSettings,
+  getAuditSettings,
+  getInvestigationSettings,
+  updateAiEvidenceSettings,
+  updateApprovalSettings,
+  updateAuditSettings,
+  updateInvestigationSettings,
+} from "@/mocks/endpoints/settings";
 
 export const handlers = [
   http.get(apiEndpoint("/auth/session"), () =>
@@ -50,5 +70,19 @@ export const handlers = [
   updateNotificationPreferences,
   getUserPreferences,
   updateUserPreferences,
+  getWorkspaceSettings,
+  updateWorkspaceSettings,
+  getInvestigationSettings,
+  updateInvestigationSettings,
+  getAiEvidenceSettings,
+  updateAiEvidenceSettings,
+  getApprovalSettings,
+  updateApprovalSettings,
+  getAuditSettings,
+  updateAuditSettings,
+  listTeams,
+  createTeam,
+  updateTeam,
+  deleteTeam,
   incident,
 ];

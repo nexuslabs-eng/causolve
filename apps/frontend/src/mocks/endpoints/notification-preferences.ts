@@ -1,7 +1,7 @@
 import {
   NotificationPreferencesSchema,
   UpdateNotificationPreferencesRequestSchema,
-} from "contracts";
+} from "contracts/settings/notification-preferences.schema";
 import { http, HttpResponse } from "msw";
 
 import { apiEndpoint } from "@/lib/api/api-config";

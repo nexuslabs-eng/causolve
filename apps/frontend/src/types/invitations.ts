@@ -1,4 +1,4 @@
-import type { CreateInvitationRequest } from "contracts";
+import type { CreateInvitationRequest } from "contracts/invitations/create-invitation.schema";
 
 export interface InviteMembersDialogProps {
     open: boolean;

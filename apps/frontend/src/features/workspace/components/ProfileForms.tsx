@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import {
   UpdateProfileRequestSchema,
-  type AuthSession,
   type UpdateProfileRequest,
-} from "contracts";
+} from "contracts/profile/profile.schema";
+import type { AuthSession } from "contracts/auth/auth-session.schema";
 import { Controller, useForm } from "react-hook-form";
 import { useUpdateProfile } from "@/features/workspace/hooks/use-update-profile";
 import { Input } from "@/components/ui/input";
@@ -49,7 +50,12 @@ export const ProfileForms = ({
 
     if (!values.fullName) return;
 
-    await updateFullName.mutateAsync({ fullName: values.fullName });
+    try {
+      await updateFullName.mutateAsync({ fullName: values.fullName });
+      toast.success("Full name updated successfully.");
+    } catch {
+      toast.error("Unable to update your full name.");
+    }
   };
 
   const submitJobRole = async (values: UpdateProfileRequest) => {
@@ -57,7 +63,12 @@ export const ProfileForms = ({
 
     if (!values.jobRole) return;
 
-    await updateJobRole.mutateAsync({ jobRole: values.jobRole });
+    try {
+      await updateJobRole.mutateAsync({ jobRole: values.jobRole });
+      toast.success("Professional role updated successfully.");
+    } catch {
+      toast.error("Unable to update your professional role.");
+    }
   };
 
   return (
@@ -115,17 +126,6 @@ export const ProfileForms = ({
           </p>
         )}
 
-        {updateFullName.isSuccess && (
-          <p className="mt-2 text-sm text-emerald-500" role="status">
-            Full name updated successfully.
-          </p>
-        )}
-
-        {updateFullName.isError && (
-          <p className="mt-2 text-sm text-destructive" role="alert">
-            Unable to update your full name.
-          </p>
-        )}
       </section>
 
       <section className="border-b border-border pb-6">
@@ -205,17 +205,6 @@ export const ProfileForms = ({
           </p>
         )}
 
-        {updateJobRole.isSuccess && (
-          <p className="mt-2 text-sm text-emerald-500" role="status">
-            Professional role updated successfully.
-          </p>
-        )}
-
-        {updateJobRole.isError && (
-          <p className="mt-2 text-sm text-destructive" role="alert">
-            Unable to update your professional role.
-          </p>
-        )}
       </section>
     </>
   );

@@ -1,6 +1,6 @@
 import { AppLoading } from "@/components/loading/AppLoading";
 import { useAuthSession } from "@/features/auth/hooks/use-auth-session";
-import type { AuthenticatedAuthSession } from "contracts";
+import type { AuthenticatedAuthSession } from "contracts/auth/auth-session.schema";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { onboardingRoutes } from "@/app/routes/constants";
 import { SessionUnavailable } from "@/features/auth/components/SessionUnavailable"; 

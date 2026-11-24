@@ -1,4 +1,4 @@
-import { WorkspaceSlugAvailabilityResponseSchema, WorkspaceSlugSchema } from "contracts";
+import { WorkspaceSlugAvailabilityResponseSchema, WorkspaceSlugSchema } from "contracts/onboarding/workspace-setup.schema";
 import { http, HttpResponse } from "msw";
 import { apiError, authSession } from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";

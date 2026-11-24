@@ -1,9 +1,7 @@
-import type {
-  Evidence,
-  Hypothesis,
-  HypothesisRankingChange,
-  HypothesisStatus,
-} from "contracts";
+import type { Evidence } from "contracts/investigations/evidence.schema";
+import type { Hypothesis } from "contracts/investigations/hypothesis.schema";
+import type { HypothesisStatus } from "contracts/common/enums";
+import type { HypothesisRankingChange } from "contracts/investigations/ranking-change.schema";
 import { BadgeCheck, Loader2 } from "lucide-react";
 import { ResolutionNode } from "@/components/brand/ResolutionNode";
 import { cn } from "@/lib/utils";
