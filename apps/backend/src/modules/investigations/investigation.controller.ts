@@ -2,10 +2,7 @@ import { Request, Response } from "express";
 import { prisma } from "@causolve/database";
 import { type Investigation } from "contracts";
 import tryCatchWrapper from "../../infrastructure/tryCatchWrapper.js";
-import {
-  sendSuccess,
-  sendError,
-} from "../../infrastructure/responseHandler.js";
+import { sendSuccess, sendError } from "../../infrastructure/responseHandler.js";
 
 const toInvestigationResponse = (investigation: {
   id: string;

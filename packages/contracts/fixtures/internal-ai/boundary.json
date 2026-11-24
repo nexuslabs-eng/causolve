@@ -1,55 +1,53 @@
 {
-    "request": {
-        "investigationId": "11111111-1111-4111-8111-111111111111",
-        "incident": {
-            "id": "22222222-2222-4222-8222-222222222222",
-            "title": "Contract fixture",
-            "description": null,
-            "severity": "HIGH"
-        },
-        "service": {
-            "id": "33333333-3333-4333-8333-333333333333",
-            "name": "payments",
-            "environment": "test",
-            "currentVersion": null
-        },
-        "capabilityStates": [
-            {
-                "capability": "METRICS",
-                "status": "AVAILABLE",
-                "freshness": 99.5,
-                "reason": null,
-                "updatedAt": "2026-09-17T12:00:00.123456789Z"
-            }
-        ]
+  "request": {
+    "investigationId": "11111111-1111-4111-8111-111111111111",
+    "incident": {
+      "id": "22222222-2222-4222-8222-222222222222",
+      "title": "Contract fixture",
+      "description": null,
+      "severity": "HIGH"
     },
-    "result": {
-        "investigationId": "11111111-1111-4111-8111-111111111111",
-        "status": "DEGRADED",
-        "hypothesisProposals": [
-            {
-                "reference": "H1",
-                "statement": "Synthetic hypothesis for contract testing"
-            }
-        ],
-        "evidenceInterpretations": [
-            {
-                "evidenceId": "55555555-5555-4555-8555-555555555555",
-                "hypothesisReference": "H1",
-                "relation": "CONTRADICTS",
-                "reasoning": "Synthetic relation"
-            }
-        ],
-        "recommendationProposal": {
-            "actionType": "NO_ACTION",
-            "summary": "Contract fixture only",
-            "reasoning": "No real investigation",
-            "technicalRisk": "LOW",
-            "supportingEvidenceIds": [],
-            "contradictingEvidenceIds": [
-                "55555555-5555-4555-8555-555555555555"
-            ]
-        },
-        "error": null
-    }
+    "service": {
+      "id": "33333333-3333-4333-8333-333333333333",
+      "name": "payments",
+      "environment": "test",
+      "currentVersion": null
+    },
+    "capabilityStates": [
+      {
+        "capability": "METRICS",
+        "status": "AVAILABLE",
+        "freshness": 99.5,
+        "reason": null,
+        "updatedAt": "2026-09-17T12:00:00.123456789Z"
+      }
+    ]
+  },
+  "result": {
+    "investigationId": "11111111-1111-4111-8111-111111111111",
+    "status": "DEGRADED",
+    "hypothesisProposals": [
+      {
+        "reference": "H1",
+        "statement": "Synthetic hypothesis for contract testing"
+      }
+    ],
+    "evidenceInterpretations": [
+      {
+        "evidenceId": "55555555-5555-4555-8555-555555555555",
+        "hypothesisReference": "H1",
+        "relation": "CONTRADICTS",
+        "reasoning": "Synthetic relation"
+      }
+    ],
+    "recommendationProposal": {
+      "actionType": "NO_ACTION",
+      "summary": "Contract fixture only",
+      "reasoning": "No real investigation",
+      "technicalRisk": "LOW",
+      "supportingEvidenceIds": [],
+      "contradictingEvidenceIds": ["55555555-5555-4555-8555-555555555555"]
+    },
+    "error": null
+  }
 }

@@ -41,15 +41,16 @@ const DialogTitle = forwardRef<HTMLHeadingElement, ComponentProps<typeof BaseDia
   ),
 );
 
-const DialogDescription = forwardRef<HTMLParagraphElement, ComponentProps<typeof BaseDialog.Description>>(
-  ({ className, ...props }, ref) => (
-    <BaseDialog.Description
-      ref={ref}
-      className={cn("mt-2 text-sm leading-relaxed text-muted-foreground", className)}
-      {...props}
-    />
-  ),
-);
+const DialogDescription = forwardRef<
+  HTMLParagraphElement,
+  ComponentProps<typeof BaseDialog.Description>
+>(({ className, ...props }, ref) => (
+  <BaseDialog.Description
+    ref={ref}
+    className={cn("mt-2 text-sm leading-relaxed text-muted-foreground", className)}
+    {...props}
+  />
+));
 
 export {
   Dialog,

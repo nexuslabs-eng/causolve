@@ -14,7 +14,7 @@ authorization before consequential remediation.
 
 ## Product Direction
 
-``` text
+```text
 Incident
   ↓
 Investigation
@@ -44,31 +44,31 @@ capabilities become unavailable.
 
 ## Key Capabilities
 
--   Incident lifecycle and timeline management
--   AI-assisted investigation with LangGraph
--   Competing root-cause hypotheses
--   Asymmetric evidence contradiction analysis
--   Evidence provenance and independence tracking
--   Investigation integrity and evidence coverage
--   Progressive degradation during tool or service failures
--   RBAC and human-controlled remediation
--   Recovery verification
--   Postmortem generation and audit history
--   Real-time investigation updates through SSE
--   Installable React PWA
+- Incident lifecycle and timeline management
+- AI-assisted investigation with LangGraph
+- Competing root-cause hypotheses
+- Asymmetric evidence contradiction analysis
+- Evidence provenance and independence tracking
+- Investigation integrity and evidence coverage
+- Progressive degradation during tool or service failures
+- RBAC and human-controlled remediation
+- Recovery verification
+- Postmortem generation and audit history
+- Real-time investigation updates through SSE
+- Installable React PWA
 
 ## Architecture
 
 Causolve is developed as three independently testable domains connected
 through explicit contracts.
 
-``` text
+```text
 React + TypeScript PWA
         │
      REST / SSE
         │
         ▼
-Node.js + Express API 
+Node.js + Express API
         │
         ├── PostgreSQL + Prisma ORM
         │
@@ -78,8 +78,8 @@ Python + FastAPI + LangGraph
 
 ### Frontend
 
-React, TypeScript, Vite, React Router, Tailwind CSS, shadcn/ui, Radix
-UI, Zustand, TanStack Query, Axios, Zod, React Hook Form, Recharts,
+React, TypeScript, Vite+, React Router, Tailwind CSS, shadcn/ui, Base UI,
+Zustand, TanStack Query, Axios, Zod, React Hook Form, Recharts,
 vite-plugin-pwa, Vitest, React Testing Library, Playwright, and MSW.
 
 ### Backend
@@ -138,16 +138,17 @@ pnpm --filter @causolve/backend dev
 pnpm ai:dev
 ```
 
-Frontend development can use MSW without a running backend. AI scaffold
-tests run independently of the backend and database.
+Frontend development can use MSW without a running backend. The mock
+authentication flow persists its development state in localStorage. AI
+scaffold tests run independently of the backend and database.
 
 ## Verification
 
 Common commands, run from the repository root:
 
 ```powershell
+pnpm check
 pnpm --filter frontend test
-pnpm --filter frontend lint
 pnpm --filter frontend build
 pnpm --filter @causolve/backend build
 
@@ -157,6 +158,10 @@ pnpm ai:format:check
 ```
 
 The backend `build` command currently performs TypeScript checking.
+
+`pnpm check` runs the Vite+ validation pipeline: Oxfmt formatting checks,
+Oxlint, and TypeScript validation. The frontend and backend package lint
+scripts are available for focused checks when needed.
 
 For AI lint fixes and formatting:
 

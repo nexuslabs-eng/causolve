@@ -3,10 +3,7 @@ import { RoleSchema } from "../common/enums.js";
 import { NonEmptyStringSchema, IdSchema } from "../common/primitives.js";
 import { OnboardingStateSchema } from "../onboarding/onboarding-state.schema.js";
 import { WorkspaceSlugSchema } from "../onboarding/workspace-setup.schema.js";
-import {
-  JobRoleSchema,
-  TeamSizeSchema,
-} from "../onboarding/onboarding.enums.js";
+import { JobRoleSchema, TeamSizeSchema } from "../onboarding/onboarding.enums.js";
 
 export const AuthenticatedUserSchema = z.object({
   id: IdSchema,
@@ -58,8 +55,6 @@ export const LogoutResponseSchema = z.object({
 export type OAuthErrorCode = z.infer<typeof OAuthErrorCodeSchema>;
 export type AuthenticatedUser = z.infer<typeof AuthenticatedUserSchema>;
 export type AnonymousAuthSession = z.infer<typeof AnonymousAuthSessionSchema>;
-export type AuthenticatedAuthSession = z.infer<
-  typeof AuthenticatedAuthSessionSchema
->;
+export type AuthenticatedAuthSession = z.infer<typeof AuthenticatedAuthSessionSchema>;
 export type AuthSession = z.infer<typeof AuthSessionSchema>;
 export type LogoutResponse = z.infer<typeof LogoutResponseSchema>;

@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { Menu } from "@base-ui/react/menu"
+import { Menu } from "@base-ui/react/menu";
 import { cn } from "@/lib/utils";
 import { forwardRef, isValidElement, type ComponentProps, type HTMLAttributes } from "react";
 
@@ -14,10 +14,7 @@ const DropdownMenuSub = Menu.SubmenuRoot;
 const DropdownMenuRadioGroup = Menu.RadioGroup;
 
 const DropdownMenuTrigger = ({ asChild, children, ...props }: TriggerProps) => (
-  <Menu.Trigger
-    {...props}
-    render={asChild && isValidElement(children) ? children : undefined}
-  >
+  <Menu.Trigger {...props} render={asChild && isValidElement(children) ? children : undefined}>
     {asChild ? undefined : children}
   </Menu.Trigger>
 );
@@ -30,17 +27,7 @@ type ContentProps = Omit<ComponentProps<typeof Menu.Popup>, "ref"> & {
 };
 
 const DropdownMenuContent = forwardRef<HTMLDivElement, ContentProps>(
-  (
-    {
-      className,
-      side = "bottom",
-      align = "center",
-      sideOffset = 4,
-      container,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ className, side = "bottom", align = "center", sideOffset = 4, container, ...props }, ref) => {
     const content = (
       <Menu.Positioner side={side} align={align} sideOffset={sideOffset}>
         <Menu.Popup
@@ -74,7 +61,11 @@ const DropdownMenuItem = forwardRef<HTMLDivElement, ComponentProps<typeof Menu.I
 const DropdownMenuLabel = forwardRef<HTMLDivElement, ComponentProps<typeof Menu.GroupLabel>>(
   ({ className, ...props }, ref) => (
     <Menu.Group>
-      <Menu.GroupLabel ref={ref} className={cn("px-2 py-1.5 text-sm font-semibold", className)} {...props} />
+      <Menu.GroupLabel
+        ref={ref}
+        className={cn("px-2 py-1.5 text-sm font-semibold", className)}
+        {...props}
+      />
     </Menu.Group>
   ),
 );

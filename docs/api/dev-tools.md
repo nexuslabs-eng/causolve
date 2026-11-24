@@ -5,7 +5,7 @@ routes here don't exist at all once deployed, regardless of any other
 protection. Not part of the product's real API surface; not defined in
 `packages/contracts`.
 
-------------------------------------------------------------------------
+---
 
 ## DELETE /dev/users
 
@@ -22,7 +22,7 @@ members are left untouched.
 
 **Errors**
 
-| Status | Code             | Meaning                     |
-| ------ | ---------------- | ------------------------------- |
-| 400    | `INVALID_REQUEST`| malformed/missing email          |
-| 404    | `USER_NOT_FOUND` | no account exists for that email |
+| Status | Code              | Meaning                          |
+| ------ | ----------------- | -------------------------------- |
+| 400    | `INVALID_REQUEST` | malformed/missing email          |
+| 404    | `USER_NOT_FOUND`  | no account exists for that email |

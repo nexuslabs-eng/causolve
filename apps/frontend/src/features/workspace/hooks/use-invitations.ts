@@ -1,12 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { CreateInvitationRequest } from "contracts/invitations/create-invitation.schema";
-import {
-  resendInvitation,
-  revokeInvitation,
-} from "@/features/workspace/api/invitations";
-import {
-  invitationsQueryOptions,
-} from "@/features/workspace/queries/invitations-query";
+import { resendInvitation, revokeInvitation } from "@/features/workspace/api/invitations";
+import { invitationsQueryOptions } from "@/features/workspace/queries/invitations-query";
 import { sendInvitations } from "@/features/workspace/lib/invitations";
 
 export const useInvitations = (organizationId: string, page = 1, limit = 10) =>

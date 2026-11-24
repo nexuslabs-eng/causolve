@@ -1,14 +1,14 @@
-import session from 'express-session';
-import connectPgSimple from 'connect-pg-simple';
-import { prisma } from '@causolve/database';
-import { env } from './keys.js';
+import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
+import { prisma } from "@causolve/database";
+import { env } from "./keys.js";
 
 // Extends express-session's SessionData with our own field. userId is the
 // ONLY thing we trust from the session cookie — everything else about the
 // user (role, organizationId, etc.) gets re-fetched fresh from Postgres on
 // every request by the auth middleware, so a role/org change takes effect
 // immediately instead of waiting for the old session to expire.
-declare module 'express-session' {
+declare module "express-session" {
   interface SessionData {
     userId?: string;
     // Transient fields, only ever alive between the redirect to Google and
@@ -42,17 +42,17 @@ const SESSION_MAX_AGE = 24 * 60 * 60 * 1000; // 24 hours
 const createSessionStore = () => {
   return new PgSession({
     conString: env.DATABASE_URL,
-    tableName: 'session',
+    tableName: "session",
     createTableIfMissing: false,
   });
 };
 
 export const createSessionMiddleware = () => {
-  const isProd = env.NODE_ENV === 'production';
+  const isProd = env.NODE_ENV === "production";
 
   return session({
     secret: env.SESSION_SECRET,
-    name: 'sessionId', // custom cookie name, avoids the default 'connect.sid'
+    name: "sessionId", // custom cookie name, avoids the default 'connect.sid'
     resave: false, // don't save session if unmodified
     saveUninitialized: false, // don't create a session until something is stored
     store: createSessionStore(),
@@ -60,7 +60,7 @@ export const createSessionMiddleware = () => {
       maxAge: SESSION_MAX_AGE,
       httpOnly: true, // not readable from client-side JS
       secure: isProd, // HTTPS only in production
-      sameSite: isProd ? 'none' : 'lax', // 'none' requires secure: true, hence the pairing above
+      sameSite: isProd ? "none" : "lax", // 'none' requires secure: true, hence the pairing above
     },
     rolling: true, // refresh expiration on every response
   });
@@ -73,6 +73,6 @@ export const createSessionMiddleware = () => {
 // would stay logged in indefinitely even after the password changes.
 export const destroyAllSessionsForUser = async (userId: string): Promise<void> => {
   await prisma.session.deleteMany({
-    where: { sess: { path: ['userId'], equals: userId } },
+    where: { sess: { path: ["userId"], equals: userId } },
   });
 };

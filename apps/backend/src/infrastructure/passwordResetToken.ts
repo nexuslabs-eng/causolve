@@ -2,10 +2,7 @@ import crypto from "node:crypto";
 import { prisma } from "@causolve/database";
 
 export const findUserByResetToken = async (rawToken: string) => {
-  const passwordResetTokenHash = crypto
-    .createHash("sha256")
-    .update(rawToken)
-    .digest("hex");
+  const passwordResetTokenHash = crypto.createHash("sha256").update(rawToken).digest("hex");
 
   return prisma.user.findUnique({
     where: { passwordResetTokenHash },
@@ -18,7 +15,5 @@ export const findUserByResetToken = async (rawToken: string) => {
   });
 };
 
-export const isResetTokenExpired = (
-  passwordResetTokenExpires: Date | null,
-): boolean =>
+export const isResetTokenExpired = (passwordResetTokenExpires: Date | null): boolean =>
   !passwordResetTokenExpires || passwordResetTokenExpires < new Date();

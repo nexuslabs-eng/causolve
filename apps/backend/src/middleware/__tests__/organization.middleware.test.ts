@@ -1,12 +1,10 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import type { NextFunction, Request, Response } from "express";
 import { requireOrganizationMembership } from "../organization.middleware.js";
 import { prismaMock } from "../../test/mocks/prisma.js";
 import { buildFakeUser, buildFakeMembership } from "../../test/fixtures.js";
 
-const buildFakeRequest = (
-  organizationId: string,
-): Request<{ organizationId: string }> => {
+const buildFakeRequest = (organizationId: string): Request<{ organizationId: string }> => {
   const fakeUser = buildFakeUser();
   return {
     params: { organizationId },
@@ -35,9 +33,7 @@ describe("requireOrganizationMembership", () => {
 
     prismaMock.membership.findFirst.mockResolvedValue(null);
 
-    await expect(
-      requireOrganizationMembership(req, {} as Response, next),
-    ).rejects.toMatchObject({
+    await expect(requireOrganizationMembership(req, {} as Response, next)).rejects.toMatchObject({
       statusCode: 404,
       code: "ORGANIZATION_NOT_FOUND",
     });

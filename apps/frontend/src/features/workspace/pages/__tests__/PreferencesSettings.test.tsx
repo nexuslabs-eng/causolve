@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 
 import { PreferencesSettings } from "@/features/workspace/pages/personal-settings/PreferencesSettings";
 import { setAuthSession } from "@/mocks/utils";
@@ -25,9 +25,7 @@ describe("PreferencesSettings", () => {
     localStorage.removeItem("causolve_mock_user_preferences");
     renderPreferencesSettings();
 
-    expect(
-      await screen.findByRole("heading", { name: "Preferences" }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Preferences" })).toBeInTheDocument();
     expect(await screen.findByText("Africa/Lagos")).toBeInTheDocument();
     expect(await screen.findByText("DD/MM/YYYY")).toBeInTheDocument();
     expect(screen.queryByText("DD_MM_YYYY")).not.toBeInTheDocument();

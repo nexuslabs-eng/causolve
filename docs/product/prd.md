@@ -59,18 +59,23 @@ Causolve must:
 ## 4. Core Users
 
 ### Admin
+
 Manages organization membership, teams, roles, services, and policy configuration.
 
 ### Incident Commander
+
 Owns incident response, reviews recommendations, authorizes remediation, and resolves incidents.
 
 ### Engineer / Responder
+
 Investigates incidents, reviews evidence, adds observations, and participates in remediation.
 
 ### Observer
+
 Has read-only visibility into incidents, timelines, evidence, and postmortems.
 
 ### Engineering Manager
+
 Reviews incident history, recurring causes, response metrics, and postmortems.
 
 ---
@@ -342,14 +347,14 @@ The AI cannot approve its own recommendation.
 
 Initial roles:
 
-| Capability | Observer | Engineer | Incident Commander | Admin |
-|---|---:|---:|---:|---:|
-| View incidents | Yes | Yes | Yes | Yes |
-| Add evidence/notes | No | Yes | Yes | Yes |
-| Start investigation | No | Yes | Yes | Yes |
-| Approve remediation | No | Limited | Yes | Yes |
-| Resolve incident | No | No | Yes | Yes |
-| Manage organization | No | No | No | Yes |
+| Capability          | Observer | Engineer | Incident Commander | Admin |
+| ------------------- | -------: | -------: | -----------------: | ----: |
+| View incidents      |      Yes |      Yes |                Yes |   Yes |
+| Add evidence/notes  |       No |      Yes |                Yes |   Yes |
+| Start investigation |       No |      Yes |                Yes |   Yes |
+| Approve remediation |       No |  Limited |                Yes |   Yes |
+| Resolve incident    |       No |       No |                Yes |   Yes |
+| Manage organization |       No |       No |                 No |   Yes |
 
 Authorization is enforced by the backend.
 
@@ -394,6 +399,7 @@ Expected behavior:
 ## 15. MVP Features
 
 ### Incident Management
+
 - incident creation;
 - severity;
 - lifecycle;
@@ -402,6 +408,7 @@ Expected behavior:
 - affected service.
 
 ### Investigation
+
 - candidate hypotheses;
 - controlled tools;
 - evidence provenance;
@@ -410,6 +417,7 @@ Expected behavior:
 - progressive degradation.
 
 ### Decision and Response
+
 - recommendation;
 - remediation risk;
 - RBAC;
@@ -418,6 +426,7 @@ Expected behavior:
 - recovery verification.
 
 ### Organizational
+
 - organizations;
 - teams;
 - services;
@@ -425,6 +434,7 @@ Expected behavior:
 - audit logs.
 
 ### Post-Incident
+
 - postmortem draft;
 - hypothesis history;
 - contradictions discovered;

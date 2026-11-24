@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { AuthSession } from "contracts/auth/auth-session.schema";
 
 const { toastSuccess } = vi.hoisted(() => ({
@@ -102,20 +102,15 @@ describe("ProfileSettings", () => {
 
     expect(fullNameForm).not.toBeNull();
 
-    const saveButton = within(fullNameForm as HTMLFormElement).getByRole(
-      "button",
-      { name: "Save" },
-    );
+    const saveButton = within(fullNameForm as HTMLFormElement).getByRole("button", {
+      name: "Save",
+    });
 
     await user.click(saveButton);
 
-    expect(toastSuccess).toHaveBeenCalledWith(
-      "Full name updated successfully.",
-    );
+    expect(toastSuccess).toHaveBeenCalledWith("Full name updated successfully.");
 
-    expect(
-      await screen.findByDisplayValue("Samuel Adeyemi"),
-    ).toBeInTheDocument();
+    expect(await screen.findByDisplayValue("Samuel Adeyemi")).toBeInTheDocument();
   });
 
   it("does not submit when the full name is empty", async () => {

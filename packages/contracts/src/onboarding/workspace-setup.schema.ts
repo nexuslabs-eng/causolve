@@ -32,9 +32,7 @@ export const WorkspaceSlugAvailabilityResponseSchema = z.object({
 
 export type WorkspaceSlug = z.infer<typeof WorkspaceSlugSchema>;
 export type WorkspaceSetupRequest = z.infer<typeof WorkspaceSetupRequestSchema>;
-export type WorkspaceSetupResponse = z.infer<
-  typeof WorkspaceSetupResponseSchema
->;
+export type WorkspaceSetupResponse = z.infer<typeof WorkspaceSetupResponseSchema>;
 export type WorkspaceSlugAvailabilityResponse = z.infer<
   typeof WorkspaceSlugAvailabilityResponseSchema
 >;

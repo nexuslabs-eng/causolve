@@ -9,10 +9,7 @@ import {
   PaginationQuerySchema,
 } from "contracts";
 import tryCatchWrapper from "../../infrastructure/tryCatchWrapper.js";
-import {
-  sendSuccess,
-  sendError,
-} from "../../infrastructure/responseHandler.js";
+import { sendSuccess, sendError } from "../../infrastructure/responseHandler.js";
 
 const toTeamResponse = (team: {
   id: string;
@@ -40,10 +37,7 @@ export const createTeam = tryCatchWrapper(
         data: { organizationId, name },
       });
     } catch (error) {
-      if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === "P2002"
-      ) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
         sendError(
           res,
           409,
@@ -60,10 +54,7 @@ export const createTeam = tryCatchWrapper(
 );
 
 export const listTeams = tryCatchWrapper(
-  async (
-    req: Request<{ organizationId: string }>,
-    res: Response,
-  ): Promise<void> => {
+  async (req: Request<{ organizationId: string }>, res: Response): Promise<void> => {
     const { organizationId } = req.params;
 
     const result = PaginationQuerySchema.safeParse(req.query);
@@ -117,11 +108,7 @@ export const getTeam = tryCatchWrapper(
 
 export const updateTeam = tryCatchWrapper(
   async (
-    req: Request<
-      { organizationId: string; teamId: string },
-      unknown,
-      UpdateTeamRequest
-    >,
+    req: Request<{ organizationId: string; teamId: string }, unknown, UpdateTeamRequest>,
     res: Response,
   ): Promise<void> => {
     const { organizationId, teamId } = req.params;
@@ -143,10 +130,7 @@ export const updateTeam = tryCatchWrapper(
         data: { name },
       });
     } catch (error) {
-      if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === "P2002"
-      ) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
         sendError(
           res,
           409,

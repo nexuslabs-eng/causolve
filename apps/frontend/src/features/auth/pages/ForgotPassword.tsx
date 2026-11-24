@@ -1,7 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ForgotPasswordRequestSchema, type ForgotPasswordRequest } from "contracts/auth/password-reset.schema";
+import {
+  ForgotPasswordRequestSchema,
+  type ForgotPasswordRequest,
+} from "contracts/auth/password-reset.schema";
 import { Input } from "@/components/ui/input";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { forgotPassword } from "@/features/auth/api/password-recovery";
@@ -12,55 +15,61 @@ import { AuthAlternateAction } from "@/features/auth/components/AuthAlternateAct
 import { AuthErrorBanner } from "@/features/auth/components/AuthErrorBanner";
 
 export default function ForgotPassword() {
-    const navigate = useNavigate()
-    
-    const { 
-        register, 
-        handleSubmit, 
-        setError,
-        clearErrors,
-        formState: { errors, isSubmitting } } =
-        useForm<ForgotPasswordRequest>({
-            resolver: zodResolver(ForgotPasswordRequestSchema),
-            defaultValues: { email: "" }, mode: "onSubmit",
-        });
+  const navigate = useNavigate();
 
-    const submit = async (values: ForgotPasswordRequest) => {
-        try {
-            await forgotPassword(values);
-            navigate("/check-email", { replace: true });
-        } catch {
-            setError("root", {
-                message: "Unable to request a reset link. Please try again."
-            });
-        }
-    };
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting },
+  } = useForm<ForgotPasswordRequest>({
+    resolver: zodResolver(ForgotPasswordRequestSchema),
+    defaultValues: { email: "" },
+    mode: "onSubmit",
+  });
 
-    return ( 
-        <>
-            <AuthBackButton disabled={isSubmitting} />
+  const submit = async (values: ForgotPasswordRequest) => {
+    try {
+      await forgotPassword(values);
+      await navigate("/check-email", { replace: true });
+    } catch {
+      setError("root", {
+        message: "Unable to request a reset link. Please try again.",
+      });
+    }
+  };
 
-                <AuthFormHeader title="Forgot your password?" description="Enter your account email to request a reset link." />
+  return (
+    <>
+      <AuthBackButton disabled={isSubmitting} />
 
-                {errors.root?.message && (
-                    <AuthErrorBanner onDismiss={() => clearErrors("root")} >
-                        {errors.root.message}
-                    </AuthErrorBanner>
-                )}
-                
-                <form noValidate onSubmit={handleSubmit(submit)}>
-                    <Field name="email" invalid={Boolean(errors.email)}>
-                        <FieldLabel>Email</FieldLabel>
+      <AuthFormHeader
+        title="Forgot your password?"
+        description="Enter your account email to request a reset link."
+      />
 
-                        <Input type="email" autoComplete="email" disabled={isSubmitting} {...register("email")} />
+      {errors.root?.message && (
+        <AuthErrorBanner onDismiss={() => clearErrors("root")}>
+          {errors.root.message}
+        </AuthErrorBanner>
+      )}
 
-                        <FieldError match={Boolean(errors.email)}>{errors.email?.message}</FieldError>
-                    </Field>
+      <form noValidate onSubmit={handleSubmit(submit)}>
+        <Field name="email" invalid={Boolean(errors.email)}>
+          <FieldLabel>Email</FieldLabel>
 
-                    <AuthSubmitButton loading={isSubmitting} loadingLabel="Sending link">Send reset link</AuthSubmitButton>
-                </form>
+          <Input type="email" autoComplete="email" disabled={isSubmitting} {...register("email")} />
 
-            <AuthAlternateAction message="Remember your password?" linkLabel="Sign in" to="/login" />
-        </>
-    );
-};
+          <FieldError match={Boolean(errors.email)}>{errors.email?.message}</FieldError>
+        </Field>
+
+        <AuthSubmitButton loading={isSubmitting} loadingLabel="Sending link">
+          Send reset link
+        </AuthSubmitButton>
+      </form>
+
+      <AuthAlternateAction message="Remember your password?" linkLabel="Sign in" to="/login" />
+    </>
+  );
+}

@@ -33,7 +33,7 @@ const startApplication = async () => {
       </StrictMode>,
     );
   } catch (error) {
-    console.error(`Causolve startup failed: ${error}`);
+    console.error("Causolve startup failed:", error);
 
     root.render(
       <StrictMode>

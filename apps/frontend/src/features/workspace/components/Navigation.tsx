@@ -10,11 +10,7 @@ import {
   Siren,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 type NavigationItem = {
@@ -59,9 +55,7 @@ const NavigationItemView = ({
 
   const content = (
     <>
-      <Icon
-        className={cn("size-4 shrink-0", item.active && "text-primary-bright")}
-      />
+      <Icon className={cn("size-4 shrink-0", item.active && "text-primary-bright")} />
       {!collapsed && <span className="truncate">{item.label}</span>}
     </>
   );
@@ -114,9 +108,7 @@ const NavigationSection = ({
           {label}
         </p>
       )}
-      {label && collapsed && (
-        <div className="mx-auto mb-2 h-px w-6 bg-border" />
-      )}
+      {label && collapsed && <div className="mx-auto mb-2 h-px w-6 bg-border" />}
       <div className="space-y-1">
         {items.map((item) => (
           <NavigationItemView
@@ -147,11 +139,7 @@ export const Navigation = ({
   }));
   return (
     <nav className="space-y-7" aria-label="Workspace navigation">
-      <NavigationSection
-        items={items}
-        collapsed={collapsed}
-        onNavigate={onNavigate}
-      />
+      <NavigationSection items={items} collapsed={collapsed} onNavigate={onNavigate} />
       <NavigationSection
         label="Operations"
         items={operationsItems}
@@ -179,9 +167,7 @@ export const SettingsLink = ({
           label: "Settings",
           icon: Settings,
           to: "/settings/profile",
-          active:
-            location.pathname === "/settings" ||
-            location.pathname.startsWith("/settings/"),
+          active: location.pathname === "/settings" || location.pathname.startsWith("/settings/"),
         },
       ]}
       collapsed={collapsed}

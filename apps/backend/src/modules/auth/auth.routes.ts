@@ -48,12 +48,7 @@ router.post(
   resendVerificationCode,
 );
 
-router.post(
-  "/login",
-  customRateLimiter(10, 15),
-  validateFormData(LoginRequestSchema),
-  loginUser,
-);
+router.post("/login", customRateLimiter(10, 15), validateFormData(LoginRequestSchema), loginUser);
 
 router.post("/logout", isAuthenticated, logoutUser);
 
@@ -64,11 +59,7 @@ router.post(
   forgotPassword,
 );
 
-router.post(
-  "/reset-password",
-  validateFormData(ResetPasswordRequestSchema),
-  resetPassword,
-);
+router.post("/reset-password", validateFormData(ResetPasswordRequestSchema), resetPassword);
 
 router.get("/reset-password/validate", validateResetToken);
 

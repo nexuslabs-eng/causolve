@@ -12,8 +12,7 @@ export const useUpdateUserPreferences = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (input: UpdateUserPreferencesRequest) =>
-      updateUserPreferences(input),
+    mutationFn: (input: UpdateUserPreferencesRequest) => updateUserPreferences(input),
 
     onSuccess: (preferences) => {
       queryClient.setQueryData(userPreferencesQueryKey, preferences);

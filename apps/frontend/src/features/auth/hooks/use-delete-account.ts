@@ -7,25 +7,25 @@ import { signupCompletionQueryKey } from "@/features/auth/queries/signup-complet
 import { queryClient } from "@/lib/query-client";
 
 export const useDeleteAccount = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return useMutation({
-        mutationFn: deleteAccount,
+  return useMutation({
+    mutationFn: deleteAccount,
 
-        onSuccess: () => {
-            queryClient.setQueryData(authSessionQueryKey, {
-                authenticated: false,
-                oauthError: null,
-            });
+    onSuccess: async () => {
+      queryClient.setQueryData(authSessionQueryKey, {
+        authenticated: false,
+        oauthError: null,
+      });
 
-            queryClient.removeQueries({
-                queryKey: signupCompletionQueryKey,
-            });
+      queryClient.removeQueries({
+        queryKey: signupCompletionQueryKey,
+      });
 
-            navigate("/", {
-                replace: true,
-                flushSync: true,
-            });
-        },
-    });
+      await navigate("/", {
+        replace: true,
+        flushSync: true,
+      });
+    },
+  });
 };

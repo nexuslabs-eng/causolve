@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { InvestigationSchema } from "contracts";
@@ -26,9 +26,7 @@ describe("GET /organizations/:organizationId/incidents/:incidentId/investigation
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "OBSERVER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "OBSERVER" }));
     prismaMock.incident.findFirst.mockResolvedValue(buildFakeIncident());
     const fakeInvestigation = buildFakeInvestigation();
     prismaMock.investigation.findUnique.mockResolvedValue(fakeInvestigation);

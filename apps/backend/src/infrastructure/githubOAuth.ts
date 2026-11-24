@@ -1,5 +1,5 @@
-import { GitHub } from 'arctic';
-import { env } from './keys.js';
+import { GitHub } from "arctic";
+import { env } from "./keys.js";
 
 // Same singleton pattern as googleOAuth.ts. Unlike Google, GitHub's OAuth2
 // flow doesn't use PKCE — no code verifier involved.

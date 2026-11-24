@@ -11,10 +11,7 @@ import {
   PaginationQuerySchema,
 } from "contracts";
 import tryCatchWrapper from "../../infrastructure/tryCatchWrapper.js";
-import {
-  sendSuccess,
-  sendError,
-} from "../../infrastructure/responseHandler.js";
+import { sendSuccess, sendError } from "../../infrastructure/responseHandler.js";
 
 const toIncidentResponse = (incident: {
   id: string;
@@ -142,10 +139,7 @@ export const listIncidents = tryCatchWrapper(
 );
 
 export const getIncident = tryCatchWrapper(
-  async (
-    req: Request<{ organizationId: string; incidentId: string }>,
-    res: Response,
-  ) => {
+  async (req: Request<{ organizationId: string; incidentId: string }>, res: Response) => {
     const { organizationId, incidentId } = req.params;
 
     const incident = await prisma.incident.findFirst({
@@ -163,11 +157,7 @@ export const getIncident = tryCatchWrapper(
 
 export const updateIncident = tryCatchWrapper(
   async (
-    req: Request<
-      { organizationId: string; incidentId: string },
-      unknown,
-      UpdateIncidentRequest
-    >,
+    req: Request<{ organizationId: string; incidentId: string }, unknown, UpdateIncidentRequest>,
     res: Response,
   ) => {
     const { organizationId, incidentId } = req.params;
@@ -220,10 +210,7 @@ export const updateIncident = tryCatchWrapper(
         message: `Severity changed from ${existingIncident.severity} to ${severity}.`,
       });
     }
-    if (
-      commanderId !== undefined &&
-      commanderId !== existingIncident.commanderId
-    ) {
+    if (commanderId !== undefined && commanderId !== existingIncident.commanderId) {
       data.commanderId = commanderId;
       events.push({
         incidentId,

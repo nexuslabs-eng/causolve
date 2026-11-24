@@ -3,10 +3,7 @@ import { validateFormData } from "../../middleware/formValidate.middleware.js";
 import { isAuthenticated } from "../../middleware/auth.middleware.js";
 import { requireRole } from "../../middleware/rbac.middleware.js";
 import { requireOrganizationMembership } from "../../middleware/organization.middleware.js";
-import {
-  CreateInvitationRequestSchema,
-  AcceptInvitationRequestSchema,
-} from "contracts";
+import { CreateInvitationRequestSchema, AcceptInvitationRequestSchema } from "contracts";
 import {
   acceptInvitation,
   createInvitation,

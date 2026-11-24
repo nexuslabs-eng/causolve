@@ -16,9 +16,7 @@ const getStoredPreferences = () => {
 
     if (!stored) return DEFAULT_SERVER_USER_PREFERENCES;
 
-    const result = UpdateUserPreferencesRequestSchema.safeParse(
-      JSON.parse(stored),
-    );
+    const result = UpdateUserPreferencesRequestSchema.safeParse(JSON.parse(stored));
 
     return result.success ? result.data : DEFAULT_SERVER_USER_PREFERENCES;
   } catch {
@@ -33,24 +31,16 @@ const setStoredPreferences = (preferences: UpdateUserPreferencesRequest) => {
 const requireAuthentication = () => {
   if (authSession.authenticated) return null;
 
-  return HttpResponse.json(
-    apiError("UNAUTHENTICATED", "You must be signed in."),
-    { status: 401 },
-  );
+  return HttpResponse.json(apiError("UNAUTHENTICATED", "You must be signed in."), { status: 401 });
 };
 
-export const getUserPreferences = http.get(
-  apiEndpoint("/settings/preferences"),
-  () => {
-    const authenticationError = requireAuthentication();
+export const getUserPreferences = http.get(apiEndpoint("/settings/preferences"), () => {
+  const authenticationError = requireAuthentication();
 
-    if (authenticationError) return authenticationError;
+  if (authenticationError) return authenticationError;
 
-    return HttpResponse.json(
-      ServerUserPreferencesSchema.parse(getStoredPreferences()),
-    );
-  },
-);
+  return HttpResponse.json(ServerUserPreferencesSchema.parse(getStoredPreferences()));
+});
 
 export const updateUserPreferences = http.patch(
   apiEndpoint("/settings/preferences"),
@@ -59,15 +49,12 @@ export const updateUserPreferences = http.patch(
 
     if (authenticationError) return authenticationError;
 
-    const result = UpdateUserPreferencesRequestSchema.safeParse(
-      await request.json(),
-    );
+    const result = UpdateUserPreferencesRequestSchema.safeParse(await request.json());
 
     if (!result.success) {
-      return HttpResponse.json(
-        apiError("INVALID_USER_PREFERENCES", "Invalid user preferences."),
-        { status: 422 },
-      );
+      return HttpResponse.json(apiError("INVALID_USER_PREFERENCES", "Invalid user preferences."), {
+        status: 422,
+      });
     }
 
     setStoredPreferences(result.data);

@@ -30,9 +30,7 @@ export const loginAsFakeUser = async (
   });
 
   if (response.status !== 200) {
-    throw new Error(
-      `loginAsFakeUser: login failed with status ${response.status}`,
-    );
+    throw new Error(`loginAsFakeUser: login failed with status ${response.status}`);
   }
 
   return agent;

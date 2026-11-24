@@ -2,7 +2,11 @@ import type { Evidence } from "contracts/investigations/evidence.schema";
 import type { EvidenceHypothesisRelation } from "contracts/investigations/evidence-relation.schema";
 import type { Hypothesis } from "contracts/investigations/hypothesis.schema";
 import { Check, MinusCircle, Terminal, XCircle } from "lucide-react";
-import { getEvidenceDetail, getEvidenceQuality, getEvidenceSourceLabel } from "@/features/marketing/fixtures/incident-mock";
+import {
+  getEvidenceDetail,
+  getEvidenceQuality,
+  getEvidenceSourceLabel,
+} from "@/features/marketing/fixtures/incident-mock";
 import { cn } from "@/lib/utils";
 
 type EvidenceRelation = EvidenceHypothesisRelation["relation"];
@@ -35,12 +39,7 @@ const RelationIcon = ({
   return <MinusCircle className={classes} />;
 };
 
-export const EvidenceFeed = ({
-  evidence,
-  hypotheses,
-  relations,
-  revealed,
-}: EvidenceFeedProps) => (
+export const EvidenceFeed = ({ evidence, hypotheses, relations, revealed }: EvidenceFeedProps) => (
   <div className="mt-5 border-t border-border pt-3">
     <p className="flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-wider text-muted-foreground">
       <Terminal className="h-3 w-3" />
@@ -49,9 +48,7 @@ export const EvidenceFeed = ({
 
     <div className="mt-2.5 space-y-2">
       {evidence.map((item, index) => {
-        const evidenceRelation = relations.find(
-          (relation) => relation.evidenceId === item.id,
-        );
+        const evidenceRelation = relations.find((relation) => relation.evidenceId === item.id);
 
         if (!evidenceRelation) return null;
 
@@ -64,9 +61,7 @@ export const EvidenceFeed = ({
             key={item.id}
             className={cn(
               "rounded-lg border bg-surface-raised px-3 py-2.5 transition-opacity",
-              evidenceRelation.relation === "CONTRADICTS"
-                ? "border-critical/25"
-                : "border-border",
+              evidenceRelation.relation === "CONTRADICTS" ? "border-critical/25" : "border-border",
               index < revealed ? "animate-rise opacity-100" : "opacity-0",
             )}
             aria-hidden={index < revealed ? undefined : true}

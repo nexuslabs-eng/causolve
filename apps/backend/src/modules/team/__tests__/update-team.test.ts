@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { Prisma } from "@causolve/database";
@@ -26,9 +26,7 @@ describe("PATCH /organizations/:organizationId/teams/:teamId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
     const existingTeam = buildFakeTeam();
     prismaMock.team.findFirst.mockResolvedValue(existingTeam);
     const renamedTeam = buildFakeTeam({ name: "Platform Engineering" });
@@ -47,9 +45,7 @@ describe("PATCH /organizations/:organizationId/teams/:teamId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
 
     const response = await agent
       .patch(`/organizations/${MOCK_ORGANIZATION_ID}/teams/${MOCK_TEAM_ID}`)
@@ -63,9 +59,7 @@ describe("PATCH /organizations/:organizationId/teams/:teamId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
     prismaMock.team.findFirst.mockResolvedValue(null);
 
     const response = await agent
@@ -80,9 +74,7 @@ describe("PATCH /organizations/:organizationId/teams/:teamId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
     prismaMock.team.findFirst.mockResolvedValue(buildFakeTeam());
     prismaMock.team.update.mockRejectedValue(
       new Prisma.PrismaClientKnownRequestError("Unique constraint failed", {
@@ -104,9 +96,7 @@ describe("PATCH /organizations/:organizationId/teams/:teamId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
 
     const response = await agent
       .patch(`/organizations/${MOCK_ORGANIZATION_ID}/teams/${MOCK_TEAM_ID}`)

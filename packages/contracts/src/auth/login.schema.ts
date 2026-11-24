@@ -3,21 +3,21 @@ import { NonEmptyStringSchema, IdSchema, EmailSchema } from "../common/primitive
 import { OnboardingStatusSchema, OnboardingStepSchema } from "../onboarding/onboarding.enums.js";
 
 export const LoginRequestSchema = z.object({
-    email: EmailSchema,
-    password: z.string().min(1, "Password is required."),
+  email: EmailSchema,
+  password: z.string().min(1, "Password is required."),
 });
 
 export const LoginResponseSchema = z.object({
-    user: z.object({
-        id: IdSchema,
-        fullName: NonEmptyStringSchema,
-        email: z.email(),
-        emailVerified: z.boolean(),
-    }),
-    onboarding: z.object({
-        status: OnboardingStatusSchema,
-        nextStep: OnboardingStepSchema,
-    }),
+  user: z.object({
+    id: IdSchema,
+    fullName: NonEmptyStringSchema,
+    email: z.email(),
+    emailVerified: z.boolean(),
+  }),
+  onboarding: z.object({
+    status: OnboardingStatusSchema,
+    nextStep: OnboardingStepSchema,
+  }),
 });
 
 export type LoginRequest = z.infer<typeof LoginRequestSchema>;

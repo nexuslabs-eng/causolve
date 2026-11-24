@@ -39,9 +39,7 @@ export const buildFakeUser = (overrides: Partial<User> = {}): User => ({
   ...overrides,
 });
 
-export const buildFakeOrganization = (
-  overrides: Partial<Organization> = {},
-): Organization => ({
+export const buildFakeOrganization = (overrides: Partial<Organization> = {}): Organization => ({
   id: MOCK_ORGANIZATION_ID,
   name: "Acme Engineering",
   slug: "acme-engineering",
@@ -52,9 +50,7 @@ export const buildFakeOrganization = (
   ...overrides,
 });
 
-export const buildFakeMembership = (
-  overrides: Partial<Membership> = {},
-): Membership => ({
+export const buildFakeMembership = (overrides: Partial<Membership> = {}): Membership => ({
   id: MOCK_MEMBERSHIP_ID,
   userId: MOCK_USER_ID,
   organizationId: MOCK_ORGANIZATION_ID,
@@ -72,9 +68,7 @@ export const buildFakeTeam = (overrides: Partial<Team> = {}): Team => ({
   ...overrides,
 });
 
-export const buildFakeService = (
-  overrides: Partial<Service> = {},
-): Service => ({
+export const buildFakeService = (overrides: Partial<Service> = {}): Service => ({
   id: MOCK_SERVICE_ID,
   organizationId: MOCK_ORGANIZATION_ID,
   teamId: null,
@@ -87,9 +81,7 @@ export const buildFakeService = (
   ...overrides,
 });
 
-export const buildFakeIncident = (
-  overrides: Partial<Incident> = {},
-): Incident => ({
+export const buildFakeIncident = (overrides: Partial<Incident> = {}): Incident => ({
   id: MOCK_INCIDENT_ID,
   reference: "INC-1",
   organizationId: MOCK_ORGANIZATION_ID,
@@ -107,9 +99,7 @@ export const buildFakeIncident = (
   ...overrides,
 });
 
-export const buildFakeIncidentEvent = (
-  overrides: Partial<IncidentEvent> = {},
-): IncidentEvent => ({
+export const buildFakeIncidentEvent = (overrides: Partial<IncidentEvent> = {}): IncidentEvent => ({
   id: MOCK_INCIDENT_EVENT_ID,
   incidentId: MOCK_INCIDENT_ID,
   actorType: "USER",
@@ -121,9 +111,7 @@ export const buildFakeIncidentEvent = (
   ...overrides,
 });
 
-export const buildFakeInvestigation = (
-  overrides: Partial<Investigation> = {},
-): Investigation => ({
+export const buildFakeInvestigation = (overrides: Partial<Investigation> = {}): Investigation => ({
   id: MOCK_INVESTIGATION_ID,
   incidentId: MOCK_INCIDENT_ID,
   status: "PENDING",
@@ -146,9 +134,7 @@ type FakeInvitation = Invitation & {
   organization?: { id: string; name: string; slug: string };
 };
 
-export const buildFakeInvitation = (
-  overrides: Partial<FakeInvitation> = {},
-): FakeInvitation => ({
+export const buildFakeInvitation = (overrides: Partial<FakeInvitation> = {}): FakeInvitation => ({
   id: MOCK_INVITATION_ID,
   organizationId: MOCK_ORGANIZATION_ID,
   email: "newhire@acme.com",

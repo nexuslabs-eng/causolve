@@ -8,7 +8,7 @@ export const passwordResetTemplate = (
   fullName: string,
   resetUrl: string,
 ): PasswordResetEmailContent => {
-  const subject = 'Reset your Causolve password';
+  const subject = "Reset your Causolve password";
 
   const text = `Hi ${fullName},\n\nWe received a request to reset your Causolve password. Reset it here: ${resetUrl}\n\nThis link expires in 15 minutes. If you didn't request this, you can safely ignore this email - your password won't be changed.`;
 

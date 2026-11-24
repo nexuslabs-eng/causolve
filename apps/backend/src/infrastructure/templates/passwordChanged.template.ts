@@ -8,7 +8,7 @@ export const passwordChangedTemplate = (
   fullName: string,
   forgotPasswordUrl: string,
 ): PasswordChangedEmailContent => {
-  const subject = 'Your Causolve password was changed';
+  const subject = "Your Causolve password was changed";
 
   const text = `Hi ${fullName},\n\nYour Causolve password was just changed. If this was you, no action is needed.\n\nIf you didn't make this change, secure your account immediately: ${forgotPasswordUrl}`;
 

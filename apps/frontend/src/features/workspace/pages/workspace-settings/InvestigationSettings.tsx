@@ -19,8 +19,7 @@ export const InvestigationSettings = () => {
 
   const settings = query.data ?? null;
   const canEdit = Boolean(settings) && !query.isError && !query.isPending;
-  const showLoadError =
-    query.isError && !query.isPending && !query.isFetching;
+  const showLoadError = query.isError && !query.isPending && !query.isFetching;
 
   if (query.isPending) {
     return (

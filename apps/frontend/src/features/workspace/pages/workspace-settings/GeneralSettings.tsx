@@ -6,19 +6,12 @@ import { SettingsPageLoading } from "@/features/workspace/components/SettingsPag
 export const GeneralSettings = () => {
   const sessionQuery = useAuthSession();
 
-  const workspace = sessionQuery.data?.authenticated
-    ? sessionQuery.data.activeWorkspace
-    : null;
+  const workspace = sessionQuery.data?.authenticated ? sessionQuery.data.activeWorkspace : null;
 
-  const sessionError =
-    sessionQuery.error instanceof Error
-      ? sessionQuery.error.message
-      : undefined;
+  const sessionError = sessionQuery.error instanceof Error ? sessionQuery.error.message : undefined;
 
   const showSessionError =
-    Boolean(sessionError) &&
-    !sessionQuery.isPending &&
-    !sessionQuery.isFetching;
+    Boolean(sessionError) && !sessionQuery.isPending && !sessionQuery.isFetching;
 
   if (sessionQuery.isPending) {
     return (
@@ -40,10 +33,7 @@ export const GeneralSettings = () => {
         />
       )}
 
-      <GeneralSettingsForm
-        settings={workspace}
-        canEdit={Boolean(workspace) && !sessionError}
-      />
+      <GeneralSettingsForm settings={workspace} canEdit={Boolean(workspace) && !sessionError} />
     </div>
   );
 };

@@ -25,13 +25,8 @@ export const CreateHypothesisRequestSchema = z.object({
   statement: z.string().trim().min(3).max(2000),
 });
 
-export const HypothesisListResponseSchema =
-  paginatedResponseSchema(HypothesisSchema);
+export const HypothesisListResponseSchema = paginatedResponseSchema(HypothesisSchema);
 
 export type Hypothesis = z.infer<typeof HypothesisSchema>;
-export type CreateHypothesisRequest = z.infer<
-  typeof CreateHypothesisRequestSchema
->;
-export type HypothesisListResponse = z.infer<
-  typeof HypothesisListResponseSchema
->;
+export type CreateHypothesisRequest = z.infer<typeof CreateHypothesisRequestSchema>;
+export type HypothesisListResponse = z.infer<typeof HypothesisListResponseSchema>;

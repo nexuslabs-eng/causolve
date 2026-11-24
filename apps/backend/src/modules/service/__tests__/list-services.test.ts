@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { ServiceListResponseSchema } from "contracts";
@@ -24,16 +24,12 @@ describe("GET /organizations/:organizationId/services", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "OBSERVER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "OBSERVER" }));
     const fakeService = buildFakeService();
     prismaMock.service.findMany.mockResolvedValue([fakeService]);
     prismaMock.service.count.mockResolvedValue(1);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/services`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/services`);
 
     expect(response.status).toBe(200);
     const body = ServiceListResponseSchema.parse(response.body);
@@ -76,9 +72,7 @@ describe("GET /organizations/:organizationId/services", () => {
 
     prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership());
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/services?page=0`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/services?page=0`);
 
     expect(response.status).toBe(400);
     expect(prismaMock.service.findMany).not.toHaveBeenCalled();
@@ -90,9 +84,7 @@ describe("GET /organizations/:organizationId/services", () => {
 
     prismaMock.membership.findFirst.mockResolvedValue(null);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/services`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/services`);
 
     expect(response.status).toBe(404);
     expect(response.body).toMatchObject({
@@ -101,9 +93,7 @@ describe("GET /organizations/:organizationId/services", () => {
   });
 
   it("rejects an unauthenticated request", async () => {
-    const response = await request(app).get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/services`,
-    );
+    const response = await request(app).get(`/organizations/${MOCK_ORGANIZATION_ID}/services`);
 
     expect(response.status).toBe(401);
   });

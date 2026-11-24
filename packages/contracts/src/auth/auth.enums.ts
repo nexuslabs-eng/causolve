@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const AuthProviderSchema = z.enum([ "PASSWORD", "GOOGLE", "GITHUB" ]);
+export const AuthProviderSchema = z.enum(["PASSWORD", "GOOGLE", "GITHUB"]);
 
 export const EmailVerificationPurposeSchema = z.enum(["SIGNUP", "EMAIL_CHANGE"]);
 

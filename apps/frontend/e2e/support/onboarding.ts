@@ -6,10 +6,7 @@ const TEST_PASSWORD = "E2eTestPassword123!";
 const createUniqueEmail = () =>
   `onboarding-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@causolve.test`;
 
-export const createVerifiedAccount = async (
-  page: Page,
-  request: APIRequestContext,
-) => {
+export const createVerifiedAccount = async (page: Page, request: APIRequestContext) => {
   const email = createUniqueEmail();
 
   await page.goto("/signup/account");

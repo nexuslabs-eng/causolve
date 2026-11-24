@@ -19,9 +19,7 @@ export type DateFormat = UserPreferences["dateFormat"];
 
 export type ServerUserPreferences = z.infer<typeof ServerUserPreferencesSchema>;
 
-export type UpdateUserPreferencesRequest = z.infer<
-  typeof UpdateUserPreferencesRequestSchema
->;
+export type UpdateUserPreferencesRequest = z.infer<typeof UpdateUserPreferencesRequestSchema>;
 
 export const DEFAULT_SERVER_USER_PREFERENCES = {
   timeZone: "Africa/Lagos",

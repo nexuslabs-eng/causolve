@@ -20,17 +20,14 @@ export const forgotPassword = http.post(
     const result = ForgotPasswordRequestSchema.safeParse(await request.json());
 
     if (!result.success) {
-      return HttpResponse.json(
-        apiError("INVALID_REQUEST", "Enter a valid email."),
-        { status: 422 },
-      );
+      return HttpResponse.json(apiError("INVALID_REQUEST", "Enter a valid email."), {
+        status: 422,
+      });
     }
 
     issuePasswordResetToken(result.data.email);
 
-    return HttpResponse.json(
-      ForgotPasswordResponseSchema.parse({ accepted: true }),
-    );
+    return HttpResponse.json(ForgotPasswordResponseSchema.parse({ accepted: true }));
   },
 );
 
@@ -62,32 +59,24 @@ export const validateResetToken = http.get(
       );
     }
 
-    return HttpResponse.json(
-      ValidateResetTokenResponseSchema.parse({ valid: true }),
-    );
+    return HttpResponse.json(ValidateResetTokenResponseSchema.parse({ valid: true }));
   },
 );
 
-export const resetPassword = http.post(
-  apiEndpoint("/auth/reset-password"),
-  async ({ request }) => {
-    const result = ResetPasswordRequestSchema.safeParse(await request.json());
+export const resetPassword = http.post(apiEndpoint("/auth/reset-password"), async ({ request }) => {
+  const result = ResetPasswordRequestSchema.safeParse(await request.json());
 
-    if (
-      !result.success ||
-      !resetMockPassword(result.data.token, result.data.password)
-    ) {
-      return HttpResponse.json(
-        apiError("PASSWORD_RESET_TOKEN_INVALID", "Request a new reset link."),
-        { status: 400 },
-      );
-    }
-
+  if (!result.success || !resetMockPassword(result.data.token, result.data.password)) {
     return HttpResponse.json(
-      ResetPasswordResponseSchema.parse({
-        reset: true,
-        completedAt: new Date().toISOString(),
-      }),
+      apiError("PASSWORD_RESET_TOKEN_INVALID", "Request a new reset link."),
+      { status: 400 },
     );
-  },
-);
+  }
+
+  return HttpResponse.json(
+    ResetPasswordResponseSchema.parse({
+      reset: true,
+      completedAt: new Date().toISOString(),
+    }),
+  );
+});

@@ -5,15 +5,10 @@ type SettingsPageLoadingProps = {
   description: string;
 };
 
-export const SettingsPageLoading = ({
-  title,
-  description,
-}: SettingsPageLoadingProps) => (
+export const SettingsPageLoading = ({ title, description }: SettingsPageLoadingProps) => (
   <div className="min-w-0">
     <header className="border-b border-border pb-6">
-      <h1 className="mt-2 text-2xl font-semibold text-foreground">
-        {title}
-      </h1>
+      <h1 className="mt-2 text-2xl font-semibold text-foreground">{title}</h1>
       <p className="mt-2 text-sm text-muted-foreground">{description}</p>
     </header>
 

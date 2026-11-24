@@ -58,9 +58,7 @@ export const removeTeamMember = async (
   membershipId: string,
 ): Promise<RemoveTeamMemberResponse> => {
   const response = await axiosClient.delete<unknown, unknown>(
-    `${teamMembersEndpoint(organizationId, teamId)}/${encodeURIComponent(
-      membershipId,
-    )}`,
+    `${teamMembersEndpoint(organizationId, teamId)}/${encodeURIComponent(membershipId)}`,
   );
 
   return RemoveTeamMemberResponseSchema.parse(response);

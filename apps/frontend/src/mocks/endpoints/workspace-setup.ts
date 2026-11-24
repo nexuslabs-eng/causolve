@@ -3,12 +3,7 @@ import {
   WorkspaceSetupResponseSchema,
 } from "contracts/onboarding/workspace-setup.schema";
 import { http, HttpResponse } from "msw";
-import {
-  apiError,
-  authSession,
-  MOCK_ORGANIZATION_ID,
-  setAuthSession,
-} from "@/mocks/utils";
+import { apiError, authSession, MOCK_ORGANIZATION_ID, setAuthSession } from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";
 
 export const workspaceSetup = http.post(
@@ -24,10 +19,7 @@ export const workspaceSetup = http.post(
 
     if (!authSession.authenticated || !authSession.onboarding.emailVerified)
       return HttpResponse.json(
-        apiError(
-          "ONBOARDING_STEP_NOT_ALLOWED",
-          "Verify your email before creating a workspace.",
-        ),
+        apiError("ONBOARDING_STEP_NOT_ALLOWED", "Verify your email before creating a workspace."),
         { status: 409 },
       );
 

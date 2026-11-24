@@ -25,10 +25,7 @@ import {
   findUserByResetToken,
   isResetTokenExpired,
 } from "../../infrastructure/passwordResetToken.js";
-import {
-  sendSuccess,
-  sendError,
-} from "../../infrastructure/responseHandler.js";
+import { sendSuccess, sendError } from "../../infrastructure/responseHandler.js";
 import { logger } from "../../infrastructure/logger.js";
 import { env } from "../../infrastructure/keys.js";
 import { generateOtp, otpExpiryMs } from "../../infrastructure/generateOtp.js";
@@ -41,20 +38,12 @@ import { passwordChangedTemplate } from "../../infrastructure/templates/password
 import { destroyAllSessionsForUser } from "../../infrastructure/session.js";
 
 export const registerUser = tryCatchWrapper(
-  async (
-    req: Request<unknown, unknown, SignupRequest>,
-    res: Response,
-  ): Promise<void> => {
+  async (req: Request<unknown, unknown, SignupRequest>, res: Response): Promise<void> => {
     const { fullName, email, password } = req.body;
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
-      sendError(
-        res,
-        409,
-        "EMAIL_ALREADY_REGISTERED",
-        "An account with this email already exists.",
-      );
+      sendError(res, 409, "EMAIL_ALREADY_REGISTERED", "An account with this email already exists.");
       return;
     }
 
@@ -74,10 +63,7 @@ export const registerUser = tryCatchWrapper(
       },
     });
 
-    const { subject, text, html } = verificationCodeTemplate(
-      user.fullName,
-      plainVerificationCode,
-    );
+    const { subject, text, html } = verificationCodeTemplate(user.fullName, plainVerificationCode);
     await sendEmail({ to: user.email, subject, text, html });
 
     if (env.NODE_ENV === "development") {
@@ -100,20 +86,12 @@ export const registerUser = tryCatchWrapper(
 );
 
 export const verifyEmail = tryCatchWrapper(
-  async (
-    req: Request<unknown, unknown, VerifyEmailOtpRequest>,
-    res: Response,
-  ): Promise<void> => {
+  async (req: Request<unknown, unknown, VerifyEmailOtpRequest>, res: Response): Promise<void> => {
     const { otp } = req.body;
     const userId = req.user!.id;
 
     if (req.user!.emailVerified) {
-      sendError(
-        res,
-        409,
-        "EMAIL_ALREADY_VERIFIED",
-        "This email is already verified.",
-      );
+      sendError(res, 409, "EMAIL_ALREADY_VERIFIED", "This email is already verified.");
       return;
     }
     const user = await prisma.user.findUnique({
@@ -130,12 +108,7 @@ export const verifyEmail = tryCatchWrapper(
       return;
     }
     if (user?.verificationCodeExpires < new Date()) {
-      sendError(
-        res,
-        400,
-        "VERIFICATION_CODE_EXPIRED",
-        "That code has expired.",
-      );
+      sendError(res, 400, "VERIFICATION_CODE_EXPIRED", "That code has expired.");
       return;
     }
 
@@ -171,10 +144,7 @@ export const verifyEmail = tryCatchWrapper(
     });
 
     try {
-      const { subject, text, html } = welcomeEmailTemplate(
-        req.user!.fullName,
-        env.CLIENT_URL,
-      );
+      const { subject, text, html } = welcomeEmailTemplate(req.user!.fullName, env.CLIENT_URL);
       await sendEmail({ to: req.user!.email, subject, text, html });
     } catch (error) {
       logger.error({ err: error }, "Failed to send welcome email");
@@ -192,12 +162,7 @@ export const verifyEmail = tryCatchWrapper(
 export const resendVerificationCode = tryCatchWrapper(
   async (req: Request, res: Response): Promise<void> => {
     if (req.user!.emailVerified) {
-      sendError(
-        res,
-        409,
-        "EMAIL_ALREADY_VERIFIED",
-        "This email is already verified.",
-      );
+      sendError(res, 409, "EMAIL_ALREADY_VERIFIED", "This email is already verified.");
       return;
     }
 
@@ -277,10 +242,7 @@ const getOnboardingProgress = (user: {
 };
 
 export const loginUser = tryCatchWrapper(
-  async (
-    req: Request<unknown, unknown, LoginRequest>,
-    res: Response,
-  ): Promise<void> => {
+  async (req: Request<unknown, unknown, LoginRequest>, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
     const user = await prisma.user.findUnique({
@@ -296,23 +258,13 @@ export const loginUser = tryCatchWrapper(
       },
     });
     if (!user || !user.passwordHash) {
-      sendError(
-        res,
-        401,
-        "INVALID_CREDENTIALS",
-        "Incorrect email or password.",
-      );
+      sendError(res, 401, "INVALID_CREDENTIALS", "Incorrect email or password.");
       return;
     }
     const isPasswordValid = await argon2.verify(user.passwordHash, password);
 
     if (!isPasswordValid) {
-      sendError(
-        res,
-        401,
-        "INVALID_CREDENTIALS",
-        "Incorrect email or password.",
-      );
+      sendError(res, 401, "INVALID_CREDENTIALS", "Incorrect email or password.");
       return;
     }
 
@@ -334,106 +286,91 @@ export const loginUser = tryCatchWrapper(
   },
 );
 
-export const logoutUser = tryCatchWrapper(
-  async (req: Request, res: Response): Promise<void> => {
-    const isProd = env.NODE_ENV === "production";
+export const logoutUser = tryCatchWrapper(async (req: Request, res: Response): Promise<void> => {
+  const isProd = env.NODE_ENV === "production";
 
-    req.session.destroy((error) => {
-      if (error) {
-        sendError(
-          res,
-          500,
-          "LOGOUT_FAILED",
-          "Could not log out please try again.",
-        );
-        return;
-      }
-      res.clearCookie("sessionId", {
-        httpOnly: true,
-        secure: isProd,
-        sameSite: isProd ? "none" : "lax",
-      });
-      const response: LogoutResponse = { loggedOut: true };
-      sendSuccess(res, 200, response);
-    });
-  },
-);
-
-export const getSession = tryCatchWrapper(
-  async (req: Request, res: Response): Promise<void> => {
-    const userId = req.session.userId;
-
-    if (!userId) {
-      const oauthError = (req.session.oauthError ??
-        null) as OAuthErrorCode | null;
-      delete req.session.oauthError;
-      const response: AuthSession = { authenticated: false, oauthError };
-      sendSuccess(res, 200, response);
+  req.session.destroy((error) => {
+    if (error) {
+      sendError(res, 500, "LOGOUT_FAILED", "Could not log out please try again.");
       return;
     }
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        id: true,
-        fullName: true,
-        email: true,
-        emailVerified: true,
-        jobRole: true,
-        onboardingCompletedAt: true,
-        memberships: {
-          take: 1,
-          select: {
-            role: true,
-            organization: {
-              select: { id: true, name: true, slug: true, teamSize: true },
-            },
+    res.clearCookie("sessionId", {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
+    });
+    const response: LogoutResponse = { loggedOut: true };
+    sendSuccess(res, 200, response);
+  });
+});
+
+export const getSession = tryCatchWrapper(async (req: Request, res: Response): Promise<void> => {
+  const userId = req.session.userId;
+
+  if (!userId) {
+    const oauthError = (req.session.oauthError ?? null) as OAuthErrorCode | null;
+    delete req.session.oauthError;
+    const response: AuthSession = { authenticated: false, oauthError };
+    sendSuccess(res, 200, response);
+    return;
+  }
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      fullName: true,
+      email: true,
+      emailVerified: true,
+      jobRole: true,
+      onboardingCompletedAt: true,
+      memberships: {
+        take: 1,
+        select: {
+          role: true,
+          organization: {
+            select: { id: true, name: true, slug: true, teamSize: true },
           },
         },
       },
-    });
+    },
+  });
 
-    if (!user) {
-      //session points at a deleted account - treat identically to anonymous rather than surfacing an error
-      const response: AuthSession = { authenticated: false, oauthError: null };
-      sendSuccess(res, 200, response);
-      return;
-    }
-    const membership = user.memberships[0] ?? null;
-
-    const response: AuthSession = {
-      authenticated: true,
-      user: {
-        id: user.id,
-        fullName: user.fullName,
-        email: user.email,
-        emailVerified: user.emailVerified,
-      },
-      activeWorkspace: membership
-        ? {
-            organizationId: membership.organization.id,
-            name: membership.organization.name,
-            slug: membership.organization.slug,
-            teamSize: membership.organization.teamSize,
-          }
-        : null,
-      membership: membership
-        ? { role: membership.role, jobRole: user.jobRole }
-        : null,
-      onboarding: getOnboardingProgress({
-        ...user,
-        hasWorkspace: membership !== null,
-      }),
-    };
+  if (!user) {
+    //session points at a deleted account - treat identically to anonymous rather than surfacing an error
+    const response: AuthSession = { authenticated: false, oauthError: null };
     sendSuccess(res, 200, response);
-  },
-);
+    return;
+  }
+  const membership = user.memberships[0] ?? null;
+
+  const response: AuthSession = {
+    authenticated: true,
+    user: {
+      id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      emailVerified: user.emailVerified,
+    },
+    activeWorkspace: membership
+      ? {
+          organizationId: membership.organization.id,
+          name: membership.organization.name,
+          slug: membership.organization.slug,
+          teamSize: membership.organization.teamSize,
+        }
+      : null,
+    membership: membership ? { role: membership.role, jobRole: user.jobRole } : null,
+    onboarding: getOnboardingProgress({
+      ...user,
+      hasWorkspace: membership !== null,
+    }),
+  };
+  sendSuccess(res, 200, response);
+});
 
 const PASSWORD_RESET_TOKEN_EXPIRY_MS = 15 * 60 * 1000;
 export const forgotPassword = tryCatchWrapper(
-  async (
-    req: Request<unknown, unknown, ForgotPasswordRequest>,
-    res: Response,
-  ): Promise<void> => {
+  async (req: Request<unknown, unknown, ForgotPasswordRequest>, res: Response): Promise<void> => {
     const { email } = req.body;
 
     const user = await prisma.user.findUnique({
@@ -443,22 +380,14 @@ export const forgotPassword = tryCatchWrapper(
 
     if (user && user.passwordHash) {
       const rawToken = crypto.randomBytes(32).toString("hex");
-      const passwordResetTokenHash = crypto
-        .createHash("sha256")
-        .update(rawToken)
-        .digest("hex");
-      const passwordResetTokenExpires = new Date(
-        Date.now() + PASSWORD_RESET_TOKEN_EXPIRY_MS,
-      );
+      const passwordResetTokenHash = crypto.createHash("sha256").update(rawToken).digest("hex");
+      const passwordResetTokenExpires = new Date(Date.now() + PASSWORD_RESET_TOKEN_EXPIRY_MS);
       await prisma.user.update({
         where: { id: user.id },
         data: { passwordResetTokenHash, passwordResetTokenExpires },
       });
       const resetUrl = `${env.CLIENT_URL}/reset-password?token=${rawToken}`;
-      const { subject, text, html } = passwordResetTemplate(
-        user.fullName,
-        resetUrl,
-      );
+      const { subject, text, html } = passwordResetTemplate(user.fullName, resetUrl);
       await sendEmail({ to: email, subject, text, html });
     }
     const response: ForgotPasswordResponse = { accepted: true };
@@ -467,29 +396,16 @@ export const forgotPassword = tryCatchWrapper(
 );
 
 export const resetPassword = tryCatchWrapper(
-  async (
-    req: Request<unknown, unknown, ResetPasswordRequest>,
-    res: Response,
-  ): Promise<void> => {
+  async (req: Request<unknown, unknown, ResetPasswordRequest>, res: Response): Promise<void> => {
     const { token, password } = req.body;
 
     const user = await findUserByResetToken(token);
     if (!user) {
-      sendError(
-        res,
-        400,
-        "PASSWORD_RESET_TOKEN_INVALID",
-        "This reset link is invalid.",
-      );
+      sendError(res, 400, "PASSWORD_RESET_TOKEN_INVALID", "This reset link is invalid.");
       return;
     }
     if (isResetTokenExpired(user.passwordResetTokenExpires)) {
-      sendError(
-        res,
-        400,
-        "PASSWORD_RESET_TOKEN_EXPIRED",
-        "This reset link has expired.",
-      );
+      sendError(res, 400, "PASSWORD_RESET_TOKEN_EXPIRED", "This reset link has expired.");
       return;
     }
     const passwordHash = await argon2.hash(password);
@@ -505,10 +421,7 @@ export const resetPassword = tryCatchWrapper(
     try {
       await destroyAllSessionsForUser(user.id);
     } catch (error) {
-      logger.error(
-        { err: error },
-        "Failed to destroy existing sessions after password reset",
-      );
+      logger.error({ err: error }, "Failed to destroy existing sessions after password reset");
     }
 
     try {
@@ -534,31 +447,16 @@ export const validateResetToken = tryCatchWrapper(
     const result = PasswordResetTokenSchema.safeParse(req.query.token);
 
     if (!result.success) {
-      sendError(
-        res,
-        400,
-        "PASSWORD_RESET_TOKEN_INVALID",
-        "This reset link is invalid.",
-      );
+      sendError(res, 400, "PASSWORD_RESET_TOKEN_INVALID", "This reset link is invalid.");
       return;
     }
     const user = await findUserByResetToken(result.data);
     if (!user) {
-      sendError(
-        res,
-        400,
-        "PASSWORD_RESET_TOKEN_INVALID",
-        "This reset link is invalid.",
-      );
+      sendError(res, 400, "PASSWORD_RESET_TOKEN_INVALID", "This reset link is invalid.");
       return;
     }
     if (isResetTokenExpired(user.passwordResetTokenExpires)) {
-      sendError(
-        res,
-        400,
-        "PASSWORD_RESET_TOKEN_EXPIRED",
-        "This reset link has expired.",
-      );
+      sendError(res, 400, "PASSWORD_RESET_TOKEN_EXPIRED", "This reset link has expired.");
       return;
     }
     const response: ValidateResetTokenResponse = { valid: true };

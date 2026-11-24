@@ -1,6 +1,10 @@
 import { Activity, FileText, GitBranch, Layers, Search, ShieldCheck } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
-import { TIMELINE, SERVICES, HUMAN_CONTROLLED_REMEDIATION } from "@/features/marketing/fixtures/capabilities-data";
+import {
+  TIMELINE,
+  SERVICES,
+  HUMAN_CONTROLLED_REMEDIATION,
+} from "@/features/marketing/fixtures/capabilities-data";
 
 export const CapabilitiesSection = () => {
   return (
@@ -23,16 +27,14 @@ export const CapabilitiesSection = () => {
               same incident, not five different chat threads.
             </p>
             <div className="mt-4 flex flex-wrap gap-2 font-mono text-[10.5px]">
-              {["INC-1042", "HIGH", "INVESTIGATING", "checkout-api"]
-                .map((chip) => (
-                  <span
-                    key={chip}
-                    className="rounded-md border border-border bg-surface-inset px-2 py-1 text-muted-foreground"
-                  >
-                    {chip}
-                  </span>
-                )
-              )}
+              {["INC-1042", "HIGH", "INVESTIGATING", "checkout-api"].map((chip) => (
+                <span
+                  key={chip}
+                  className="rounded-md border border-border bg-surface-inset px-2 py-1 text-muted-foreground"
+                >
+                  {chip}
+                </span>
+              ))}
             </div>
           </article>
 
@@ -51,12 +53,15 @@ export const CapabilitiesSection = () => {
                 { label: "deployment regression", value: 42 },
                 { label: "database exhaustion", value: 18 },
               ].map((row) => (
-                <div key={row.label} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+                <div
+                  key={row.label}
+                  className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3"
+                >
                   <div className="min-w-0">
                     <p className="truncate font-mono text-[11px] text-muted-foreground">
                       {row.label}
                     </p>
-                    
+
                     <div className="mt-1 h-0.75 overflow-hidden rounded-full bg-surface-raised">
                       <div
                         className="h-full rounded-full bg-primary-bright"
@@ -65,7 +70,9 @@ export const CapabilitiesSection = () => {
                     </div>
                   </div>
 
-                  <span className="font-mono text-[11px] tabular-nums text-foreground">{row.value}%</span>
+                  <span className="font-mono text-[11px] tabular-nums text-foreground">
+                    {row.value}%
+                  </span>
                 </div>
               ))}
             </div>
@@ -86,12 +93,13 @@ export const CapabilitiesSection = () => {
               {TIMELINE.map((item) => (
                 <li key={item.at} className="relative text-[12.5px] text-muted-foreground">
                   <span className="absolute -left-4.5 top-1.5 h-1.5 w-1.5 rounded-full bg-border" />
-                  <span className="font-mono text-[11px] tabular-nums text-muted-foreground">{item.at}</span>{" "}
+                  <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
+                    {item.at}
+                  </span>{" "}
                   <span className={item.tone}>{item.label}</span>
                 </li>
               ))}
             </ol>
-
           </article>
 
           <article className="rounded-xl border border-border bg-surface p-5 lg:col-span-2">
@@ -107,18 +115,17 @@ export const CapabilitiesSection = () => {
 
             <ul className="mt-4 divide-y divide-border overflow-hidden rounded-lg border border-border">
               {SERVICES.map((svc) => (
-                <li key={svc.name} className="flex items-center justify-between gap-2 bg-surface-inset px-3 py-2">
+                <li
+                  key={svc.name}
+                  className="flex items-center justify-between gap-2 bg-surface-inset px-3 py-2"
+                >
                   <span className="min-w-0 truncate font-mono text-[11.5px] text-foreground">
                     {svc.name}
                   </span>
 
-                  <span className="font-mono text-[10.5px] text-muted-foreground">  
-                    {svc.owner}
-                  </span>
+                  <span className="font-mono text-[10.5px] text-muted-foreground">{svc.owner}</span>
 
-                  <span className={`font-mono text-[10.5px] ${svc.tone}`}>
-                    {svc.state}
-                  </span>
+                  <span className={`font-mono text-[10.5px] ${svc.tone}`}>{svc.state}</span>
                 </li>
               ))}
             </ul>
@@ -158,7 +165,6 @@ export const CapabilitiesSection = () => {
                   The draft is assembled from real evidence, decisions, and timings, so the review
                   starts from facts instead of memory.
                 </p>
-
               </div>
 
               <div className="rounded-lg border border-border bg-surface-inset p-4 font-mono text-[11.5px] leading-relaxed text-muted-foreground">
@@ -169,16 +175,14 @@ export const CapabilitiesSection = () => {
                 <p>mitigation: traffic shifted to secondary provider</p>
                 <p>detection: 1m 42s · mitigation: 5m 11s</p>
                 <p>
-                  action items: 
+                  action items:
                   <span className="text-primary-bright">3 open</span>
                 </p>
-
               </div>
             </div>
-            
           </article>
         </div>
       </div>
     </section>
   );
-}
+};

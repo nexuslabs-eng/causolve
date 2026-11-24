@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { InvestigationSchema } from "contracts";
@@ -27,9 +27,7 @@ describe("POST /organizations/:organizationId/incidents/:incidentId/investigatio
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
     prismaMock.incident.findFirst.mockResolvedValue(buildFakeIncident());
     prismaMock.investigation.findUnique.mockResolvedValue(null);
     const fakeInvestigation = buildFakeInvestigation();
@@ -62,9 +60,7 @@ describe("POST /organizations/:organizationId/incidents/:incidentId/investigatio
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
     prismaMock.incident.findFirst.mockResolvedValue(null);
 
     const response = await agent.post(
@@ -82,13 +78,9 @@ describe("POST /organizations/:organizationId/incidents/:incidentId/investigatio
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
     prismaMock.incident.findFirst.mockResolvedValue(buildFakeIncident());
-    prismaMock.investigation.findUnique.mockResolvedValue(
-      buildFakeInvestigation(),
-    );
+    prismaMock.investigation.findUnique.mockResolvedValue(buildFakeInvestigation());
 
     const response = await agent.post(
       `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/investigation`,
@@ -105,9 +97,7 @@ describe("POST /organizations/:organizationId/incidents/:incidentId/investigatio
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "OBSERVER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "OBSERVER" }));
 
     const response = await agent.post(
       `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/investigation`,

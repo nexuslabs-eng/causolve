@@ -1,6 +1,6 @@
-import type { NextFunction, Request, Response } from 'express';
-import { prisma } from '@causolve/database';
-import { ErrorResponse } from './error.middleware.js';
+import type { NextFunction, Request, Response } from "express";
+import { prisma } from "@causolve/database";
+import { ErrorResponse } from "./error.middleware.js";
 
 export interface AuthenticatedUser {
   id: string;
@@ -26,7 +26,11 @@ export const isAuthenticated = async (
   const userId = req.session.userId;
 
   if (!userId) {
-    throw new ErrorResponse('You must be logged in to access this resource.', 401, 'UNAUTHENTICATED');
+    throw new ErrorResponse(
+      "You must be logged in to access this resource.",
+      401,
+      "UNAUTHENTICATED",
+    );
   }
 
   const user = await prisma.user.findUnique({
@@ -43,7 +47,11 @@ export const isAuthenticated = async (
   // the cookie was issued) — treat this identically to "never logged in"
   // rather than surfacing a 500.
   if (!user) {
-    throw new ErrorResponse('You must be logged in to access this resource.', 401, 'UNAUTHENTICATED');
+    throw new ErrorResponse(
+      "You must be logged in to access this resource.",
+      401,
+      "UNAUTHENTICATED",
+    );
   }
 
   req.user = user;

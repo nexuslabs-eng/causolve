@@ -1,26 +1,20 @@
 import { tableFeatures, useTable } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Loader2, Mail, RefreshCw, XCircle } from "lucide-react";
-import type { InvitationListItem, InvitationListResponse } from "contracts/invitations/invitation-list.schema";
+import type {
+  InvitationListItem,
+  InvitationListResponse,
+} from "contracts/invitations/invitation-list.schema";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { SettingsLoadError } from "@/features/workspace/components/SettingsLoadError";
 import type { InvitationAction } from "@/features/workspace/hooks/use-members-settings";
-import {
-  JOB_ROLES_LABELS,
-  ROLE_LABELS,
-} from "@/features/workspace/lib/invite-members";
+import { JOB_ROLES_LABELS, ROLE_LABELS } from "@/features/workspace/lib/invite-members";
 import { cn } from "@/lib/utils";
 
 const features = tableFeatures({});
 const formatDate = (value: string) =>
-  new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(
-    new Date(value),
-  );
+  new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(new Date(value));
 const invitationStatusStyles = {
   PENDING: "border-caution/30 bg-caution/10 text-caution",
   ACCEPTED: "border-success/30 bg-success/10 text-success",
@@ -68,10 +62,7 @@ export const MembersInvitations = ({
         role="status"
         aria-label="Loading invitations"
       >
-        <Loader2
-          aria-hidden="true"
-          className="size-4 animate-spin text-primary"
-        />
+        <Loader2 aria-hidden="true" className="size-4 animate-spin text-primary" />
       </div>
     );
   if (failed || !data)
@@ -87,17 +78,14 @@ export const MembersInvitations = ({
     return (
       <div className="flex min-h-40 flex-col items-center justify-center rounded-md border border-dashed border-border px-6 text-center">
         <Mail aria-hidden="true" className="size-6 text-muted-foreground" />
-        <p className="mt-3 text-sm font-medium text-foreground">
-          No invitations yet
-        </p>
+        <p className="mt-3 text-sm font-medium text-foreground">No invitations yet</p>
         <p className="mt-1 text-sm text-muted-foreground">
           Invite teammates to start building your workspace team.
         </p>
       </div>
     );
   const invitations = [...data.invitations].sort(
-    (first, second) =>
-      Date.parse(second.createdAt) - Date.parse(first.createdAt),
+    (first, second) => Date.parse(second.createdAt) - Date.parse(first.createdAt),
   );
   return (
     <>
@@ -171,8 +159,7 @@ const InvitationsTable = ({
     {
       accessorKey: "jobRole",
       header: "Professional role",
-      cell: (info) =>
-        JOB_ROLES_LABELS[info.getValue<keyof typeof JOB_ROLES_LABELS>()],
+      cell: (info) => JOB_ROLES_LABELS[info.getValue<keyof typeof JOB_ROLES_LABELS>()],
     },
     {
       accessorKey: "status",
@@ -272,9 +259,7 @@ const InvitationsTable = ({
                   scope="col"
                   className="whitespace-nowrap px-4 py-3 font-medium last:text-right"
                 >
-                  {header.isPlaceholder ? null : (
-                    <table.FlexRender header={header} />
-                  )}
+                  {header.isPlaceholder ? null : <table.FlexRender header={header} />}
                 </th>
               ))}
             </tr>

@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 
 const { toastSuccess } = vi.hoisted(() => ({
   toastSuccess: vi.fn(),
@@ -40,12 +40,8 @@ describe("NotificationsSettings", () => {
   it("renders the page heading while preferences load", () => {
     renderNotificationsSettings();
 
-    expect(
-      screen.getByRole("heading", { name: "Notifications" }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("status", { name: "Loading notifications" }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Notifications" })).toBeInTheDocument();
+    expect(screen.getByRole("status", { name: "Loading notifications" })).toBeInTheDocument();
   });
 
   it("updates a notification preference", async () => {
@@ -60,9 +56,7 @@ describe("NotificationsSettings", () => {
 
     await user.click(emailNotifications);
 
-    expect(toastSuccess).toHaveBeenCalledWith(
-      "Notification preferences saved.",
-    );
+    expect(toastSuccess).toHaveBeenCalledWith("Notification preferences saved.");
     expect(emailNotifications).not.toBeChecked();
   });
 });

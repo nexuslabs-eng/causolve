@@ -6,9 +6,7 @@ import { CreateInvitationRequestSchema } from "contracts/invitations/create-invi
 
 export const InviteMembersFormSchema = z
   .object({
-    invitations: z
-      .array(CreateInvitationRequestSchema)
-      .min(1, "Add at least one invitation."),
+    invitations: z.array(CreateInvitationRequestSchema).min(1, "Add at least one invitation."),
   })
   .superRefine(({ invitations }, context) => {
     const seenEmails = new Set<string>();

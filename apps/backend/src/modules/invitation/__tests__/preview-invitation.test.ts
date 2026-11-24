@@ -1,12 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import { InvitationPreviewSchema } from "contracts";
 import app from "../../../app.js";
 import { prismaMock } from "../../../test/mocks/prisma.js";
-import {
-  buildFakeInvitation,
-  buildFakeOrganization,
-} from "../../../test/fixtures.js";
+import { buildFakeInvitation, buildFakeOrganization } from "../../../test/fixtures.js";
 
 const VALID_TOKEN = "a".repeat(64);
 
@@ -16,9 +13,7 @@ describe("GET /invitations/preview", () => {
       buildFakeInvitation({ organization: buildFakeOrganization() }),
     );
 
-    const response = await request(app).get(
-      `/invitations/preview?token=${VALID_TOKEN}`,
-    );
+    const response = await request(app).get(`/invitations/preview?token=${VALID_TOKEN}`);
 
     expect(response.status).toBe(200);
     const body = InvitationPreviewSchema.parse(response.body);
@@ -37,9 +32,7 @@ describe("GET /invitations/preview", () => {
       }),
     );
 
-    const response = await request(app).get(
-      `/invitations/preview?token=${VALID_TOKEN}`,
-    );
+    const response = await request(app).get(`/invitations/preview?token=${VALID_TOKEN}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({ status: "EXPIRED" });
@@ -48,9 +41,7 @@ describe("GET /invitations/preview", () => {
   it("returns 404 when the token matches no invitation", async () => {
     prismaMock.invitation.findUnique.mockResolvedValue(null);
 
-    const response = await request(app).get(
-      `/invitations/preview?token=${VALID_TOKEN}`,
-    );
+    const response = await request(app).get(`/invitations/preview?token=${VALID_TOKEN}`);
 
     expect(response.status).toBe(404);
     expect(response.body).toMatchObject({
@@ -59,9 +50,7 @@ describe("GET /invitations/preview", () => {
   });
 
   it("rejects a malformed token without touching the database", async () => {
-    const response = await request(app).get(
-      "/invitations/preview?token=too-short",
-    );
+    const response = await request(app).get("/invitations/preview?token=too-short");
 
     expect(response.status).toBe(400);
     expect(prismaMock.invitation.findUnique).not.toHaveBeenCalled();

@@ -37,7 +37,9 @@ test.describe("login", () => {
   test("shows an error for invalid credentials", async ({ page }) => {
     await signIn(page, `missing-${Date.now()}@example.com`, "WrongPassword123!");
 
-    await expect(page.getByRole("alert")).toHaveText("Invalid email or password.", { timeout: 20000 });
+    await expect(page.getByRole("alert")).toHaveText("Invalid email or password.", {
+      timeout: 20000,
+    });
     await expect(page).toHaveURL(/\/login$/);
   });
 

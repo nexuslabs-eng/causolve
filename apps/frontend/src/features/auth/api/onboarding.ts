@@ -1,65 +1,59 @@
 import {
-    WorkspaceSetupRequestSchema,
-    WorkspaceSetupResponseSchema,
-    WorkspaceSlugSchema,
-    WorkspaceSlugAvailabilityResponseSchema,
-    ProfileSetupRequestSchema,
-    ProfileSetupResponseSchema,
-    type WorkspaceSetupRequest,
-    type WorkspaceSetupResponse,
-    type WorkspaceSlug,
-    type WorkspaceSlugAvailabilityResponse,
-    type ProfileSetupRequest,
-    type ProfileSetupResponse,
-    type SignupCompletion,
-    SignupCompletionSchema
+  WorkspaceSetupRequestSchema,
+  WorkspaceSetupResponseSchema,
+  WorkspaceSlugSchema,
+  WorkspaceSlugAvailabilityResponseSchema,
+  ProfileSetupRequestSchema,
+  ProfileSetupResponseSchema,
+  type WorkspaceSetupRequest,
+  type WorkspaceSetupResponse,
+  type WorkspaceSlug,
+  type WorkspaceSlugAvailabilityResponse,
+  type ProfileSetupRequest,
+  type ProfileSetupResponse,
+  type SignupCompletion,
+  SignupCompletionSchema,
 } from "contracts/onboarding/index";
 import { axiosClient } from "@/lib/api/axios-client";
 
 export const createWorkspace = async (
-    input: WorkspaceSetupRequest
+  input: WorkspaceSetupRequest,
 ): Promise<WorkspaceSetupResponse> => {
-    const payload = WorkspaceSetupRequestSchema.parse(input);
+  const payload = WorkspaceSetupRequestSchema.parse(input);
 
-    const response = await axiosClient.post<unknown, unknown>(
-        "/onboarding/workspace",
-        payload
-    );
+  const response = await axiosClient.post<unknown, unknown>("/onboarding/workspace", payload);
 
-    return WorkspaceSetupResponseSchema.parse(response);
+  return WorkspaceSetupResponseSchema.parse(response);
 };
 
 export const completeProfile = async (
-    input: ProfileSetupRequest
+  input: ProfileSetupRequest,
 ): Promise<ProfileSetupResponse> => {
-    const payload = ProfileSetupRequestSchema.parse(input);
-    const response = await axiosClient.post<unknown, unknown>("/onboarding/profile", payload);
+  const payload = ProfileSetupRequestSchema.parse(input);
+  const response = await axiosClient.post<unknown, unknown>("/onboarding/profile", payload);
 
-    return ProfileSetupResponseSchema.parse(response);
+  return ProfileSetupResponseSchema.parse(response);
 };
 
-export const getSignupCompletion =
-    async (): Promise<SignupCompletion> => {
-        const response = await axiosClient.get<unknown, unknown>(
-            "/onboarding/completion",
-        );
+export const getSignupCompletion = async (): Promise<SignupCompletion> => {
+  const response = await axiosClient.get<unknown, unknown>("/onboarding/completion");
 
-        return SignupCompletionSchema.parse(response);
-    };
+  return SignupCompletionSchema.parse(response);
+};
 
 export const checkWorkspaceSlugAvailability = async (
-    slug: WorkspaceSlug,
-    signal?: AbortSignal,
+  slug: WorkspaceSlug,
+  signal?: AbortSignal,
 ): Promise<WorkspaceSlugAvailabilityResponse> => {
-    const validSlug = WorkspaceSlugSchema.parse(slug);
+  const validSlug = WorkspaceSlugSchema.parse(slug);
 
-    const response = await axiosClient.get<unknown, unknown>(
-        "/onboarding/workspace-slug-availability",
-        {
-            params: { slug: validSlug },
-            signal,
-        },
-    );
+  const response = await axiosClient.get<unknown, unknown>(
+    "/onboarding/workspace-slug-availability",
+    {
+      params: { slug: validSlug },
+      signal,
+    },
+  );
 
-    return WorkspaceSlugAvailabilityResponseSchema.parse(response);
+  return WorkspaceSlugAvailabilityResponseSchema.parse(response);
 };

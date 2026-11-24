@@ -1,5 +1,5 @@
 import session from "express-session";
-import { vi } from "vitest";
+import { vi } from "vite-plus/test";
 
 // session.ts's real store (connect-pg-simple) talks to Postgres directly,
 // bypassing the Prisma mock — so it needs its own swap-out. Tests get an

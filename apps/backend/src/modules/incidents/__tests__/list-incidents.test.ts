@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { IncidentListResponseSchema } from "contracts";
@@ -24,16 +24,12 @@ describe("GET /organizations/:organizationId/incidents", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "OBSERVER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "OBSERVER" }));
     const fakeIncident = buildFakeIncident();
     prismaMock.incident.findMany.mockResolvedValue([fakeIncident]);
     prismaMock.incident.count.mockResolvedValue(1);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/incidents`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`);
 
     expect(response.status).toBe(200);
     const body = IncidentListResponseSchema.parse(response.body);
@@ -78,9 +74,7 @@ describe("GET /organizations/:organizationId/incidents", () => {
     prismaMock.incident.findMany.mockResolvedValue([]);
     prismaMock.incident.count.mockResolvedValue(0);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/incidents?pa=1`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/incidents?pa=1`);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({ page: 1, limit: 10 });
@@ -92,9 +86,7 @@ describe("GET /organizations/:organizationId/incidents", () => {
 
     prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership());
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/incidents?page=0`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/incidents?page=0`);
 
     expect(response.status).toBe(400);
     expect(response.body).toMatchObject({
@@ -109,9 +101,7 @@ describe("GET /organizations/:organizationId/incidents", () => {
 
     prismaMock.membership.findFirst.mockResolvedValue(null);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/incidents`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`);
 
     expect(response.status).toBe(404);
     expect(response.body).toMatchObject({
@@ -120,9 +110,7 @@ describe("GET /organizations/:organizationId/incidents", () => {
   });
 
   it("rejects an unauthenticated request", async () => {
-    const response = await request(app).get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/incidents`,
-    );
+    const response = await request(app).get(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`);
 
     expect(response.status).toBe(401);
   });

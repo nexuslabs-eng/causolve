@@ -5,34 +5,35 @@ import { PasswordSchema } from "./password.schema.js";
 export const PasswordResetTokenSchema = z.string().min(32, "Invalid password reset token.");
 
 export const ForgotPasswordRequestSchema = z.object({
-    email: EmailSchema,
+  email: EmailSchema,
 });
 
 export const ForgotPasswordResponseSchema = z.object({
-    accepted: z.literal(true),
+  accepted: z.literal(true),
 });
 
-export const ResetPasswordFormSchema = z.object({
+export const ResetPasswordFormSchema = z
+  .object({
     password: PasswordSchema,
-    confirmPassword: z.string().min(1, "Confirm your password")
-})
-.refine(data => data.password === data.confirmPassword, {
+    confirmPassword: z.string().min(1, "Confirm your password"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match.",
     path: ["confirmPassword"],
-});
+  });
 
 export const ResetPasswordRequestSchema = z.object({
-    token: PasswordResetTokenSchema,
-    password: PasswordSchema,
+  token: PasswordResetTokenSchema,
+  password: PasswordSchema,
 });
 
 export const ResetPasswordResponseSchema = z.object({
-    reset: z.literal(true),
-    completedAt: DateTimeSchema,
+  reset: z.literal(true),
+  completedAt: DateTimeSchema,
 });
 
 export const ValidateResetTokenResponseSchema = z.object({
-    valid: z.literal(true),
+  valid: z.literal(true),
 });
 
 export type PasswordResetToken = z.infer<typeof PasswordResetTokenSchema>;

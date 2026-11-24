@@ -32,7 +32,7 @@ export default defineConfig({
       timeout: 120_000,
       env: {
         VITE_ENABLE_MSW: "false",
-      }
+      },
     },
     {
       command:

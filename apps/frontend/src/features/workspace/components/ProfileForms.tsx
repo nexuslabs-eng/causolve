@@ -21,11 +21,7 @@ import { JOB_ROLES } from "@/features/auth/fixtures/profile";
 
 type AuthenticatedSession = Extract<AuthSession, { authenticated: true }>;
 
-export const ProfileForms = ({
-  session,
-}: {
-  session: AuthenticatedSession;
-}) => {
+export const ProfileForms = ({ session }: { session: AuthenticatedSession }) => {
   const { user, membership } = session;
 
   const fullNameForm = useForm<UpdateProfileRequest>({
@@ -74,28 +70,18 @@ export const ProfileForms = ({
   return (
     <>
       <section className="border-b border-border pb-6">
-        <label
-          htmlFor="fullName"
-          className="text-sm font-medium text-foreground"
-        >
+        <label htmlFor="fullName" className="text-sm font-medium text-foreground">
           Full name
         </label>
 
-        <form
-          className="mt-2 flex gap-2"
-          onSubmit={fullNameForm.handleSubmit(submitFullName)}
-        >
+        <form className="mt-2 flex gap-2" onSubmit={fullNameForm.handleSubmit(submitFullName)}>
           <div className="flex min-w-0 flex-col gap-3 @[480px]:flex-row">
             <Input
               id="fullName"
               autoComplete="name"
-              aria-invalid={
-                fullNameForm.formState.errors.fullName ? true : undefined
-              }
+              aria-invalid={fullNameForm.formState.errors.fullName ? true : undefined}
               aria-describedby={
-                fullNameForm.formState.errors.fullName
-                  ? "fullName-error"
-                  : undefined
+                fullNameForm.formState.errors.fullName ? "fullName-error" : undefined
               }
               {...fullNameForm.register("fullName")}
             />
@@ -117,29 +103,18 @@ export const ProfileForms = ({
         </form>
 
         {fullNameForm.formState.errors.fullName && (
-          <p
-            id="fullName-error"
-            className="mt-2 text-sm text-destructive"
-            role="alert"
-          >
+          <p id="fullName-error" className="mt-2 text-sm text-destructive" role="alert">
             {fullNameForm.formState.errors.fullName.message}
           </p>
         )}
-
       </section>
 
       <section className="border-b border-border pb-6">
-        <label
-          htmlFor="jobRole"
-          className="text-sm font-medium text-foreground"
-        >
+        <label htmlFor="jobRole" className="text-sm font-medium text-foreground">
           Professional role
         </label>
 
-        <form
-          className="mt-2 flex gap-2"
-          onSubmit={jobRoleForm.handleSubmit(submitJobRole)}
-        >
+        <form className="mt-2 flex gap-2" onSubmit={jobRoleForm.handleSubmit(submitJobRole)}>
           <div className="flex min-w-0 flex-col gap-3 @[480px]:flex-row">
             <Controller
               control={jobRoleForm.control}
@@ -153,19 +128,15 @@ export const ProfileForms = ({
                 >
                   <SelectTrigger
                     id="jobRole"
-                    aria-invalid={
-                      jobRoleForm.formState.errors.jobRole ? true : undefined
-                    }
+                    aria-invalid={jobRoleForm.formState.errors.jobRole ? true : undefined}
                     aria-describedby={
-                      jobRoleForm.formState.errors.jobRole
-                        ? "jobRole-error"
-                        : undefined
+                      jobRoleForm.formState.errors.jobRole ? "jobRole-error" : undefined
                     }
                     className="h-9!"
                   >
                     <SelectValue placeholder="Select your professional role">
-                      {JOB_ROLES.find((role) => role.value === field.value)
-                        ?.label ?? "Select your professional role"}
+                      {JOB_ROLES.find((role) => role.value === field.value)?.label ??
+                        "Select your professional role"}
                     </SelectValue>
                   </SelectTrigger>
 
@@ -196,15 +167,10 @@ export const ProfileForms = ({
         </form>
 
         {jobRoleForm.formState.errors.jobRole && (
-          <p
-            id="jobRole-error"
-            className="mt-2 text-sm text-destructive"
-            role="alert"
-          >
+          <p id="jobRole-error" className="mt-2 text-sm text-destructive" role="alert">
             {jobRoleForm.formState.errors.jobRole.message}
           </p>
         )}
-
       </section>
     </>
   );

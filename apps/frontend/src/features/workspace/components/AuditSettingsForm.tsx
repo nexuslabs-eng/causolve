@@ -75,8 +75,11 @@ export const AuditSettingsForm = ({ settings, canEdit, onSave }: Props) => {
     reset(settings ?? EMPTY_SETTINGS);
   }, [canEdit, reset, settings]);
 
-  const { eventCategories, complianceArchivalEnabled: archivalEnabled, exportPermission } =
-    useWatch({ control: form.control });
+  const {
+    eventCategories,
+    complianceArchivalEnabled: archivalEnabled,
+    exportPermission,
+  } = useWatch({ control: form.control });
   const categories = eventCategories ?? [];
   const controlsDisabled = !canEdit || !editing;
 
@@ -187,9 +190,7 @@ export const AuditSettingsForm = ({ settings, canEdit, onSave }: Props) => {
                 disabled={controlsDisabled}
                 onCheckedChange={() => toggleCategory(category)}
               />
-              <span className="text-sm text-foreground">
-                {EVENT_CATEGORY_LABELS[category]}
-              </span>
+              <span className="text-sm text-foreground">{EVENT_CATEGORY_LABELS[category]}</span>
             </label>
           ))}
         </div>
@@ -208,9 +209,7 @@ export const AuditSettingsForm = ({ settings, canEdit, onSave }: Props) => {
           }
         />
         <span>
-          <span className="block text-sm font-medium">
-            Compliance and archival settings
-          </span>
+          <span className="block text-sm font-medium">Compliance and archival settings</span>
           <span className="text-sm text-muted-foreground">
             Preserve audit records for compliance and archival workflows.
           </span>

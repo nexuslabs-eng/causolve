@@ -9,8 +9,7 @@ export const useUpdateWorkspaceSettings = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (input: UpdateWorkspaceSettingsRequest) =>
-      updateWorkspaceSettings(input),
+    mutationFn: (input: UpdateWorkspaceSettingsRequest) => updateWorkspaceSettings(input),
 
     onSuccess: (settings) => {
       queryClient.setQueryData<AuthSession>(authSessionQueryKey, (session) => {

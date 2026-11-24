@@ -10,6 +10,4 @@ export const AiEvidenceSettingsSchema = z.object({
 export const UpdateAiEvidenceSettingsRequestSchema = AiEvidenceSettingsSchema;
 
 export type AiEvidenceSettings = z.infer<typeof AiEvidenceSettingsSchema>;
-export type UpdateAiEvidenceSettingsRequest = z.infer<
-  typeof UpdateAiEvidenceSettingsRequestSchema
->;
+export type UpdateAiEvidenceSettingsRequest = z.infer<typeof UpdateAiEvidenceSettingsRequestSchema>;

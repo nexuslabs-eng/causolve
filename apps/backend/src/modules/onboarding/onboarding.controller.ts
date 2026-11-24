@@ -10,20 +10,14 @@ import {
   type SignupCompletion,
 } from "contracts";
 import tryCatchWrapper from "../../infrastructure/tryCatchWrapper.js";
-import {
-  sendSuccess,
-  sendError,
-} from "../../infrastructure/responseHandler.js";
+import { sendSuccess, sendError } from "../../infrastructure/responseHandler.js";
 import { sendEmail } from "../../infrastructure/email.service.js";
 import { onboardingCompleteTemplate } from "../../infrastructure/templates/onboardingComplete.template.js";
 import { logger } from "../../infrastructure/logger.js";
 import { env } from "../../infrastructure/keys.js";
 
 export const createWorkspace = tryCatchWrapper(
-  async (
-    req: Request<unknown, unknown, WorkspaceSetupRequest>,
-    res: Response,
-  ): Promise<void> => {
+  async (req: Request<unknown, unknown, WorkspaceSetupRequest>, res: Response): Promise<void> => {
     if (!req.user!.emailVerified) {
       sendError(
         res,
@@ -58,16 +52,8 @@ export const createWorkspace = tryCatchWrapper(
         },
       });
     } catch (error) {
-      if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === "P2002"
-      ) {
-        sendError(
-          res,
-          409,
-          "WORKSPACE_SLUG_UNAVAILABLE",
-          "This workspace URL is already in use.",
-        );
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+        sendError(res, 409, "WORKSPACE_SLUG_UNAVAILABLE", "This workspace URL is already in use.");
         return;
       }
       throw error;
@@ -88,12 +74,7 @@ export const checkWorkspaceSlugAvailability = tryCatchWrapper(
     const result = WorkspaceSlugSchema.safeParse(req.query.slug);
 
     if (!result.success) {
-      sendError(
-        res,
-        422,
-        "INVALID_WORKSPACE_REQUEST",
-        "Enter a valid workspace URL.",
-      );
+      sendError(res, 422, "INVALID_WORKSPACE_REQUEST", "Enter a valid workspace URL.");
       return;
     }
     const slug = result.data;
@@ -116,10 +97,7 @@ export const checkWorkspaceSlugAvailability = tryCatchWrapper(
 );
 
 export const completeProfile = tryCatchWrapper(
-  async (
-    req: Request<unknown, unknown, ProfileSetupRequest>,
-    res: Response,
-  ): Promise<void> => {
+  async (req: Request<unknown, unknown, ProfileSetupRequest>, res: Response): Promise<void> => {
     const membership = await prisma.membership.findFirst({
       where: { userId: req.user!.id },
     });

@@ -1,6 +1,6 @@
-import type { Response } from 'express';
-import type { ApiError } from 'contracts/common/api-error.schema';
-import { logger } from './logger.js';
+import type { Response } from "express";
+import type { ApiError } from "contracts/common/api-error.schema";
+import { logger } from "./logger.js";
 
 const sendResponse = (res: Response, status: number, body: unknown): void => {
   res.status(status).json(body);
@@ -21,10 +21,9 @@ export const sendError = (
   message: string,
   details?: Record<string, unknown>,
 ): void => {
-  
   const requestId = res.req.id as string;
 
-  logger.error({ code, message, requestId }, 'Error response sent');
+  logger.error({ code, message, requestId }, "Error response sent");
 
   const body: ApiError = {
     error: {

@@ -6,25 +6,22 @@ import type { AuthSession } from "contracts/auth/auth-session.schema";
 export const authSessionQueryKey = ["auth", "session"] as const;
 
 export const authSessionQueryOptions = () =>
-    queryOptions({
-        queryKey: authSessionQueryKey,
-        queryFn: getAuthSession,
-        retry: false,
-    });
+  queryOptions({
+    queryKey: authSessionQueryKey,
+    queryFn: getAuthSession,
+    retry: false,
+  });
 
 export const refreshAuthSession = () =>
-    queryClient.query({
-        ...authSessionQueryOptions(),
-        staleTime: 0
-    });
+  queryClient.query({
+    ...authSessionQueryOptions(),
+    staleTime: 0,
+  });
 
 export const clearOAuthError = () => {
-    queryClient.setQueryData<AuthSession>(
-        authSessionQueryKey,
-        session => {
-            if (!session || session.authenticated) return session;
+  queryClient.setQueryData<AuthSession>(authSessionQueryKey, (session) => {
+    if (!session || session.authenticated) return session;
 
-            return { ...session, oauthError: null }
-        }
-    )
-}
+    return { ...session, oauthError: null };
+  });
+};

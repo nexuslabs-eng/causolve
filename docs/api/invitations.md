@@ -13,7 +13,7 @@ named by `:organizationId` (`404 ORGANIZATION_NOT_FOUND` otherwise —
 deliberately a bare 404, not 403: tenant isolation means never confirming
 an organization exists to someone who has no business knowing about it).
 Every route in this group additionally requires the `ADMIN` role
-(`403 FORBIDDEN` otherwise) — unlike Teams/Services, even *viewing*
+(`403 FORBIDDEN` otherwise) — unlike Teams/Services, even _viewing_
 invitations is admin-only, since the list exposes other people's email
 addresses and who invited whom.
 
@@ -69,10 +69,10 @@ Generates a random token, emails an invite link to `email`, and creates a
 
 **Errors**
 
-| Status | Code                      | Meaning                                                        |
-| ------ | ------------------------- | ----------------------------------------------------------------- |
-| 400    | (validation)               | malformed body                                                 |
-| 409    | `ALREADY_A_MEMBER`          | this email already belongs to a member of this organization    |
+| Status | Code                         | Meaning                                                             |
+| ------ | ---------------------------- | ------------------------------------------------------------------- |
+| 400    | (validation)                 | malformed body                                                      |
+| 409    | `ALREADY_A_MEMBER`           | this email already belongs to a member of this organization         |
 | 409    | `INVITATION_ALREADY_PENDING` | a live (unexpired) pending invitation already exists for this email |
 
 ---
@@ -117,7 +117,7 @@ automatically; every read path recomputes this the same way.
 **Errors**
 
 | Status | Code              | Meaning                         |
-| ------ | ----------------- | -------------------------------- |
+| ------ | ----------------- | ------------------------------- |
 | 400    | `INVALID_REQUEST` | malformed pagination parameters |
 
 ---
@@ -127,7 +127,7 @@ automatically; every read path recomputes this the same way.
 **Role required:** `ADMIN`
 
 Rotates the token (old link stops working), extends `expiresAt` by another
-7 days, and re-sends the invite email — reusing the *original* inviter's
+7 days, and re-sends the invite email — reusing the _original_ inviter's
 name and the invitation's stored `role`/`jobRole` in the email copy, not
 whoever triggered the resend.
 
@@ -135,10 +135,10 @@ whoever triggered the resend.
 
 **Errors**
 
-| Status | Code                    | Meaning                                         |
-| ------ | ------------------------ | ------------------------------------------------ |
-| 404    | `INVITATION_NOT_FOUND`    | no invitation with this ID exists in this organization |
-| 409    | `INVITATION_NOT_PENDING`  | only a pending invitation can be resent (not accepted/revoked) |
+| Status | Code                     | Meaning                                                        |
+| ------ | ------------------------ | -------------------------------------------------------------- |
+| 404    | `INVITATION_NOT_FOUND`   | no invitation with this ID exists in this organization         |
+| 409    | `INVITATION_NOT_PENDING` | only a pending invitation can be resent (not accepted/revoked) |
 
 ---
 
@@ -154,10 +154,10 @@ preview or accept it reports `status: "REVOKED"`.
 
 **Errors**
 
-| Status | Code                   | Meaning                                                |
-| ------ | ----------------------- | -------------------------------------------------------- |
-| 404    | `INVITATION_NOT_FOUND`   | same meaning as resend                                 |
-| 409    | `INVITATION_NOT_PENDING` | only a pending invitation can be revoked                |
+| Status | Code                     | Meaning                                  |
+| ------ | ------------------------ | ---------------------------------------- |
+| 404    | `INVITATION_NOT_FOUND`   | same meaning as resend                   |
+| 409    | `INVITATION_NOT_PENDING` | only a pending invitation can be revoked |
 
 ---
 
@@ -174,7 +174,7 @@ session and no organization membership yet.
 **Auth:** none.
 
 Lets the frontend show the right thing (signup form, "already accepted"
-message, etc.) *before* the invitee does anything, by reporting the
+message, etc.) _before_ the invitee does anything, by reporting the
 invitation's real status up front.
 
 **Success — `200`**
@@ -196,10 +196,10 @@ invitation's real status up front.
 
 **Errors**
 
-| Status | Code              | Meaning                                   |
-| ------ | ----------------- | ------------------------------------------- |
-| 400    | `INVALID_REQUEST` | missing or malformed token                 |
-| 404    | `INVITATION_NOT_FOUND` | token doesn't match any invitation     |
+| Status | Code                   | Meaning                            |
+| ------ | ---------------------- | ---------------------------------- |
+| 400    | `INVALID_REQUEST`      | missing or malformed token         |
+| 404    | `INVITATION_NOT_FOUND` | token doesn't match any invitation |
 
 ---
 
@@ -247,9 +247,9 @@ work email distinct from any personal account they might already have.
 
 **Errors**
 
-| Status | Code                       | Meaning                                                   |
-| ------ | --------------------------- | ------------------------------------------------------------ |
-| 400    | (validation)                 | malformed body                                             |
-| 404    | `INVITATION_NOT_FOUND`       | token doesn't match any invitation                          |
-| 409    | `INVITATION_NOT_PENDING`     | invitation is expired, already accepted, or revoked         |
-| 409    | `EMAIL_ALREADY_REGISTERED`   | a `User` already exists for this email                     |
+| Status | Code                       | Meaning                                             |
+| ------ | -------------------------- | --------------------------------------------------- |
+| 400    | (validation)               | malformed body                                      |
+| 404    | `INVITATION_NOT_FOUND`     | token doesn't match any invitation                  |
+| 409    | `INVITATION_NOT_PENDING`   | invitation is expired, already accepted, or revoked |
+| 409    | `EMAIL_ALREADY_REGISTERED` | a `User` already exists for this email              |

@@ -4,14 +4,7 @@ import { ResolutionNode } from "@/components/brand/ResolutionNode";
 import { useInView } from "@/hooks/use-in-view";
 import { cn } from "@/lib/utils";
 
-const SOURCES = [
-  "metrics",
-  "logs",
-  "traces",
-  "deployments",
-  "runtime state",
-  "service topology",
-];
+const SOURCES = ["metrics", "logs", "traces", "deployments", "runtime state", "service topology"];
 
 const PAINS = [
   {
@@ -114,4 +107,4 @@ export const ProblemSection = () => {
       </div>
     </section>
   );
-}
+};

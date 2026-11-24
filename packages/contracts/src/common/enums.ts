@@ -5,138 +5,101 @@ export const RoleSchema = z.enum(["OBSERVER", "ENGINEER", "INCIDENT_COMMANDER", 
 export const IncidentSeveritySchema = z.enum(["LOW", "MEDIUM", "HIGH", "CRITICAL"]);
 
 export const IncidentStatusSchema = z.enum([
-    "DETECTED",
-    "ACKNOWLEDGED",
-    "INVESTIGATING",
-    "MITIGATING",
-    "MONITORING",
-    "RESOLVED"
+  "DETECTED",
+  "ACKNOWLEDGED",
+  "INVESTIGATING",
+  "MITIGATING",
+  "MONITORING",
+  "RESOLVED",
 ]);
 
 export const InvestigationStatusSchema = z.enum([
-    "PENDING",
-    "RUNNING",
-    "COMPLETED",
-    "DEGRADED",
-    "FAILED"
+  "PENDING",
+  "RUNNING",
+  "COMPLETED",
+  "DEGRADED",
+  "FAILED",
 ]);
 
 export const HypothesisStatusSchema = z.enum([
-    "CANDIDATE",
-    "PLAUSIBLE",
-    "LEADING",
-    "WEAKENED",
-    "INVALIDATED",
-    "CONFIRMED"
+  "CANDIDATE",
+  "PLAUSIBLE",
+  "LEADING",
+  "WEAKENED",
+  "INVALIDATED",
+  "CONFIRMED",
 ]);
 
-export const ContradictionSeveritySchema = z.enum([
-    "WEAK", 
-    "MODERATE", 
-    "STRONG", 
-    "INVALIDATING"
-]);
+export const ContradictionSeveritySchema = z.enum(["WEAK", "MODERATE", "STRONG", "INVALIDATING"]);
 
-export const IntegrityLevelSchema = z.enum([
-    "HIGH",
-    "MODERATE",
-    "DEGRADED",
-    "LOW"
-]);
+export const IntegrityLevelSchema = z.enum(["HIGH", "MODERATE", "DEGRADED", "LOW"]);
 
 export const CapabilityStatusSchema = z.enum([
-    "AVAILABLE",
-    "PARTIAL",
-    "STALE",
-    "UNAVAILABLE",
-    "FAILED"
+  "AVAILABLE",
+  "PARTIAL",
+  "STALE",
+  "UNAVAILABLE",
+  "FAILED",
 ]);
 
 export const EvidenceSourceTypeSchema = z.enum([
-    "METRIC",
-    "LOG",
-    "TRACE",
-    "DEPLOYMENT",
-    "CHANGE",
-    "RUNTIME_STATE",
-    "ALERT",
-    "TOPOLOGY",
-    "INCIDENT_HISTORY",
-    "RUNBOOK",
-    "HUMAN_OBSERVATION",
+  "METRIC",
+  "LOG",
+  "TRACE",
+  "DEPLOYMENT",
+  "CHANGE",
+  "RUNTIME_STATE",
+  "ALERT",
+  "TOPOLOGY",
+  "INCIDENT_HISTORY",
+  "RUNBOOK",
+  "HUMAN_OBSERVATION",
 ]);
 
 export const RecommendationActionTypeSchema = z.enum([
-    "ROLLBACK",
-    "RESTART_SERVICE",
-    "TRAFFIC_SHIFT",
-    "MANUAL_PROCEDURE",
-    "NO_ACTION"
+  "ROLLBACK",
+  "RESTART_SERVICE",
+  "TRAFFIC_SHIFT",
+  "MANUAL_PROCEDURE",
+  "NO_ACTION",
 ]);
 
-export const TechnicalRiskSchema = z.enum([
-    "LOW",
-    "MEDIUM",
-    "HIGH"
-]);
+export const TechnicalRiskSchema = z.enum(["LOW", "MEDIUM", "HIGH"]);
 
-export const BlastRadiusSchema = z.enum([
-    "SERVICE",
-    "MULTI_SERVICE",
-    "REGION",
-    "MULTI_REGION"
-]);
+export const BlastRadiusSchema = z.enum(["SERVICE", "MULTI_SERVICE", "REGION", "MULTI_REGION"]);
 
 export const ApprovalDecisionSchema = z.enum(["APPROVED", "REJECTED"]);
 
 export const RemediationStatusSchema = z.enum([
-    "PENDING",
-    "APPROVED",
-    "EXECUTING",
-    "SUCCEEDED",
-    "FAILED"
+  "PENDING",
+  "APPROVED",
+  "EXECUTING",
+  "SUCCEEDED",
+  "FAILED",
 ]);
 
-export const RemediationExecutionModeSchema = z.enum([
-    "SIMULATED",
-    "MANUAL",
-    "AUTOMATED"
-]);
+export const RemediationExecutionModeSchema = z.enum(["SIMULATED", "MANUAL", "AUTOMATED"]);
 
-export const VerificationStatusSchema = z.enum([
-    "PENDING",
-    "RUNNING",
-    "PASSED",
-    "FAILED"
-]);
+export const VerificationStatusSchema = z.enum(["PENDING", "RUNNING", "PASSED", "FAILED"]);
 
-export const VerificationCheckStatusSchema = z.enum([
-    "PASSED",
-    "FAILED",
-    "UNKNOWN"
-]);
+export const VerificationCheckStatusSchema = z.enum(["PASSED", "FAILED", "UNKNOWN"]);
 
 export const CapabilityNameSchema = z.enum([
-    "SERVICE_TOPOLOGY",
-    "METRICS",
-    "LOG_SEARCH",
-    "TRACE_SEARCH",
-    "DEPLOYMENTS",
-    "CHANGE_HISTORY",
-    "RUNTIME_STATE",
-    "ALERTS",
-    "INCIDENT_HISTORY",
-    "RUNBOOKS",
-    "AI_REASONING",
-    "REMEDIATION_AUTOMATION",
+  "SERVICE_TOPOLOGY",
+  "METRICS",
+  "LOG_SEARCH",
+  "TRACE_SEARCH",
+  "DEPLOYMENTS",
+  "CHANGE_HISTORY",
+  "RUNTIME_STATE",
+  "ALERTS",
+  "INCIDENT_HISTORY",
+  "RUNBOOKS",
+  "AI_REASONING",
+  "REMEDIATION_AUTOMATION",
 ]);
 
-export const ServiceHealthStatusSchema = z.enum([
-    "HEALTHY",
-    "DEGRADED",
-    "UNAVAILABLE",
-    "UNKNOWN"
-]);
+export const ServiceHealthStatusSchema = z.enum(["HEALTHY", "DEGRADED", "UNAVAILABLE", "UNKNOWN"]);
 
 export type Role = z.infer<typeof RoleSchema>;
 export type IncidentSeverity = z.infer<typeof IncidentSeveritySchema>;

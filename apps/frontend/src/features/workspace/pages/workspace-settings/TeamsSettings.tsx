@@ -56,22 +56,13 @@ const TeamsSettings = () => {
     const callbacks = {
       onSuccess: () => {
         setDialogOpen(false);
-        toast.success(
-          editingTeam
-            ? "Team renamed successfully."
-            : "Team created successfully.",
-        );
+        toast.success(editingTeam ? "Team renamed successfully." : "Team created successfully.");
       },
       onError: (error: unknown) =>
-        toast.error(
-          isApiClientError(error) ? error.message : "Unable to save the team.",
-        ),
+        toast.error(isApiClientError(error) ? error.message : "Unable to save the team."),
     };
     if (editingTeam) {
-      updateMutation.mutate(
-        { organizationId, teamId: editingTeam.id, input: values },
-        callbacks,
-      );
+      updateMutation.mutate({ organizationId, teamId: editingTeam.id, input: values }, callbacks);
     } else {
       createMutation.mutate({ organizationId, input: values }, callbacks);
     }
@@ -89,11 +80,7 @@ const TeamsSettings = () => {
         },
         onError: (error: unknown) => {
           setDeletingTeamId(null);
-          toast.error(
-            isApiClientError(error)
-              ? error.message
-              : "Unable to delete the team.",
-          );
+          toast.error(isApiClientError(error) ? error.message : "Unable to delete the team.");
         },
       },
     );

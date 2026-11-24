@@ -10,7 +10,7 @@ cookie (via `express-session`, Postgres-backed). Routes marked
 **Auth: required** read `req.session.userId` and reject with `401
 UNAUTHENTICATED` if there's no valid session.
 
-------------------------------------------------------------------------
+---
 
 ## POST /auth/signup
 
@@ -18,10 +18,10 @@ UNAUTHENTICATED` if there's no valid session.
 
 **Request body** (`SignupRequestSchema`)
 
-| Field      | Type   | Notes                                  |
-| ---------- | ------ | --------------------------------------- |
-| `fullName` | string | non-empty                               |
-| `email`    | string | valid email                             |
+| Field      | Type   | Notes                                           |
+| ---------- | ------ | ----------------------------------------------- |
+| `fullName` | string | non-empty                                       |
+| `email`    | string | valid email                                     |
 | `password` | string | ≥10 chars, upper/lower/digit/special, no spaces |
 
 **Success — `201`**
@@ -32,12 +32,12 @@ UNAUTHENTICATED` if there's no valid session.
 
 **Errors**
 
-| Status | Code                       | Meaning                          |
-| ------ | -------------------------- | -------------------------------- |
-| 400    | (validation)                | malformed body                   |
+| Status | Code                       | Meaning                            |
+| ------ | -------------------------- | ---------------------------------- |
+| 400    | (validation)               | malformed body                     |
 | 409    | `EMAIL_ALREADY_REGISTERED` | an account already uses this email |
 
-------------------------------------------------------------------------
+---
 
 ## POST /auth/verify-email
 
@@ -53,14 +53,14 @@ UNAUTHENTICATED` if there's no valid session.
 
 **Errors**
 
-| Status | Code                              | Meaning                                  |
-| ------ | --------------------------------- | ------------------------------------------ |
-| 400    | `INVALID_VERIFICATION_CODE`       | wrong code (also increments attempt count) |
-| 400    | `VERIFICATION_CODE_EXPIRED`       | code's 10-minute window has passed        |
-| 409    | `EMAIL_ALREADY_VERIFIED`          | already verified                          |
-| 429    | `VERIFICATION_ATTEMPTS_EXCEEDED`  | 5 incorrect attempts made — request a new code |
+| Status | Code                             | Meaning                                        |
+| ------ | -------------------------------- | ---------------------------------------------- |
+| 400    | `INVALID_VERIFICATION_CODE`      | wrong code (also increments attempt count)     |
+| 400    | `VERIFICATION_CODE_EXPIRED`      | code's 10-minute window has passed             |
+| 409    | `EMAIL_ALREADY_VERIFIED`         | already verified                               |
+| 429    | `VERIFICATION_ATTEMPTS_EXCEEDED` | 5 incorrect attempts made — request a new code |
 
-------------------------------------------------------------------------
+---
 
 ## POST /auth/resend-verification-otp
 
@@ -72,11 +72,11 @@ No request body. Issues a new OTP (resets the attempt counter to 0) and emails i
 
 **Errors**
 
-| Status | Code                     | Meaning              |
-| ------ | ------------------------- | --------------------- |
-| 409    | `EMAIL_ALREADY_VERIFIED`  | nothing to resend     |
+| Status | Code                     | Meaning           |
+| ------ | ------------------------ | ----------------- |
+| 409    | `EMAIL_ALREADY_VERIFIED` | nothing to resend |
 
-------------------------------------------------------------------------
+---
 
 ## POST /auth/login
 
@@ -95,11 +95,11 @@ No request body. Issues a new OTP (resets the attempt counter to 0) and emails i
 
 **Errors**
 
-| Status | Code                  | Meaning                                                        |
-| ------ | ---------------------- | ---------------------------------------------------------------- |
-| 401    | `INVALID_CREDENTIALS`  | wrong email or password — same code for both, to avoid leaking which one was wrong |
+| Status | Code                  | Meaning                                                                            |
+| ------ | --------------------- | ---------------------------------------------------------------------------------- |
+| 401    | `INVALID_CREDENTIALS` | wrong email or password — same code for both, to avoid leaking which one was wrong |
 
-------------------------------------------------------------------------
+---
 
 ## POST /auth/logout
 
@@ -109,7 +109,7 @@ No request body. Destroys the session and clears the session cookie.
 
 **Success — `200`**: `{ "loggedOut": true }`
 
-------------------------------------------------------------------------
+---
 
 ## POST /auth/forgot-password
 
@@ -123,7 +123,7 @@ password (OAuth-only accounts silently no-op here) — this is deliberate,
 to avoid leaking account existence. Internally, if (and only if) a
 password-based account is found, a reset token is generated and emailed.
 
-------------------------------------------------------------------------
+---
 
 ## POST /auth/reset-password
 
@@ -144,12 +144,12 @@ old password shouldn't stay logged in after a reset).
 
 **Errors**
 
-| Status | Code                          | Meaning                        |
-| ------ | ------------------------------ | -------------------------------- |
-| 400    | `PASSWORD_RESET_TOKEN_INVALID` | token doesn't match any account  |
+| Status | Code                           | Meaning                             |
+| ------ | ------------------------------ | ----------------------------------- |
+| 400    | `PASSWORD_RESET_TOKEN_INVALID` | token doesn't match any account     |
 | 400    | `PASSWORD_RESET_TOKEN_EXPIRED` | token's 15-minute window has passed |
 
-------------------------------------------------------------------------
+---
 
 ## GET /auth/reset-password/validate
 
@@ -158,7 +158,7 @@ old password shouldn't stay logged in after a reset).
 **Query:** `?token=...`
 
 A read-only pre-check — lets the frontend confirm a reset link is still
-valid *before* showing the "set a new password" form, instead of only
+valid _before_ showing the "set a new password" form, instead of only
 finding out after the user fills it out and submits. Uses the exact same
 error codes as `POST /auth/reset-password`, so existing error-handling
 logic covers both.
@@ -168,11 +168,11 @@ logic covers both.
 **Errors:** same two codes as `POST /auth/reset-password` above (a
 malformed/too-short token is also reported as `PASSWORD_RESET_TOKEN_INVALID`).
 
-------------------------------------------------------------------------
+---
 
 ## GET /auth/session
 
-**Auth:** not required (this endpoint *is* the auth check)
+**Auth:** not required (this endpoint _is_ the auth check)
 
 Returns the current session state — this is what the frontend calls on
 load / after any auth action to know who's logged in.
@@ -182,11 +182,17 @@ load / after any auth action to know who's logged in.
 Anonymous: `{ "authenticated": false }`
 
 Authenticated:
+
 ```json
 {
   "authenticated": true,
   "user": { "id": "...", "fullName": "...", "email": "...", "emailVerified": true },
-  "activeWorkspace": { "organizationId": "...", "name": "...", "slug": "...", "teamSize": "SIX_TO_TWENTY" },
+  "activeWorkspace": {
+    "organizationId": "...",
+    "name": "...",
+    "slug": "...",
+    "teamSize": "SIX_TO_TWENTY"
+  },
   "membership": null,
   "onboarding": { "status": "...", "nextStep": "..." }
 }
@@ -201,9 +207,10 @@ nullable only for organizations created before this field existed.
 A session pointing at a since-deleted account is treated identically to
 having no session at all (`{ "authenticated": false }`), not an error.
 
-------------------------------------------------------------------------
+---
 
 ## GET /auth/google · GET /auth/google/callback
+
 ## GET /auth/github · GET /auth/github/callback
 
 Standard OAuth redirect flow (no PKCE for GitHub, since it doesn't

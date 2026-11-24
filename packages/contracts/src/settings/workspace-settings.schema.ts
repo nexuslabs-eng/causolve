@@ -17,6 +17,4 @@ export const UpdateWorkspaceSettingsRequestSchema = z.object({
 
 export type WorkspaceSettings = z.infer<typeof WorkspaceSettingsSchema>;
 
-export type UpdateWorkspaceSettingsRequest = z.infer<
-  typeof UpdateWorkspaceSettingsRequestSchema
->;
+export type UpdateWorkspaceSettingsRequest = z.infer<typeof UpdateWorkspaceSettingsRequestSchema>;

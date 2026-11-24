@@ -98,11 +98,11 @@ prompts, provider responses, or internal exception details.
 
 ### HTTP errors
 
-| Status | Meaning |
-| ------ | ------- |
-| 401 | The bearer token is missing or does not match the configured internal key. |
-| 422 | The request body does not satisfy the Pydantic request contract. |
-| 503 | Internal service authentication is not configured on the AI service. |
+| Status | Meaning                                                                    |
+| ------ | -------------------------------------------------------------------------- |
+| 401    | The bearer token is missing or does not match the configured internal key. |
+| 422    | The request body does not satisfy the Pydantic request contract.           |
+| 503    | Internal service authentication is not configured on the AI service.       |
 
 Provider and graph failures use a `200` response with `status: "FAILED"` so
 the backend can validate one stable investigation-result contract.

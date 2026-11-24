@@ -18,27 +18,26 @@ export const AuthSubmitButton = ({
   disabled,
   ...props
 }: AuthSubmitButtonProps) => {
-
-    return (
-        <Button
-            type="submit"
-            variant="brand"
-            size="lg"
-            disabled={disabled || loading}
-            className={cn("mt-6 w-full", className)}
-            {...props}
-        >
-            {loading ? (
-            <>
-                <Loader aria-hidden="true" className="animate-spin" />
-                {loadingLabel}
-            </>
-            ) : (
-            <>
-                {children}
-                <ArrowRight aria-hidden="true" />
-            </>
-            )}
-        </Button>
-    );
+  return (
+    <Button
+      type="submit"
+      variant="brand"
+      size="lg"
+      disabled={disabled || loading}
+      className={cn("mt-6 w-full", className)}
+      {...props}
+    >
+      {loading ? (
+        <>
+          <Loader aria-hidden="true" className="animate-spin" />
+          {loadingLabel}
+        </>
+      ) : (
+        <>
+          {children}
+          <ArrowRight aria-hidden="true" />
+        </>
+      )}
+    </Button>
+  );
 };

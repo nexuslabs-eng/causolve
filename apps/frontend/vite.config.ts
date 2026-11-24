@@ -1,12 +1,19 @@
-import react, { reactCompilerPreset } from '@vitejs/plugin-react';
-import babel from '@rolldown/plugin-babel';
-import { defineConfig } from 'vite';
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
+import babel from "@rolldown/plugin-babel";
+import { defineConfig, lazyPlugins } from "vite-plus";
 import tailwindcss from "@tailwindcss/vite";
-import path from 'path';
+import path from "path";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  plugins: [
+  test: {
+    // Vitest v4 compatibility: preserve mock call history.
+    // Remove after tests no longer rely on calls from setup or earlier tests.
+    // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
+    // https://vitest.dev/guide/migration/#clearmocks-is-enabled-by-default
+    clearMocks: false,
+  },
+  plugins: lazyPlugins(() => [
     react(),
     tailwindcss(),
     babel({ presets: [reactCompilerPreset()] }),
@@ -24,7 +31,7 @@ export default defineConfig({
           if (sizeKB >= 1000) {
             this.error(
               `${output.fileName} is ${sizeKB.toFixed(1)} kB; ` +
-              "JavaScript chunks must stay below 1000 kB.",
+                "JavaScript chunks must stay below 1000 kB.",
             );
           }
         }
@@ -47,11 +54,11 @@ export default defineConfig({
         name: "Causolve",
         short_name: "Causolve",
         description:
-        "Evidence-aware incident investigation and controlled remediation for engineering teams.",
-        
+          "Evidence-aware incident investigation and controlled remediation for engineering teams.",
+
         theme_color: "#090D14",
         background_color: "#090D14",
-        
+
         display: "standalone",
         start_url: "/",
         scope: "/",
@@ -86,9 +93,9 @@ export default defineConfig({
 
       workbox: {
         navigateFallback: "/index.html",
-      }
+      },
     }),
-  ],
+  ]),
 
   resolve: {
     alias: {
@@ -97,5 +104,5 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1000,
-  }
-})
+  },
+});

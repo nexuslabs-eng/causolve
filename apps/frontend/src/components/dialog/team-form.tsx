@@ -55,11 +55,7 @@ export const TeamFormDialog = ({
                 : "Create a team to organize members for operational work."}
             </DialogDescription>
 
-            <form
-              noValidate
-              className="mt-6 space-y-5"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
+            <form noValidate className="mt-6 space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
               <Field name="name" invalid={Boolean(form.formState.errors.name)}>
                 <FieldLabel>Team name</FieldLabel>
                 <Input autoFocus {...form.register("name")} />
@@ -79,11 +75,7 @@ export const TeamFormDialog = ({
                 >
                   Cancel
                 </Button>
-                <Button
-                  type="submit"
-                  variant="brand"
-                  disabled={!form.formState.isValid || saving}
-                >
+                <Button type="submit" variant="brand" disabled={!form.formState.isValid || saving}>
                   {saving ? (
                     <>
                       <Loader className="animate-spin" />

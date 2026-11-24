@@ -1,14 +1,14 @@
-import { UpdateProfileRequestSchema, type UpdateProfileRequest } from "contracts/profile/profile.schema";
+import {
+  UpdateProfileRequestSchema,
+  type UpdateProfileRequest,
+} from "contracts/profile/profile.schema";
 import { AuthSessionSchema } from "contracts/auth/auth-session.schema";
 import { axiosClient } from "@/lib/api/axios-client";
 
 export const updateProfile = async (input: UpdateProfileRequest) => {
   const payload = UpdateProfileRequestSchema.parse(input);
 
-  const response = await axiosClient.patch<unknown, unknown>(
-    "/auth/profile",
-    payload,
-  );
+  const response = await axiosClient.patch<unknown, unknown>("/auth/profile", payload);
 
   return AuthSessionSchema.parse(response);
 };

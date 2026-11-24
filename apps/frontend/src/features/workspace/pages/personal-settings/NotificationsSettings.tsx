@@ -44,10 +44,7 @@ export const NotificationsSettings = () => {
   const updatePreferences = useUpdateNotificationPreferences();
   const hasPreferences = Boolean(preferences.data);
   const canEdit = hasPreferences && !preferences.isError;
-  const showLoadError =
-    preferences.isError &&
-    !preferences.isPending &&
-    !preferences.isFetching;
+  const showLoadError = preferences.isError && !preferences.isPending && !preferences.isFetching;
 
   if (preferences.isPending) {
     return (
@@ -77,9 +74,7 @@ export const NotificationsSettings = () => {
   return (
     <div>
       <header className="pb-6">
-        <h1 className="mt-2 text-2xl font-semibold text-foreground">
-          Notifications
-        </h1>
+        <h1 className="mt-2 text-2xl font-semibold text-foreground">Notifications</h1>
 
         <p className="mt-2 text-sm text-muted-foreground">
           Configure how Causolve delivers personal notifications.
@@ -98,37 +93,31 @@ export const NotificationsSettings = () => {
       )}
 
       <section className="mt-8 divide-y divide-border border-y border-border">
-          {preferenceItems.map((item) => {
-            const checked = preferences.data?.[item.key] ?? false;
+        {preferenceItems.map((item) => {
+          const checked = preferences.data?.[item.key] ?? false;
 
-            return (
-              <label
-                key={item.key}
-                className="flex cursor-pointer items-start justify-between gap-6 py-5"
-              >
-                <span className="min-w-0">
-                  <span className="block text-sm font-medium text-foreground">
-                    {item.title}
-                  </span>
+          return (
+            <label
+              key={item.key}
+              className="flex cursor-pointer items-start justify-between gap-6 py-5"
+            >
+              <span className="min-w-0">
+                <span className="block text-sm font-medium text-foreground">{item.title}</span>
 
-                  <span className="mt-1 block text-sm text-muted-foreground">
-                    {item.description}
-                  </span>
-                </span>
+                <span className="mt-1 block text-sm text-muted-foreground">{item.description}</span>
+              </span>
 
-                <input
-                  type="checkbox"
-                  aria-label={item.title}
-                  checked={checked}
+              <input
+                type="checkbox"
+                aria-label={item.title}
+                checked={checked}
                 disabled={!canEdit || updatePreferences.isPending}
-                  onChange={(event) =>
-                    handleChange(item.key, event.target.checked)
-                  }
-                  className="mt-1 size-4 shrink-0 accent-primary"
-                />
-              </label>
-            );
-          })}
+                onChange={(event) => handleChange(item.key, event.target.checked)}
+                className="mt-1 size-4 shrink-0 accent-primary"
+              />
+            </label>
+          );
+        })}
       </section>
 
       {updatePreferences.isPending && (
@@ -136,7 +125,6 @@ export const NotificationsSettings = () => {
           Saving notification preferences...
         </p>
       )}
-
     </div>
   );
 };

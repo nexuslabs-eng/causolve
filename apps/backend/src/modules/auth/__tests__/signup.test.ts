@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import request from "supertest";
 import { SignupResponseSchema } from "contracts";
 import app from "../../../app.js";

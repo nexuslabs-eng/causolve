@@ -6,18 +6,18 @@ import { signupCompletionQueryKey } from "@/features/auth/queries/signup-complet
 import { queryClient } from "@/lib/query-client";
 
 export const useLogout = (redirectTo = "/login") => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return useMutation({
-        mutationFn: logout,
-        onMutate: async () => {
-            await queryClient.cancelQueries({ queryKey: authSessionQueryKey });
-        },
-        onSuccess: () => {
-            queryClient.setQueryData(authSessionQueryKey, anonymousSession());
-            queryClient.removeQueries({ queryKey: signupCompletionQueryKey });
+  return useMutation({
+    mutationFn: logout,
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: authSessionQueryKey });
+    },
+    onSuccess: async () => {
+      queryClient.setQueryData(authSessionQueryKey, anonymousSession());
+      queryClient.removeQueries({ queryKey: signupCompletionQueryKey });
 
-            navigate(redirectTo, { replace: true, flushSync: true });
-        },
-    });
+      await navigate(redirectTo, { replace: true, flushSync: true });
+    },
+  });
 };

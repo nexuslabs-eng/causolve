@@ -8,16 +8,11 @@ export const NotificationPreferencesSchema = z.object({
 });
 
 export const UpdateNotificationPreferencesRequestSchema =
-  NotificationPreferencesSchema.partial().refine(
-    (value) => Object.keys(value).length > 0,
-    {
-      message: "At least one notification preference is required.",
-    },
-  );
+  NotificationPreferencesSchema.partial().refine((value) => Object.keys(value).length > 0, {
+    message: "At least one notification preference is required.",
+  });
 
-export type NotificationPreferences = z.infer<
-  typeof NotificationPreferencesSchema
->;
+export type NotificationPreferences = z.infer<typeof NotificationPreferencesSchema>;
 
 export type UpdateNotificationPreferencesRequest = z.infer<
   typeof UpdateNotificationPreferencesRequestSchema

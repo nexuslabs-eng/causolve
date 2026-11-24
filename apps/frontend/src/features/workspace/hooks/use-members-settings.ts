@@ -21,8 +21,9 @@ export const useMembersSettings = () => {
   const [page, setPage] = useState(1);
   const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
   const [dismissedError, setDismissedError] = useState(false);
-  const [activeInvitationAction, setActiveInvitationAction] =
-    useState<InvitationAction | null>(null);
+  const [activeInvitationAction, setActiveInvitationAction] = useState<InvitationAction | null>(
+    null,
+  );
 
   const { data: session } = useAuthSession();
 
@@ -30,27 +31,17 @@ export const useMembersSettings = () => {
     ? (session.activeWorkspace?.organizationId ?? "")
     : "";
 
-  const workspaceName = session?.authenticated
-    ? session.activeWorkspace?.name
-    : undefined;
+  const workspaceName = session?.authenticated ? session.activeWorkspace?.name : undefined;
 
-  const invitationsQuery = useInvitations(
-    organizationId,
-    page,
-    MEMBERS_PAGE_SIZE,
-  );
+  const invitationsQuery = useInvitations(organizationId, page, MEMBERS_PAGE_SIZE);
   const sendInvitationsMutation = useSendWorkspaceInvitations();
   const resendMutation = useResendInvitation();
   const revokeMutation = useRevokeInvitation();
 
   const requestError =
-    invitationsQuery.error instanceof Error
-      ? invitationsQuery.error.message
-      : undefined;
+    invitationsQuery.error instanceof Error ? invitationsQuery.error.message : undefined;
 
-  const sendInvitations = async (
-    invitations: CreateInvitationRequest[],
-  ) => {
+  const sendInvitations = async (invitations: CreateInvitationRequest[]) => {
     if (!organizationId) {
       throw new Error("No active workspace was found.");
     }
@@ -75,11 +66,7 @@ export const useMembersSettings = () => {
         },
         onError: (error) => {
           setActiveInvitationAction(null);
-          toast.error(
-            isApiClientError(error)
-              ? error.message
-              : "Unable to resend the invitation.",
-          );
+          toast.error(isApiClientError(error) ? error.message : "Unable to resend the invitation.");
         },
       },
     );
@@ -99,11 +86,7 @@ export const useMembersSettings = () => {
         },
         onError: (error) => {
           setActiveInvitationAction(null);
-          toast.error(
-            isApiClientError(error)
-              ? error.message
-              : "Unable to revoke the invitation.",
-          );
+          toast.error(isApiClientError(error) ? error.message : "Unable to revoke the invitation.");
         },
       },
     );
@@ -130,7 +113,6 @@ export const useMembersSettings = () => {
     revokeInvitation,
     activeInvitationAction,
     sending: sendInvitationsMutation.isPending,
-    changingInvitation:
-      resendMutation.isPending || revokeMutation.isPending,
+    changingInvitation: resendMutation.isPending || revokeMutation.isPending,
   };
 };

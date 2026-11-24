@@ -41,7 +41,6 @@ export const ControlSection = () => {
         >
           <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-(--shadow-elevated)">
             <div className="flex items-center gap-2 border-b border-border bg-surface-inset px-4 py-2.5">
-
               <ShieldCheck className="h-3.5 w-3.5 text-primary-bright" />
 
               <span className="font-mono text-[11px] tracking-wide text-muted-foreground">
@@ -60,11 +59,9 @@ export const ControlSection = () => {
               >
                 {decision === "pending" ? "awaiting approval" : decision}
               </span>
-
             </div>
 
             <div className="px-4 py-5 sm:px-5">
-              
               <p className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-muted-foreground">
                 recommended action
               </p>
@@ -79,11 +76,16 @@ export const ControlSection = () => {
                   { k: "blast radius", v: "SERVICE", tone: "text-foreground" },
                   { k: "required role", v: "incident_commander", tone: "text-primary-bright" },
                 ].map((item) => (
-                  <div key={item.k} className="rounded-lg border border-border bg-surface-inset px-3 py-2.5">
+                  <div
+                    key={item.k}
+                    className="rounded-lg border border-border bg-surface-inset px-3 py-2.5"
+                  >
                     <dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
                       {item.k}
                     </dt>
-                    <dd className={cn("mt-1 truncate font-mono text-[12.5px] font-medium", item.tone)}>
+                    <dd
+                      className={cn("mt-1 truncate font-mono text-[12.5px] font-medium", item.tone)}
+                    >
                       {item.v}
                     </dd>
                   </div>
@@ -91,7 +93,6 @@ export const ControlSection = () => {
               </dl>
 
               <div className="mt-4 flex items-start gap-2.5 rounded-lg border border-border bg-surface-inset px-3 py-2.5">
-
                 <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
 
                 <p className="text-[12.5px] leading-relaxed text-muted-foreground">
@@ -140,8 +141,13 @@ export const ControlSection = () => {
 
               <ol className="mt-3 space-y-2.5" aria-live="polite">
                 {trail.map((entry) => (
-                  <li key={entry.at + entry.actor + entry.event} className="grid grid-cols-[auto_minmax(0,1fr)] gap-3">
-                    <span className="font-mono text-[11px] tabular-nums text-muted-foreground">{entry.at}</span>
+                  <li
+                    key={entry.at + entry.actor + entry.event}
+                    className="grid grid-cols-[auto_minmax(0,1fr)] gap-3"
+                  >
+                    <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
+                      {entry.at}
+                    </span>
                     <span className="min-w-0 text-[12.5px] leading-relaxed text-muted-foreground">
                       <span className="font-mono text-[11.5px] text-foreground">{entry.actor}</span>{" "}
                       {entry.event}
@@ -149,7 +155,6 @@ export const ControlSection = () => {
                   </li>
                 ))}
               </ol>
-
             </div>
           </div>
 
@@ -163,10 +168,15 @@ export const ControlSection = () => {
 
             <ul className="mt-4 space-y-3">
               {GATES.map((gate) => (
-                <li key={gate.role} className="rounded-lg border border-border bg-surface-inset p-3.5">
+                <li
+                  key={gate.role}
+                  className="rounded-lg border border-border bg-surface-inset p-3.5"
+                >
                   <div className="flex items-baseline justify-between gap-3">
                     <p className="text-[13.5px] font-medium text-foreground">{gate.label}</p>
-                    <span className="font-mono text-[10.5px] text-muted-foreground">{gate.role}</span>
+                    <span className="font-mono text-[10.5px] text-muted-foreground">
+                      {gate.role}
+                    </span>
                   </div>
 
                   <p className="mt-2 flex gap-2 text-[12.5px] leading-relaxed text-muted-foreground">
@@ -186,4 +196,4 @@ export const ControlSection = () => {
       </div>
     </section>
   );
-}
+};

@@ -7,11 +7,8 @@ export const UpdateProfileRequestSchema = z
     fullName: NonEmptyStringSchema.optional(),
     jobRole: JobRoleSchema.optional(),
   })
-  .refine(
-    (value) => value.fullName !== undefined || value.jobRole !== undefined,
-    {
-      message: "This profile field cannot be empty.",
-    },
-  );
+  .refine((value) => value.fullName !== undefined || value.jobRole !== undefined, {
+    message: "This profile field cannot be empty.",
+  });
 
 export type UpdateProfileRequest = z.infer<typeof UpdateProfileRequestSchema>;

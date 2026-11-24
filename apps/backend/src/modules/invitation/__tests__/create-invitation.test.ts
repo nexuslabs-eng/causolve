@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { CreateInvitationResponseSchema } from "contracts";
@@ -38,17 +38,13 @@ describe("POST /organizations/:organizationId/invitations", () => {
     prismaMock.invitation.findFirst.mockResolvedValue(null);
     const fakeInvitation = buildFakeInvitation();
     prismaMock.invitation.create.mockResolvedValue(fakeInvitation);
-    prismaMock.organization.findUniqueOrThrow.mockResolvedValue(
-      buildFakeOrganization(),
-    );
+    prismaMock.organization.findUniqueOrThrow.mockResolvedValue(buildFakeOrganization());
 
-    const response = await agent
-      .post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`)
-      .send({
-        email: fakeInvitation.email,
-        role: fakeInvitation.role,
-        jobRole: fakeInvitation.inviteeJobRole,
-      });
+    const response = await agent.post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`).send({
+      email: fakeInvitation.email,
+      role: fakeInvitation.role,
+      jobRole: fakeInvitation.inviteeJobRole,
+    });
 
     expect(response.status).toBe(201);
     const body = CreateInvitationResponseSchema.parse(response.body);
@@ -69,13 +65,11 @@ describe("POST /organizations/:organizationId/invitations", () => {
       .mockResolvedValueOnce(buildFakeMembership({ role: "ADMIN" }))
       .mockResolvedValueOnce(buildFakeMembership());
 
-    const response = await agent
-      .post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`)
-      .send({
-        email: "existing@acme.com",
-        role: "ENGINEER",
-        jobRole: "SOFTWARE_ENGINEER",
-      });
+    const response = await agent.post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`).send({
+      email: "existing@acme.com",
+      role: "ENGINEER",
+      jobRole: "SOFTWARE_ENGINEER",
+    });
 
     expect(response.status).toBe(409);
     expect(response.body).toMatchObject({ error: { code: "ALREADY_A_MEMBER" } });
@@ -95,13 +89,11 @@ describe("POST /organizations/:organizationId/invitations", () => {
       }),
     );
 
-    const response = await agent
-      .post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`)
-      .send({
-        email: "newhire@acme.com",
-        role: "ENGINEER",
-        jobRole: "SOFTWARE_ENGINEER",
-      });
+    const response = await agent.post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`).send({
+      email: "newhire@acme.com",
+      role: "ENGINEER",
+      jobRole: "SOFTWARE_ENGINEER",
+    });
 
     expect(response.status).toBe(409);
     expect(response.body).toMatchObject({
@@ -124,17 +116,13 @@ describe("POST /organizations/:organizationId/invitations", () => {
     );
     const fakeInvitation = buildFakeInvitation();
     prismaMock.invitation.create.mockResolvedValue(fakeInvitation);
-    prismaMock.organization.findUniqueOrThrow.mockResolvedValue(
-      buildFakeOrganization(),
-    );
+    prismaMock.organization.findUniqueOrThrow.mockResolvedValue(buildFakeOrganization());
 
-    const response = await agent
-      .post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`)
-      .send({
-        email: fakeInvitation.email,
-        role: fakeInvitation.role,
-        jobRole: fakeInvitation.inviteeJobRole,
-      });
+    const response = await agent.post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`).send({
+      email: fakeInvitation.email,
+      role: fakeInvitation.role,
+      jobRole: fakeInvitation.inviteeJobRole,
+    });
 
     expect(response.status).toBe(201);
     expect(prismaMock.invitation.create).toHaveBeenCalled();
@@ -144,9 +132,7 @@ describe("POST /organizations/:organizationId/invitations", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
 
     const response = await agent
       .post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`)
@@ -176,9 +162,7 @@ describe("POST /organizations/:organizationId/invitations", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
 
     const response = await agent
       .post(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`)

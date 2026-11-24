@@ -7,8 +7,8 @@ interface UiState {
   setMobileNavOpen: (open: boolean) => void;
   toggleMobileNav: () => void;
 
-  sidebarState: SidebarState,
-  isCommandPaletteOpen: boolean,
+  sidebarState: SidebarState;
+  isCommandPaletteOpen: boolean;
 
   setSidebarState: (state: SidebarState) => void;
   toggleSidebar: () => void;
@@ -25,13 +25,12 @@ export const useUiStore = create<UiState>((set) => ({
   setMobileNavOpen: (open) => set({ mobileNavOpen: open }),
   toggleMobileNav: () => set((s) => ({ mobileNavOpen: !s.mobileNavOpen })),
 
-  setSidebarState: (state) => set({ sidebarState: state}),
+  setSidebarState: (state) => set({ sidebarState: state }),
 
-  toggleSidebar: () => set(state => ({
-    sidebarState: state.sidebarState === "expanded" 
-    ? "collapsed" 
-    : "expanded",
-  })),
+  toggleSidebar: () =>
+    set((state) => ({
+      sidebarState: state.sidebarState === "expanded" ? "collapsed" : "expanded",
+    })),
 
   setCommanPaletteOpen: (isCommandPaletteOpen) => set({ isCommandPaletteOpen }),
 }));

@@ -10,12 +10,8 @@ import { axiosClient } from "@/lib/api/axios-client";
 const endpoint = (organizationId: string) =>
   `/organizations/${encodeURIComponent(organizationId)}/audit-settings`;
 
-export const getAuditSettings = async (
-  organizationId: string,
-): Promise<AuditSettings> => {
-  const response = await axiosClient.get<unknown, unknown>(
-    endpoint(organizationId),
-  );
+export const getAuditSettings = async (organizationId: string): Promise<AuditSettings> => {
+  const response = await axiosClient.get<unknown, unknown>(endpoint(organizationId));
 
   return AuditSettingsSchema.parse(response);
 };

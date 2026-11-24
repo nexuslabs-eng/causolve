@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Controller,
-  useFieldArray,
-  useForm,
-  type SubmitHandler,
-} from "react-hook-form";
+import { Controller, useFieldArray, useForm, type SubmitHandler } from "react-hook-form";
 import { Send, Loader, Plus, Trash2 } from "lucide-react";
 
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
@@ -25,17 +20,9 @@ import {
   ROLE_OPTIONS,
   JOB_ROLE_OPTIONS,
 } from "@/features/workspace/lib/invite-members";
-import type {
-  InvitationFormProps,
-  InviteMembersFormValues,
-} from "@/types/invitations";
+import type { InvitationFormProps, InviteMembersFormValues } from "@/types/invitations";
 
-export const InviteMembersForm = ({
-  onSend,
-  onSent,
-  onCancel,
-  sending,
-}: InvitationFormProps) => {
+export const InviteMembersForm = ({ onSend, onSent, onCancel, sending }: InvitationFormProps) => {
   const [sendError, setSendError] = useState<string>();
 
   const {
@@ -75,9 +62,7 @@ export const InviteMembersForm = ({
       onSent(values.invitations.length);
     } catch (error: unknown) {
       setSendError(
-        isApiClientError(error)
-          ? error.message
-          : "Unable to send invitations. Please try again.",
+        isApiClientError(error) ? error.message : "Unable to send invitations. Please try again.",
       );
     }
   };
@@ -103,9 +88,7 @@ export const InviteMembersForm = ({
   return (
     <form className="mt-6 space-y-5" noValidate onSubmit={handleSubmit(submit)}>
       {sendError && (
-        <AuthErrorBanner onDismiss={() => setSendError(undefined)}>
-          {sendError}
-        </AuthErrorBanner>
+        <AuthErrorBanner onDismiss={() => setSendError(undefined)}>{sendError}</AuthErrorBanner>
       )}
 
       <div className="space-y-4">
@@ -119,8 +102,7 @@ export const InviteMembersForm = ({
                 name={`invitations.${index}.email`}
                 control={control}
                 render={({ field: emailField }) => {
-                  const emailError =
-                    errors.invitations?.[index]?.email?.message;
+                  const emailError = errors.invitations?.[index]?.email?.message;
 
                   const emailIsDirty = dirtyFields.invitations?.[index]?.email;
 
@@ -132,9 +114,7 @@ export const InviteMembersForm = ({
                       name={`invite-email-${field.id}`}
                       invalid={showEmailError}
                     >
-                      <FieldLabel htmlFor={`invite-email-${field.id}`}>
-                        Email address
-                      </FieldLabel>
+                      <FieldLabel htmlFor={`invite-email-${field.id}`}>Email address</FieldLabel>
 
                       <Input
                         id={`invite-email-${field.id}`}
@@ -161,9 +141,7 @@ export const InviteMembersForm = ({
               />
 
               <Field name={`invite-role-${field.id}`}>
-                <FieldLabel htmlFor={`invite-role-${field.id}`}>
-                  Workspace role
-                </FieldLabel>
+                <FieldLabel htmlFor={`invite-role-${field.id}`}>Workspace role</FieldLabel>
 
                 <Controller
                   name={`invitations.${index}.role`}
@@ -174,10 +152,7 @@ export const InviteMembersForm = ({
                       value={roleField.value}
                       onValueChange={roleField.onChange}
                     >
-                      <SelectTrigger
-                        id={`invite-role-${field.id}`}
-                        className="w-full"
-                      >
+                      <SelectTrigger id={`invite-role-${field.id}`} className="w-full">
                         <SelectValue />
                       </SelectTrigger>
 
@@ -194,9 +169,7 @@ export const InviteMembersForm = ({
               </Field>
 
               <Field name={`invite-job-role-${field.id}`}>
-                <FieldLabel htmlFor={`invite-job-role-${field.id}`}>
-                  Professional role
-                </FieldLabel>
+                <FieldLabel htmlFor={`invite-job-role-${field.id}`}>Professional role</FieldLabel>
 
                 <Controller
                   name={`invitations.${index}.jobRole`}
@@ -207,10 +180,7 @@ export const InviteMembersForm = ({
                       value={jobRoleField.value}
                       onValueChange={jobRoleField.onChange}
                     >
-                      <SelectTrigger
-                        id={`invite-job-role-${field.id}`}
-                        className="w-full"
-                      >
+                      <SelectTrigger id={`invite-job-role-${field.id}`} className="w-full">
                         <SelectValue />
                       </SelectTrigger>
 
@@ -248,26 +218,15 @@ export const InviteMembersForm = ({
       </Button>
 
       {!onSend && (
-        <p className="text-sm text-muted-foreground">
-          Invitation sending will be available soon.
-        </p>
+        <p className="text-sm text-muted-foreground">Invitation sending will be available soon.</p>
       )}
 
       <div className="flex flex-col-reverse gap-2 border-t border-border pt-5 sm:flex-row sm:justify-end">
-        <Button
-          type="button"
-          variant="subtle"
-          disabled={sending}
-          onClick={handleCancel}
-        >
+        <Button type="button" variant="subtle" disabled={sending} onClick={handleCancel}>
           Cancel
         </Button>
 
-        <Button
-          type="submit"
-          variant="brand"
-          disabled={!onSend || !isValid || sending}
-        >
+        <Button type="submit" variant="brand" disabled={!onSend || !isValid || sending}>
           {sending ? (
             <>
               <Loader aria-hidden="true" className="animate-spin" />

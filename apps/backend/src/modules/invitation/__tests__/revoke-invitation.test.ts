@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { RevokeInvitationResponseSchema } from "contracts";
@@ -25,9 +25,7 @@ describe("POST /organizations/:organizationId/invitations/:invitationId/revoke",
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
     prismaMock.invitation.findFirst.mockResolvedValue(buildFakeInvitation());
 
     const response = await agent.post(
@@ -52,9 +50,7 @@ describe("POST /organizations/:organizationId/invitations/:invitationId/revoke",
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
     prismaMock.invitation.findFirst.mockResolvedValue(null);
 
     const response = await agent.post(
@@ -71,12 +67,8 @@ describe("POST /organizations/:organizationId/invitations/:invitationId/revoke",
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
-    prismaMock.invitation.findFirst.mockResolvedValue(
-      buildFakeInvitation({ status: "REVOKED" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
+    prismaMock.invitation.findFirst.mockResolvedValue(buildFakeInvitation({ status: "REVOKED" }));
 
     const response = await agent.post(
       `/organizations/${MOCK_ORGANIZATION_ID}/invitations/${MOCK_INVITATION_ID}/revoke`,
@@ -93,9 +85,7 @@ describe("POST /organizations/:organizationId/invitations/:invitationId/revoke",
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
 
     const response = await agent.post(
       `/organizations/${MOCK_ORGANIZATION_ID}/invitations/${MOCK_INVITATION_ID}/revoke`,

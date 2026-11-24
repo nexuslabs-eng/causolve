@@ -1,11 +1,15 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { Prisma } from "@causolve/database";
 import { WorkspaceSetupResponseSchema } from "contracts";
 import app from "../../../app.js";
 import { prismaMock } from "../../../test/mocks/prisma.js";
-import { buildFakeUser, buildFakeOrganization, buildFakeMembership } from "../../../test/fixtures.js";
+import {
+  buildFakeUser,
+  buildFakeOrganization,
+  buildFakeMembership,
+} from "../../../test/fixtures.js";
 import { loginAsFakeUser } from "../../../test/helpers.js";
 
 const CORRECT_PASSWORD = "Causolve!123";

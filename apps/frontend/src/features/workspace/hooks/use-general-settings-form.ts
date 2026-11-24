@@ -19,9 +19,7 @@ const EMPTY_VALUES: UpdateWorkspaceSettingsRequest = {
   teamSize: "ONE_TO_FIVE",
 };
 
-const getDefaultValues = (
-  settings: WorkspaceSettings | null,
-): UpdateWorkspaceSettingsRequest => {
+const getDefaultValues = (settings: WorkspaceSettings | null): UpdateWorkspaceSettingsRequest => {
   if (!settings) {
     return EMPTY_VALUES;
   }
@@ -33,10 +31,7 @@ const getDefaultValues = (
   };
 };
 
-export const useGeneralSettingsForm = (
-  settings: WorkspaceSettings | null,
-  canEdit: boolean,
-) => {
+export const useGeneralSettingsForm = (settings: WorkspaceSettings | null, canEdit: boolean) => {
   const [isEditing, setIsEditing] = useState(false);
   const [dismissedError, setDismissedError] = useState(false);
 
@@ -60,39 +55,24 @@ export const useGeneralSettingsForm = (
 
   const defaultSlug = settings?.slug.trim().toLowerCase() ?? "";
   const slugChanged = Boolean(validSlug) && validSlug !== defaultSlug;
-  const shouldCheckSlugAvailability =
-    canEdit && isEditing && slugChanged;
+  const shouldCheckSlugAvailability = canEdit && isEditing && slugChanged;
 
-  const debouncedSlug = useDebounced(
-    shouldCheckSlugAvailability ? validSlug : undefined,
-    400,
-  );
+  const debouncedSlug = useDebounced(shouldCheckSlugAvailability ? validSlug : undefined, 400);
 
-  const slugAvailabilityQuery = useQuery(
-    workspaceSlugAvailabilityQueryOptions(debouncedSlug),
-  );
+  const slugAvailabilityQuery = useQuery(workspaceSlugAvailabilityQueryOptions(debouncedSlug));
 
-  const isDebouncing =
-    shouldCheckSlugAvailability && validSlug !== debouncedSlug;
+  const isDebouncing = shouldCheckSlugAvailability && validSlug !== debouncedSlug;
 
-  const hasCurrentAvailabilityResult =
-    shouldCheckSlugAvailability && validSlug === debouncedSlug;
+  const hasCurrentAvailabilityResult = shouldCheckSlugAvailability && validSlug === debouncedSlug;
 
   const isCheckingSlugAvailability =
     shouldCheckSlugAvailability &&
-    (isDebouncing ||
-      (hasCurrentAvailabilityResult && slugAvailabilityQuery.isFetching));
+    (isDebouncing || (hasCurrentAvailabilityResult && slugAvailabilityQuery.isFetching));
 
-  const currentAvailability = hasCurrentAvailabilityResult
-    ? slugAvailabilityQuery.data
-    : undefined;
+  const currentAvailability = hasCurrentAvailabilityResult ? slugAvailabilityQuery.data : undefined;
 
   const slugAvailabilityError =
-    !canEdit ||
-    !isEditing ||
-    !validSlug ||
-    isDebouncing ||
-    !hasCurrentAvailabilityResult
+    !canEdit || !isEditing || !validSlug || isDebouncing || !hasCurrentAvailabilityResult
       ? undefined
       : slugAvailabilityQuery.isError
         ? "Unable to check this workspace URL."
@@ -102,7 +82,6 @@ export const useGeneralSettingsForm = (
 
   useEffect(() => {
     form.reset(getDefaultValues(settings));
-
   }, [canEdit, form, settings]);
 
   const handleEdit = () => {

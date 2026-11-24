@@ -49,9 +49,9 @@ pnpm --filter @causolve/backend dev
 
 ## Environment variables
 
-| Variable       | Purpose                                                  |
-| -------------- | --------------------------------------------------------- |
+| Variable       | Purpose                                                           |
+| -------------- | ----------------------------------------------------------------- |
 | `DATABASE_URL` | PostgreSQL (Neon) connection string, used by `@causolve/database` |
-| `PORT`         | HTTP port                                                 |
-| `NODE_ENV`     | `development` / `production` / `test`                    |
-| `LOG_LEVEL`    | Logger verbosity                                          |
+| `PORT`         | HTTP port                                                         |
+| `NODE_ENV`     | `development` / `production` / `test`                             |
+| `LOG_LEVEL`    | Logger verbosity                                                  |

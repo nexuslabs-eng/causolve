@@ -23,20 +23,12 @@ import {
   getNotificationPreferences,
   updateNotificationPreferences,
 } from "@/mocks/endpoints/notification-preferences";
-import {
-  getUserPreferences,
-  updateUserPreferences,
-} from "@/mocks/endpoints/user-preferences";
+import { getUserPreferences, updateUserPreferences } from "@/mocks/endpoints/user-preferences";
 import {
   getWorkspaceSettings,
   updateWorkspaceSettings,
 } from "@/mocks/endpoints/workspace-settings";
-import {
-  createTeam,
-  deleteTeam,
-  listTeams,
-  updateTeam,
-} from "@/mocks/endpoints/teams";
+import { createTeam, deleteTeam, listTeams, updateTeam } from "@/mocks/endpoints/teams";
 import {
   getAiEvidenceSettings,
   getApprovalSettings,

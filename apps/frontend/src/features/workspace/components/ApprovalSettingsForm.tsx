@@ -26,11 +26,7 @@ const EMPTY_SETTINGS: ApprovalSettings = {
   approvalTimeoutHours: 0,
 };
 
-export const ApprovalSettingsForm = ({
-  settings,
-  canEdit,
-  onSave,
-}: Props) => {
+export const ApprovalSettingsForm = ({ settings, canEdit, onSave }: Props) => {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -52,14 +48,14 @@ export const ApprovalSettingsForm = ({
     reset(settings ?? EMPTY_SETTINGS);
   }, [canEdit, reset, settings]);
 
-  const { requireApprovalBeforeRemediation: requireApproval, automaticRemediationEnabled: automaticRemediation } =
-    useWatch({ control: form.control });
+  const {
+    requireApprovalBeforeRemediation: requireApproval,
+    automaticRemediationEnabled: automaticRemediation,
+  } = useWatch({ control: form.control });
   const controlsDisabled = !canEdit || !editing;
 
   const updateCheckbox = (
-    field:
-      | "requireApprovalBeforeRemediation"
-      | "automaticRemediationEnabled",
+    field: "requireApprovalBeforeRemediation" | "automaticRemediationEnabled",
     value: boolean | "indeterminate",
   ) => {
     setValue(field, value === true, {
@@ -107,14 +103,10 @@ export const ApprovalSettingsForm = ({
         <Checkbox
           checked={requireApproval}
           disabled={controlsDisabled}
-          onCheckedChange={(value) =>
-            updateCheckbox("requireApprovalBeforeRemediation", value)
-          }
+          onCheckedChange={(value) => updateCheckbox("requireApprovalBeforeRemediation", value)}
         />
         <span>
-          <span className="block text-sm font-medium">
-            Require approval before remediation
-          </span>
+          <span className="block text-sm font-medium">Require approval before remediation</span>
           <span className="text-sm text-muted-foreground">
             Prevent high-impact remediation from running before approval.
           </span>
@@ -125,14 +117,10 @@ export const ApprovalSettingsForm = ({
         <Checkbox
           checked={automaticRemediation}
           disabled={controlsDisabled}
-          onCheckedChange={(value) =>
-            updateCheckbox("automaticRemediationEnabled", value)
-          }
+          onCheckedChange={(value) => updateCheckbox("automaticRemediationEnabled", value)}
         />
         <span>
-          <span className="block text-sm font-medium">
-            Allow automatic remediation
-          </span>
+          <span className="block text-sm font-medium">Allow automatic remediation</span>
           <span className="text-sm text-muted-foreground">
             Allow approved actions to execute without another manual trigger.
           </span>
@@ -162,9 +150,7 @@ export const ApprovalSettingsForm = ({
             aria-label="Minimum required approvals unavailable"
           />
         )}
-        <FieldError>
-          {errors.minimumRequiredApprovals?.message}
-        </FieldError>
+        <FieldError>{errors.minimumRequiredApprovals?.message}</FieldError>
       </Field>
 
       <Field invalid={Boolean(errors.approvalTimeoutHours)}>
@@ -199,11 +185,7 @@ export const ApprovalSettingsForm = ({
             <X />
             Cancel
           </Button>
-          <Button
-            type="submit"
-            variant="brand"
-            disabled={!isDirty || !isValid || saving}
-          >
+          <Button type="submit" variant="brand" disabled={!isDirty || !isValid || saving}>
             {saving ? (
               <>
                 <Loader className="animate-spin" />

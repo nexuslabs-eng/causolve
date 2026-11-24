@@ -7,8 +7,7 @@ const fixture = {
     organizationId: "22222222-2222-4222-8222-222222222222",
     serviceId: "33333333-3333-4333-8333-333333333333",
     title: "Checkout payment latency spike",
-    description:
-      "Payment authorization latency is elevated and checkout success rate is dropping.",
+    description: "Payment authorization latency is elevated and checkout success rate is dropping.",
     severity: "HIGH",
     status: "MITIGATING",
     commanderId: "44444444-4444-4444-8444-444444444444",
@@ -141,8 +140,7 @@ const fixture = {
       investigationId: "55555555-5555-4555-8555-555555555555",
       source: "log-search",
       sourceType: "LOG",
-      observation:
-        "Log search failed before provider error samples could be collected.",
+      observation: "Log search failed before provider error samples could be collected.",
       reliability: 70,
       specificity: 60,
       directness: 52,
@@ -183,8 +181,7 @@ const fixture = {
       hypothesisId: "77777777-7777-4777-8777-777777777777",
       relation: "SUPPORTS",
       weight: 88,
-      reasoning:
-        "Provider authorization latency rose sharply during the incident window.",
+      reasoning: "Provider authorization latency rose sharply during the incident window.",
     },
     {
       id: "12121212-1212-4212-8212-121212121212",

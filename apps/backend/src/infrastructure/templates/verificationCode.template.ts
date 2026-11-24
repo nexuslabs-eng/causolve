@@ -8,7 +8,7 @@ export const verificationCodeTemplate = (
   fullName: string,
   code: string,
 ): VerificationCodeEmailContent => {
-  const subject = 'Your Causolve verification code';
+  const subject = "Your Causolve verification code";
 
   const text = `Hi ${fullName},\n\nYour Causolve verification code is: ${code}\n\nEnter this code to confirm your email address and continue setting up your account. This code expires in 15 minutes.\n\nIf you didn't create a Causolve account, you can safely ignore this email.`;
 

@@ -1,9 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import {
-  getAuditSettings,
-  updateAuditSettings,
-} from "@/features/workspace/api/audit-settings";
+import { getAuditSettings, updateAuditSettings } from "@/features/workspace/api/audit-settings";
 
 const queryKey = (organizationId: string) =>
   ["workspace", "audit-settings", organizationId] as const;

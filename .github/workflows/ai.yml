@@ -1,75 +1,75 @@
 name: AI Checks
 
 on:
-    push:
-        branches: [main]
-    pull_request:
-        branches: [main]
-    workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
-    contents: read
+  contents: read
 
 jobs:
-    ai:
-        name: Python and AI contract checks
-        runs-on: ubuntu-latest
-        timeout-minutes: 15
+  ai:
+    name: Python and AI contract checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
 
-        steps:
-            - name: Check repository
-              uses: actions/checkout@v6
+    steps:
+      - name: Check repository
+        uses: actions/checkout@v6
 
-            - name: Set up pnpm
-              uses: pnpm/action-setup@v6
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
 
-            - name: Set node.js
-              uses: actions/setup-node@v6
-              with:
-                node-version: 24
-                cache: pnpm
-                cache-dependency-path: pnpm-lock.yaml
+      - name: Set node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
-            - name: Install workspace dependencies
-              run: pnpm install --frozen-lockfile
+      - name: Install workspace dependencies
+        run: pnpm install --frozen-lockfile
 
-            - name: Set up uv
-              uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
-              with:
-                version: "0.11.21"
-                enable-cache: true
-                cache-dependency-glob: apps/ai/uv.lock
+      - name: Set up uv
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.11.21"
+          enable-cache: true
+          cache-dependency-glob: apps/ai/uv.lock
 
-            - name: Install python
-              working-directory: apps/ai
-              run: uv python install
+      - name: Install python
+        working-directory: apps/ai
+        run: uv python install
 
-            - name: Install python dependencies
-              working-directory: apps/ai
-              run: uv sync --locked --group dev
+      - name: Install python dependencies
+        working-directory: apps/ai
+        run: uv sync --locked --group dev
 
-            - name: Check python lint
-              working-directory: apps/ai
-              run: uv run --locked ruff check .
+      - name: Check python lint
+        working-directory: apps/ai
+        run: uv run --locked ruff check .
 
-            - name: Check python formatting
-              working-directory: apps/ai
-              run: uv run --locked ruff format --check .
+      - name: Check python formatting
+        working-directory: apps/ai
+        run: uv run --locked ruff format --check .
 
-            - name: Verify LangGraph imports
-              working-directory: apps/ai
-              run: uv run --locked python -c "from langgraph.graph import StateGraph; print('LangGraph import OK')"
+      - name: Verify LangGraph imports
+        working-directory: apps/ai
+        run: uv run --locked python -c "from langgraph.graph import StateGraph; print('LangGraph import OK')"
 
-            - name: Run python tests
-              working-directory: apps/ai
-              run: uv run --locked pytest -m "not external"
+      - name: Run python tests
+        working-directory: apps/ai
+        run: uv run --locked pytest -m "not external"
 
-            - name: Type-check contracts and scripts
-              run: pnpm --filter contracts exec tsc --noEmit
+      - name: Type-check contracts and scripts
+        run: pnpm --filter contracts exec tsc --noEmit
 
-            - name: Export python contract samples
-              working-directory: apps/ai
-              run: uv run --locked python -m scripts.export_contract_samples "$RUNNER_TEMP/ai-contract-output.json"
+      - name: Export python contract samples
+        working-directory: apps/ai
+        run: uv run --locked python -m scripts.export_contract_samples "$RUNNER_TEMP/ai-contract-output.json"
 
-            - name: Validate shared fixtures and python output with zod
-              run: pnpm --filter contracts test:ai-contracts "$RUNNER_TEMP/ai-contract-output.json"
+      - name: Validate shared fixtures and python output with zod
+        run: pnpm --filter contracts test:ai-contracts "$RUNNER_TEMP/ai-contract-output.json"

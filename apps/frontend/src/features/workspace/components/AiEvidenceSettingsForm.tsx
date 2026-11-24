@@ -3,7 +3,10 @@ import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader, Pencil, Save, X } from "lucide-react";
 
-import { AiEvidenceSettingsSchema, type AiEvidenceSettings } from "contracts/settings/ai-evidence-settings.schema";
+import {
+  AiEvidenceSettingsSchema,
+  type AiEvidenceSettings,
+} from "contracts/settings/ai-evidence-settings.schema";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -23,11 +26,7 @@ const EMPTY_SETTINGS: AiEvidenceSettings = {
   evidenceRetentionDays: 0,
 };
 
-export const AiEvidenceSettingsForm = ({
-  settings,
-  canEdit,
-  onSave,
-}: Props) => {
+export const AiEvidenceSettingsForm = ({ settings, canEdit, onSave }: Props) => {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -49,14 +48,12 @@ export const AiEvidenceSettingsForm = ({
     reset(settings ?? EMPTY_SETTINGS);
   }, [reset, settings]);
 
-  const { aiAssistanceEnabled, humanApprovalRequired, externalEvidenceAllowed } =
-    useWatch({ control: form.control });
+  const { aiAssistanceEnabled, humanApprovalRequired, externalEvidenceAllowed } = useWatch({
+    control: form.control,
+  });
 
   const updateCheckbox = (
-    field:
-      | "aiAssistanceEnabled"
-      | "humanApprovalRequired"
-      | "externalEvidenceAllowed",
+    field: "aiAssistanceEnabled" | "humanApprovalRequired" | "externalEvidenceAllowed",
     value: boolean | "indeterminate",
   ) => {
     setValue(field, value === true, {
@@ -96,11 +93,7 @@ export const AiEvidenceSettingsForm = ({
         </div>
 
         {canEdit && !editing && (
-          <Button
-            type="button"
-            variant="subtle"
-            onClick={() => setEditing(true)}
-          >
+          <Button type="button" variant="subtle" onClick={() => setEditing(true)}>
             <Pencil />
             Edit
           </Button>
@@ -111,15 +104,11 @@ export const AiEvidenceSettingsForm = ({
         <Checkbox
           checked={aiAssistanceEnabled}
           disabled={controlsDisabled}
-          onCheckedChange={(value) =>
-            updateCheckbox("aiAssistanceEnabled", value)
-          }
+          onCheckedChange={(value) => updateCheckbox("aiAssistanceEnabled", value)}
         />
 
         <span>
-          <span className="block text-sm font-medium">
-            Enable AI assistance
-          </span>
+          <span className="block text-sm font-medium">Enable AI assistance</span>
 
           <span className="text-sm text-muted-foreground">
             Allow AI-assisted investigation analysis and hypothesis generation.
@@ -131,19 +120,14 @@ export const AiEvidenceSettingsForm = ({
         <Checkbox
           checked={humanApprovalRequired}
           disabled={controlsDisabled}
-          onCheckedChange={(value) =>
-            updateCheckbox("humanApprovalRequired", value)
-          }
+          onCheckedChange={(value) => updateCheckbox("humanApprovalRequired", value)}
         />
 
         <span>
-          <span className="block text-sm font-medium">
-            Require human approval
-          </span>
+          <span className="block text-sm font-medium">Require human approval</span>
 
           <span className="text-sm text-muted-foreground">
-            Require approval before AI-generated recommendations can be acted
-            on.
+            Require approval before AI-generated recommendations can be acted on.
           </span>
         </span>
       </label>
@@ -152,15 +136,11 @@ export const AiEvidenceSettingsForm = ({
         <Checkbox
           checked={externalEvidenceAllowed}
           disabled={controlsDisabled}
-          onCheckedChange={(value) =>
-            updateCheckbox("externalEvidenceAllowed", value)
-          }
+          onCheckedChange={(value) => updateCheckbox("externalEvidenceAllowed", value)}
         />
 
         <span>
-          <span className="block text-sm font-medium">
-            Allow external evidence
-          </span>
+          <span className="block text-sm font-medium">Allow external evidence</span>
 
           <span className="text-sm text-muted-foreground">
             Permit evidence collected from connected external integrations.
@@ -199,21 +179,12 @@ export const AiEvidenceSettingsForm = ({
 
       {canEdit && editing && (
         <div className="flex justify-end gap-3 border-t border-border pt-5">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={cancel}
-            disabled={saving}
-          >
+          <Button type="button" variant="outline" onClick={cancel} disabled={saving}>
             <X />
             Cancel
           </Button>
 
-          <Button
-            type="submit"
-            variant="brand"
-            disabled={!isDirty || !isValid || saving}
-          >
+          <Button type="submit" variant="brand" disabled={!isDirty || !isValid || saving}>
             {saving ? (
               <>
                 <Loader className="animate-spin" />

@@ -15,7 +15,9 @@ const MarketingFooter = () => {
               </span>
             </div>
             <p className="mt-4 text-[13px] leading-relaxed text-muted-foreground">
-              Evidence-aware incident investigation and controlled remediation for engineering teams. Investigate competing hypotheses, challenge assumptions, and act with human authorization.
+              Evidence-aware incident investigation and controlled remediation for engineering
+              teams. Investigate competing hypotheses, challenge assumptions, and act with human
+              authorization.
             </p>
           </div>
 
@@ -29,22 +31,22 @@ const MarketingFooter = () => {
                 <ul className="mt-3 space-y-2">
                   {group.links.map((link) => (
                     <li key={link.name}>
-                      {(link.type && link.type === "legal") 
-                        ? (
-                          <Link to={link.url} className="text-[13px] text-muted-foreground transition-colors hover:text-foreground">
-                            {link.name}
-                          </Link>
-                        )
-                        : (
-                          <a
+                      {link.type && link.type === "legal" ? (
+                        <Link
+                          to={link.url}
+                          className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                          {link.name}
+                        </Link>
+                      ) : (
+                        <a
                           href={link.url}
                           target={link.target_blank ? "_blank" : undefined}
                           className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
                         >
                           {link.name}
                         </a>
-                        )
-                      }
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -59,6 +61,6 @@ const MarketingFooter = () => {
       </div>
     </footer>
   );
-}
+};
 
 export default MarketingFooter;

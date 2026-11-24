@@ -39,9 +39,9 @@ const PreferencesForm = ({
   const setTheme = useThemeStore((state) => state.setTheme);
   const updatePreferences = useUpdateUserPreferences();
   const [timeZone, setTimeZone] = useState(initialPreferences?.timeZone ?? "");
-  const [dateFormat, setDateFormat] = useState<
-    ServerUserPreferences["dateFormat"] | ""
-  >(initialPreferences?.dateFormat ?? "");
+  const [dateFormat, setDateFormat] = useState<ServerUserPreferences["dateFormat"] | "">(
+    initialPreferences?.dateFormat ?? "",
+  );
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -69,10 +69,7 @@ const PreferencesForm = ({
         <h2 className="font-medium text-foreground">Appearance</h2>
 
         <div className="mt-5">
-          <label
-            htmlFor="theme"
-            className="text-sm font-medium text-foreground"
-          >
+          <label htmlFor="theme" className="text-sm font-medium text-foreground">
             Theme
           </label>
 
@@ -105,10 +102,7 @@ const PreferencesForm = ({
         <h2 className="font-medium text-foreground">Regional preferences</h2>
 
         <div className="mt-5">
-          <label
-            htmlFor="timeZone"
-            className="text-sm font-medium text-foreground"
-          >
+          <label htmlFor="timeZone" className="text-sm font-medium text-foreground">
             Time zone
           </label>
 
@@ -135,10 +129,7 @@ const PreferencesForm = ({
         </div>
 
         <div className="mt-5">
-          <label
-            htmlFor="dateFormat"
-            className="text-sm font-medium text-foreground"
-          >
+          <label htmlFor="dateFormat" className="text-sm font-medium text-foreground">
             Date format
           </label>
 
@@ -152,9 +143,7 @@ const PreferencesForm = ({
             }}
           >
             <SelectTrigger id="dateFormat" className="mt-2 h-11 w-full">
-              <SelectValue>
-                {dateFormat ? DATE_FORMAT_LABELS[dateFormat] : undefined}
-              </SelectValue>
+              <SelectValue>{dateFormat ? DATE_FORMAT_LABELS[dateFormat] : undefined}</SelectValue>
             </SelectTrigger>
 
             <SelectContent>
@@ -169,11 +158,7 @@ const PreferencesForm = ({
       </section>
 
       <div className="flex items-center gap-4">
-        <Button
-          type="submit"
-          variant="brand"
-          disabled={!canEdit || updatePreferences.isPending}
-        >
+        <Button type="submit" variant="brand" disabled={!canEdit || updatePreferences.isPending}>
           {updatePreferences.isPending ? (
             <Loader2 className="animate-spin" aria-hidden="true" />
           ) : (
@@ -181,7 +166,6 @@ const PreferencesForm = ({
           )}
           Save preferences
         </Button>
-
       </div>
     </form>
   );
@@ -191,8 +175,7 @@ export const PreferencesSettings = () => {
   const preferences = useUserPreferences();
   const hasPreferences = Boolean(preferences.data);
   const canEdit = hasPreferences && !preferences.isError;
-  const showLoadError =
-    preferences.isError && !preferences.isPending && !preferences.isFetching;
+  const showLoadError = preferences.isError && !preferences.isPending && !preferences.isFetching;
 
   if (preferences.isPending) {
     return (
@@ -206,9 +189,7 @@ export const PreferencesSettings = () => {
   return (
     <div>
       <header className="border-b border-border pb-6">
-        <h1 className="mt-2 text-2xl font-semibold text-foreground">
-          Preferences
-        </h1>
+        <h1 className="mt-2 text-2xl font-semibold text-foreground">Preferences</h1>
 
         <p className="mt-2 text-sm text-muted-foreground">
           Configure how Causolve behaves for your account.

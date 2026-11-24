@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import type { NextFunction, Request, Response } from "express";
 import { appErrorHandler } from "../error.middleware.js";
 
@@ -21,7 +21,12 @@ describe("appErrorHandler", () => {
   it("treats a DNS resolution failure as the database being unreachable", () => {
     const res = buildFakeResponse();
 
-    appErrorHandler(buildConnectivityError("ENOTFOUND"), {} as Request, res, vi.fn() as NextFunction);
+    appErrorHandler(
+      buildConnectivityError("ENOTFOUND"),
+      {} as Request,
+      res,
+      vi.fn() as NextFunction,
+    );
 
     expect(res.status).toHaveBeenCalledWith(503);
     expect(res.json).toHaveBeenCalledWith(
@@ -36,7 +41,12 @@ describe("appErrorHandler", () => {
     (errnoCode) => {
       const res = buildFakeResponse();
 
-      appErrorHandler(buildConnectivityError(errnoCode), {} as Request, res, vi.fn() as NextFunction);
+      appErrorHandler(
+        buildConnectivityError(errnoCode),
+        {} as Request,
+        res,
+        vi.fn() as NextFunction,
+      );
 
       expect(res.status).toHaveBeenCalledWith(503);
     },
@@ -45,7 +55,12 @@ describe("appErrorHandler", () => {
   it("never leaks the real hostname in a connectivity error's response", () => {
     const res = buildFakeResponse();
 
-    appErrorHandler(buildConnectivityError("ENOTFOUND"), {} as Request, res, vi.fn() as NextFunction);
+    appErrorHandler(
+      buildConnectivityError("ENOTFOUND"),
+      {} as Request,
+      res,
+      vi.fn() as NextFunction,
+    );
 
     const [body] = (res.json as ReturnType<typeof vi.fn>).mock.calls[0] as [
       { error: { message: string } },
@@ -56,7 +71,12 @@ describe("appErrorHandler", () => {
   it("still falls back to a generic 500 for an unrelated error", () => {
     const res = buildFakeResponse();
 
-    appErrorHandler(new Error("Something else went wrong"), {} as Request, res, vi.fn() as NextFunction);
+    appErrorHandler(
+      new Error("Something else went wrong"),
+      {} as Request,
+      res,
+      vi.fn() as NextFunction,
+    );
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith(

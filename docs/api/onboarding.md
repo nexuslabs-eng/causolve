@@ -8,7 +8,7 @@ summary. Request/response shapes are defined in
 Every route here requires an authenticated session (`401
 UNAUTHENTICATED` otherwise) — none of these are usable before login.
 
-------------------------------------------------------------------------
+---
 
 ## POST /onboarding/workspace
 
@@ -17,10 +17,10 @@ Creates an `Organization` and makes the current user its `ADMIN`
 
 **Request body** (`WorkspaceSetupRequestSchema`)
 
-| Field      | Type   | Notes                                                    |
-| ---------- | ------ | ---------------------------------------------------------- |
-| `name`     | string | non-empty                                                   |
-| `slug`     | string | 3–63 chars, lowercase letters/digits/hyphens, globally unique |
+| Field      | Type   | Notes                                                                                                                                 |
+| ---------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`     | string | non-empty                                                                                                                             |
+| `slug`     | string | 3–63 chars, lowercase letters/digits/hyphens, globally unique                                                                         |
 | `teamSize` | enum   | required — describes the organization, not the creating user; shared by every member, including anyone who joins later via invitation |
 
 **Success — `201`**
@@ -31,13 +31,13 @@ Creates an `Organization` and makes the current user its `ADMIN`
 
 **Errors**
 
-| Status | Code                        | Meaning                                         |
-| ------ | ---------------------------- | -------------------------------------------------- |
-| 400    | (validation)                  | malformed body                                     |
-| 409    | `ONBOARDING_STEP_NOT_ALLOWED` | email not verified yet, or user already has a workspace |
+| Status | Code                          | Meaning                                                                                                           |
+| ------ | ----------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| 400    | (validation)                  | malformed body                                                                                                    |
+| 409    | `ONBOARDING_STEP_NOT_ALLOWED` | email not verified yet, or user already has a workspace                                                           |
 | 409    | `WORKSPACE_SLUG_UNAVAILABLE`  | another organization already has this slug (race-safe — enforced by a DB unique constraint, not just a pre-check) |
 
-------------------------------------------------------------------------
+---
 
 ## GET /onboarding/workspace-slug-availability
 
@@ -53,25 +53,25 @@ creation time.
 { "slug": "...", "available": true }
 ```
 
-A slug is reported available if no organization has it, *or* if the
+A slug is reported available if no organization has it, _or_ if the
 organization that has it belongs to the current user (covers re-checking
 your own already-created workspace's URL).
 
 **Errors**
 
-| Status | Code                       | Meaning              |
-| ------ | --------------------------- | ----------------------- |
+| Status | Code                        | Meaning               |
+| ------ | --------------------------- | --------------------- |
 | 422    | `INVALID_WORKSPACE_REQUEST` | malformed slug format |
 
-------------------------------------------------------------------------
+---
 
 ## POST /onboarding/profile
 
 **Request body** (`ProfileSetupRequestSchema`)
 
-| Field                   | Type   | Notes                            |
-| ------------------------ | ------ | ----------------------------------- |
-| `jobRole`                | enum   | required                            |
+| Field     | Type | Notes    |
+| --------- | ---- | -------- |
+| `jobRole` | enum | required |
 
 `teamSize` is **not** part of this step — it's captured earlier, at
 `POST /onboarding/workspace`, since it describes the organization, not
@@ -89,12 +89,12 @@ Sets the user's professional job role, stamps
 
 **Errors**
 
-| Status | Code                        | Meaning                             |
-| ------ | ---------------------------- | --------------------------------------- |
-| 400    | (validation)                  | malformed body                         |
-| 409    | `ONBOARDING_STEP_NOT_ALLOWED` | no workspace created yet               |
+| Status | Code                          | Meaning                  |
+| ------ | ----------------------------- | ------------------------ |
+| 400    | (validation)                  | malformed body           |
+| 409    | `ONBOARDING_STEP_NOT_ALLOWED` | no workspace created yet |
 
-------------------------------------------------------------------------
+---
 
 ## GET /onboarding/completion
 
@@ -115,6 +115,6 @@ a read of already-completed state, not a step in the flow itself.
 
 **Errors**
 
-| Status | Code                        | Meaning                                   |
-| ------ | ---------------------------- | --------------------------------------------- |
+| Status | Code                          | Meaning                                         |
+| ------ | ----------------------------- | ----------------------------------------------- |
 | 409    | `ONBOARDING_STEP_NOT_ALLOWED` | workspace not created, or profile not completed |

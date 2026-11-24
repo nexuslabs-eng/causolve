@@ -1,5 +1,5 @@
-import nodemailer from 'nodemailer';
-import { env } from './keys.js';
+import nodemailer from "nodemailer";
+import { env } from "./keys.js";
 
 const transporter = nodemailer.createTransport({
   host: env.SMTP_HOST,
@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
     pass: env.SMTP_PASSWORD,
   },
   tls: {
-    rejectUnauthorized: env.NODE_ENV === 'production',
+    rejectUnauthorized: env.NODE_ENV === "production",
   },
 });
 

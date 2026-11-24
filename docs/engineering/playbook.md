@@ -3,14 +3,14 @@
 **Purpose:** Concise implementation guide for building the Causolve MVP
 without coupling progress to one team member.
 
-------------------------------------------------------------------------
+---
 
 ## 1. Architecture
 
 Causolve has three independently developable domains connected through
 stable contracts.
 
-``` text
+```text
 React PWA
 Frontend + Product UI
       │
@@ -43,13 +43,13 @@ publishing - AI-service integration
 The domains must remain independently testable. Frontend and AI
 development must not require completed backend endpoints.
 
-------------------------------------------------------------------------
+---
 
 ## 2. Technology Stack
 
 ### Frontend
 
-``` text
+```text
 React
 TypeScript
 Vite
@@ -71,7 +71,7 @@ MSW
 
 ### Backend
 
-``` text
+```text
 Node.js
 Express
 TypeScript
@@ -86,7 +86,7 @@ Vitest + Supertest
 
 ### AI Service
 
-``` text
+```text
 Python
 FastAPI
 LangGraph
@@ -96,11 +96,11 @@ Pytest
 Ruff
 ```
 
-------------------------------------------------------------------------
+---
 
 ## 3. Repository Structure
 
-``` text
+```text
 resolve-os/
 ├── apps/
 │   ├── frontend/
@@ -144,7 +144,7 @@ resolve-os/
 `packages/contracts` defines the shared API shapes used by mocks,
 frontend, backend, and AI integration.
 
-------------------------------------------------------------------------
+---
 
 ## 4. Contract-First Development
 
@@ -153,7 +153,7 @@ independently.
 
 Core contracts:
 
-``` text
+```text
 Incident
 Investigation
 Hypothesis
@@ -169,17 +169,11 @@ SSEEvent
 
 Example:
 
-``` ts
+```ts
 interface Hypothesis {
   id: string;
   statement: string;
-  status:
-    | "CANDIDATE"
-    | "PLAUSIBLE"
-    | "LEADING"
-    | "WEAKENED"
-    | "INVALIDATED"
-    | "CONFIRMED";
+  status: "CANDIDATE" | "PLAUSIBLE" | "LEADING" | "WEAKENED" | "INVALIDATED" | "CONFIRMED";
   supportStrength: number;
   contradictionPressure: number;
   evidenceQuality: "LOW" | "MODERATE" | "HIGH";
@@ -189,7 +183,7 @@ interface Hypothesis {
 
 ### Development Adapters
 
-``` text
+```text
 Frontend → MSW / deterministic fixtures
 Frontend → Express API
 
@@ -202,7 +196,7 @@ FastAPI → future real integrations
 
 Replacing an adapter must not require rewriting consuming features.
 
-------------------------------------------------------------------------
+---
 
 ## 5. Frontend State Rules
 
@@ -219,14 +213,14 @@ available.
 **SSE:** updates TanStack Query caches instead of duplicating server
 state in Zustand.
 
-------------------------------------------------------------------------
+---
 
 ## 6. Core Data Model
 
 PostgreSQL is the source of truth. Prisma manages schema, relations,
 migrations, and data access.
 
-``` text
+```text
 Organization
 ├── Users
 ├── Teams
@@ -250,7 +244,7 @@ Organization
 
 **Investigation**
 
-``` text
+```text
 id
 incidentId
 status
@@ -263,7 +257,7 @@ completedAt
 
 **Hypothesis**
 
-``` text
+```text
 id
 investigationId
 statement
@@ -276,7 +270,7 @@ rank
 
 **Evidence**
 
-``` text
+```text
 id
 investigationId
 source
@@ -293,7 +287,7 @@ provenance
 
 **EvidenceHypothesisRelation**
 
-``` text
+```text
 evidenceId
 hypothesisId
 relation
@@ -303,7 +297,7 @@ weight
 
 Relations:
 
-``` text
+```text
 SUPPORTS
 CONTRADICTS
 NEUTRAL
@@ -312,13 +306,13 @@ INVALIDATES
 
 All organization-owned database access must be tenant-scoped.
 
-------------------------------------------------------------------------
+---
 
 ## 7. LangGraph Architecture
 
 ### Investigation State
 
-``` text
+```text
 incident context
 hypotheses[]
 evidence[]
@@ -334,7 +328,7 @@ iteration
 
 ### Graph
 
-``` text
+```text
 START
   ↓
 load_context
@@ -369,13 +363,13 @@ enough_evidence?
 
 Remediation authorization and execution remain backend responsibilities.
 
-------------------------------------------------------------------------
+---
 
 ## 8. Evidence and Contradiction Engine
 
 Evidence is evaluated by:
 
-``` text
+```text
 reliability
 specificity
 directness
@@ -389,7 +383,7 @@ Evidence sharing the same underlying signal receives the same
 
 Contradiction severity:
 
-``` text
+```text
 WEAK
 MODERATE
 STRONG
@@ -401,7 +395,7 @@ observations.
 
 Example:
 
-``` text
+```text
 H1: deployment regression
 
 Weak support:
@@ -420,7 +414,7 @@ evidence quality, independent source count, and evidence coverage.
 
 The system records why every material ranking change occurred.
 
-------------------------------------------------------------------------
+---
 
 ## 9. Discriminating Tool Selection
 
@@ -430,7 +424,7 @@ The next tool should answer:
 
 Initial simulated tools:
 
-``` text
+```text
 getServiceHealth
 getRecentDeployments
 searchLogs
@@ -441,7 +435,7 @@ getRunbook
 
 Each returns:
 
-``` text
+```text
 status
 source
 data
@@ -452,7 +446,7 @@ error
 
 Capability status:
 
-``` text
+```text
 AVAILABLE
 PARTIAL
 STALE
@@ -460,13 +454,13 @@ UNAVAILABLE
 FAILED
 ```
 
-------------------------------------------------------------------------
+---
 
 ## 10. Progressive Degradation
 
 Causolve continues safely when capabilities fail.
 
-``` text
+```text
 Level 0  Full investigation
 
 Level 1  One evidence source degraded
@@ -492,13 +486,13 @@ remediation policy.
 Every degradation transition becomes an incident timeline and audit
 event.
 
-------------------------------------------------------------------------
+---
 
 ## 11. RBAC and Remediation
 
 Authorization flow:
 
-``` text
+```text
 Authenticate
 ↓
 Resolve organization
@@ -516,7 +510,7 @@ Approve or reject execution
 
 Remediation policy considers:
 
-``` text
+```text
 technical risk
 + blast radius
 + investigation integrity
@@ -527,13 +521,13 @@ technical risk
 
 The AI generates recommendations. It cannot authorize remediation.
 
-------------------------------------------------------------------------
+---
 
 ## 12. Real-Time Events
 
 Core SSE events:
 
-``` text
+```text
 incident.updated
 
 investigation.started
@@ -555,13 +549,13 @@ verification.completed
 incident.resolved
 ```
 
-------------------------------------------------------------------------
+---
 
 ## 13. Flagship MVP Scenario
 
 Build one deterministic incident completely before expanding scenarios.
 
-``` text
+```text
 Payment incident triggered
 ↓
 Recent deployment discovered
@@ -610,13 +604,13 @@ Postmortem records reasoning history
 This fixture drives AI tests, frontend mocks, integration tests, and
 Playwright E2E.
 
-------------------------------------------------------------------------
+---
 
 ## 14. Parallel Execution Plan
 
 ### Frontend + AI Track
 
-``` text
+```text
 1. Repository and shared contracts
 2. Frontend foundation
 3. MSW + flagship fixture
@@ -640,7 +634,7 @@ Playwright E2E.
 
 ### Backend Track
 
-``` text
+```text
 1. Express + PostgreSQL + Prisma
 2. Authentication
 3. Organizations + tenant isolation
@@ -660,7 +654,7 @@ Playwright E2E.
 
 Replace adapters incrementally:
 
-``` text
+```text
 MSW → Express
 Fixtures → PostgreSQL
 Simulated AI response → FastAPI
@@ -668,7 +662,7 @@ Mock SSE → Real SSE
 Mock auth → Real auth/RBAC
 ```
 
-------------------------------------------------------------------------
+---
 
 ## 15. Testing
 
@@ -686,20 +680,20 @@ handling - discriminating tool selection - degradation paths
 through hypothesis reversal, degradation, approval, remediation,
 verification, resolution, and postmortem.
 
-------------------------------------------------------------------------
+---
 
 ## 16. MVP Definition of Done
 
 The MVP is ready when:
 
--   tenant isolation and RBAC are enforced;
--   incident lifecycle is controlled;
--   competing hypotheses are maintained;
--   decisive contradictions can weaken or invalidate hypotheses;
--   correlated evidence is not double-counted;
--   investigation integrity and evidence coverage are visible;
--   failed tools trigger progressive degradation;
--   degraded certainty changes approval requirements;
--   AI cannot authorize remediation;
--   recovery is verified before resolution;
--   the flagship E2E scenario passes reliably.
+- tenant isolation and RBAC are enforced;
+- incident lifecycle is controlled;
+- competing hypotheses are maintained;
+- decisive contradictions can weaken or invalidate hypotheses;
+- correlated evidence is not double-counted;
+- investigation integrity and evidence coverage are visible;
+- failed tools trigger progressive degradation;
+- degraded certainty changes approval requirements;
+- AI cannot authorize remediation;
+- recovery is verified before resolution;
+- the flagship E2E scenario passes reliably.

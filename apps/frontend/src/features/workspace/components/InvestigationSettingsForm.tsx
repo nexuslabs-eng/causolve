@@ -36,11 +36,7 @@ const EMPTY_SETTINGS: InvestigationSettings = {
   requireEvidenceAttribution: false,
 };
 
-export const InvestigationSettingsForm = ({
-  settings,
-  canEdit,
-  onSave,
-}: Props) => {
+export const InvestigationSettingsForm = ({ settings, canEdit, onSave }: Props) => {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -91,20 +87,14 @@ export const InvestigationSettingsForm = ({
     <form className="mt-6 space-y-6" onSubmit={handleSubmit(submit)}>
       <div className="flex items-start justify-between border-b border-border pb-5">
         <div>
-          <h1 className="text-2xl font-semibold">
-            Investigation configuration
-          </h1>
+          <h1 className="text-2xl font-semibold">Investigation configuration</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Configure how investigations collect and evaluate evidence.
           </p>
         </div>
 
         {canEdit && !editing && (
-          <Button
-            type="button"
-            variant="subtle"
-            onClick={() => setEditing(true)}
-          >
+          <Button type="button" variant="subtle" onClick={() => setEditing(true)}>
             <Pencil />
             Edit
           </Button>
@@ -114,8 +104,8 @@ export const InvestigationSettingsForm = ({
       <Field invalid={Boolean(errors.evidenceCollectionTimeout)}>
         <FieldLabel>Evidence collection timeout</FieldLabel>
         <p className="text-xs leading-relaxed text-muted-foreground">
-          Set how long evidence collection may run before it times out. Choose
-          seconds for precise limits or minutes for longer collection windows.
+          Set how long evidence collection may run before it times out. Choose seconds for precise
+          limits or minutes for longer collection windows.
         </p>
         {settings ? (
           <div className="flex h-11 min-w-0 overflow-hidden rounded-md border border-input bg-background focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/30">
@@ -212,9 +202,7 @@ export const InvestigationSettingsForm = ({
           }
         />
         <span>
-          <span className="block text-sm font-medium">
-            Start investigations automatically
-          </span>
+          <span className="block text-sm font-medium">Start investigations automatically</span>
           <span className="text-sm text-muted-foreground">
             Begin evidence collection when an incident enters investigation.
           </span>
@@ -233,9 +221,7 @@ export const InvestigationSettingsForm = ({
           }
         />
         <span>
-          <span className="block text-sm font-medium">
-            Require evidence attribution
-          </span>
+          <span className="block text-sm font-medium">Require evidence attribution</span>
           <span className="text-sm text-muted-foreground">
             Every evidence item must identify its source and collection time.
           </span>
@@ -249,11 +235,7 @@ export const InvestigationSettingsForm = ({
             Cancel
           </Button>
 
-          <Button
-            type="submit"
-            variant="brand"
-            disabled={!isDirty || !isValid || saving}
-          >
+          <Button type="submit" variant="brand" disabled={!isDirty || !isValid || saving}>
             {saving ? (
               <>
                 <Loader />

@@ -14,9 +14,7 @@ import { personalRoutes, workspaceRoutes } from "@/app/routes/setting-routes";
 
 const landingLoader = async () => {
   try {
-    const session = await queryClient.ensureQueryData(
-      authSessionQueryOptions(),
-    );
+    const session = await queryClient.ensureQueryData(authSessionQueryOptions());
 
     if (!session.authenticated) {
       return null;
@@ -52,22 +50,17 @@ export const router = createBrowserRouter([
                 index: true,
                 loader: landingLoader,
                 lazy: async () => {
-                  const module =
-                    await import("@/features/marketing/pages/HomePage");
+                  const module = await import("@/features/marketing/pages/HomePage");
                   return { Component: module.default };
                 },
               },
               {
                 path: "privacy",
-                Component: lazy(
-                  () => import("@/features/legal/pages/PrivacyPolicy"),
-                ),
+                Component: lazy(() => import("@/features/legal/pages/PrivacyPolicy")),
               },
               {
                 path: "terms",
-                Component: lazy(
-                  () => import("@/features/legal/pages/TermsOfUse"),
-                ),
+                Component: lazy(() => import("@/features/legal/pages/TermsOfUse")),
               },
             ],
           },
@@ -96,16 +89,14 @@ export const router = createBrowserRouter([
               {
                 path: "workspace",
                 lazy: async () => {
-                  const module =
-                    await import("@/features/workspace/pages/Overview");
+                  const module = await import("@/features/workspace/pages/Overview");
                   return { Component: module.Overview };
                 },
               },
               {
                 path: "settings",
                 lazy: async () => {
-                  const module =
-                    await import("@/features/workspace/pages/PersonalSettings");
+                  const module = await import("@/features/workspace/pages/PersonalSettings");
                   return { Component: module.PersonalSettings };
                 },
                 children: personalRoutes,
@@ -113,8 +104,7 @@ export const router = createBrowserRouter([
               {
                 path: "workspace/settings",
                 lazy: async () => {
-                  const module =
-                    await import("@/features/workspace/pages/WorkspaceSettings");
+                  const module = await import("@/features/workspace/pages/WorkspaceSettings");
                   return { Component: module.WorkspaceSettings };
                 },
                 children: workspaceRoutes,

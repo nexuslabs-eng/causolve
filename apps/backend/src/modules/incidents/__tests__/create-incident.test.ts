@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { IncidentSchema } from "contracts";
@@ -27,26 +27,20 @@ describe("POST /organizations/:organizationId/incidents", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
     prismaMock.service.findFirst.mockResolvedValue(buildFakeService());
     prismaMock.organization.update.mockResolvedValue(
       buildFakeOrganization({ incidentSequence: 1 }),
     );
     const fakeIncident = buildFakeIncident({ reference: "INC-1" });
     prismaMock.incident.create.mockResolvedValue(fakeIncident);
-    prismaMock.incidentEvent.create.mockResolvedValue(
-      buildFakeIncident() as never,
-    );
+    prismaMock.incidentEvent.create.mockResolvedValue(buildFakeIncident() as never);
 
-    const response = await agent
-      .post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`)
-      .send({
-        serviceId: MOCK_SERVICE_ID,
-        title: fakeIncident.title,
-        severity: fakeIncident.severity,
-      });
+    const response = await agent.post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`).send({
+      serviceId: MOCK_SERVICE_ID,
+      title: fakeIncident.title,
+      severity: fakeIncident.severity,
+    });
 
     expect(response.status).toBe(201);
     const body = IncidentSchema.parse(response.body);
@@ -66,18 +60,14 @@ describe("POST /organizations/:organizationId/incidents", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
     prismaMock.service.findFirst.mockResolvedValue(null);
 
-    const response = await agent
-      .post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`)
-      .send({
-        serviceId: MOCK_SERVICE_ID,
-        title: "Checkout API elevated error rate",
-        severity: "HIGH",
-      });
+    const response = await agent.post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`).send({
+      serviceId: MOCK_SERVICE_ID,
+      title: "Checkout API elevated error rate",
+      severity: "HIGH",
+    });
 
     expect(response.status).toBe(404);
     expect(response.body).toMatchObject({
@@ -90,17 +80,13 @@ describe("POST /organizations/:organizationId/incidents", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "OBSERVER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "OBSERVER" }));
 
-    const response = await agent
-      .post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`)
-      .send({
-        serviceId: MOCK_SERVICE_ID,
-        title: "Checkout API elevated error rate",
-        severity: "HIGH",
-      });
+    const response = await agent.post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`).send({
+      serviceId: MOCK_SERVICE_ID,
+      title: "Checkout API elevated error rate",
+      severity: "HIGH",
+    });
 
     expect(response.status).toBe(403);
     expect(response.body).toMatchObject({ error: { code: "FORBIDDEN" } });
@@ -113,13 +99,11 @@ describe("POST /organizations/:organizationId/incidents", () => {
 
     prismaMock.membership.findFirst.mockResolvedValue(null);
 
-    const response = await agent
-      .post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`)
-      .send({
-        serviceId: MOCK_SERVICE_ID,
-        title: "Checkout API elevated error rate",
-        severity: "HIGH",
-      });
+    const response = await agent.post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`).send({
+      serviceId: MOCK_SERVICE_ID,
+      title: "Checkout API elevated error rate",
+      severity: "HIGH",
+    });
 
     expect(response.status).toBe(404);
     expect(response.body).toMatchObject({
@@ -131,9 +115,7 @@ describe("POST /organizations/:organizationId/incidents", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
 
     const response = await agent
       .post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents`)

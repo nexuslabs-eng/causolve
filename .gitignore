@@ -48,10 +48,11 @@ __pycache__/
 .venv/
 venv/
 
-# Claude Code local/personal notes
+# AI Agents local/personal notes
 CLAUDE.local.md
 **/CLAUDE.local.md
 apps/backend/CLAUDE.md
+AGENTS.md
 
 # Editor and OS files
 .vscode/
