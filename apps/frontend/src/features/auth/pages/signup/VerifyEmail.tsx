@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { VerifyEmailOtpRequestSchema, type VerifyEmailOtpRequest } from "contracts";
+import { VerifyEmailOtpRequestSchema, type VerifyEmailOtpRequest } from "contracts/auth/email-verification.schema";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";

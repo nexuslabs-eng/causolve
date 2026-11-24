@@ -5,7 +5,7 @@ import {
     PasswordResetTokenSchema,
     type ResetPasswordForm,
     type PasswordResetToken
-} from "contracts";
+} from "contracts/auth/password-reset.schema";
 import { Navigate, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Check, Loader } from "lucide-react";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";

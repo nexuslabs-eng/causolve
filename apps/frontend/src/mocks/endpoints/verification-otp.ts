@@ -1,4 +1,4 @@
-import { ResendVerificationCodeResponseSchema } from "contracts";
+import { ResendVerificationCodeResponseSchema } from "contracts/auth/email-verification.schema";
 import { http, HttpResponse } from "msw";
 import { apiError, authSession, issueVerificationCode } from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";

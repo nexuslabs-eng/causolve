@@ -1,4 +1,5 @@
-import { AuthSessionSchema, UpdateProfileRequestSchema } from "contracts";
+import { AuthSessionSchema } from "contracts/auth/auth-session.schema";
+import { UpdateProfileRequestSchema } from "contracts/profile/profile.schema";
 import { http, HttpResponse } from "msw";
 
 import { apiEndpoint } from "@/lib/api/api-config";

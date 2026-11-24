@@ -1,4 +1,4 @@
-import { LoginRequestSchema, LoginResponseSchema } from "contracts";
+import { LoginRequestSchema, LoginResponseSchema } from "contracts/auth/login.schema";
 import { http, HttpResponse } from "msw";
 import {
   apiError,

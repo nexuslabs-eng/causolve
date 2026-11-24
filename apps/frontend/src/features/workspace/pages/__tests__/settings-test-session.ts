@@ -1,4 +1,4 @@
-import type { AuthSession } from "contracts";
+import type { AuthSession } from "contracts/auth/auth-session.schema";
 
 export const authenticatedSettingsSession: AuthSession = {
   authenticated: true,

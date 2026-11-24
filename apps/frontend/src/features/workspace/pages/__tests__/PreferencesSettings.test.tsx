@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { PreferencesSettings } from "@/features/workspace/pages/PreferencesSettings";
+import { PreferencesSettings } from "@/features/workspace/pages/personal-settings/PreferencesSettings";
 import { setAuthSession } from "@/mocks/utils";
 import { authenticatedSettingsSession } from "./settings-test-session";
 

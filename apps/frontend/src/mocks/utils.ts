@@ -1,10 +1,6 @@
-import {
-  ApiErrorSchema,
-  NotificationPreferencesSchema,
-  ProfileSetupRequestSchema,
-  type NotificationPreferences,
-  type ProfileSetupRequest,
-} from "contracts";
+import { ApiErrorSchema } from "contracts/common/api-error.schema";
+import { NotificationPreferencesSchema, type NotificationPreferences } from "contracts/settings/notification-preferences.schema";
+import { ProfileSetupRequestSchema, type ProfileSetupRequest } from "contracts/onboarding/profile-setup.schema";
 import {
   authSession,
   authenticateMockAccount,

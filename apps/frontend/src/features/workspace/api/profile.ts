@@ -1,8 +1,5 @@
-import {
-  AuthSessionSchema,
-  UpdateProfileRequestSchema,
-  type UpdateProfileRequest,
-} from "contracts";
+import { UpdateProfileRequestSchema, type UpdateProfileRequest } from "contracts/profile/profile.schema";
+import { AuthSessionSchema } from "contracts/auth/auth-session.schema";
 import { axiosClient } from "@/lib/api/axios-client";
 
 export const updateProfile = async (input: UpdateProfileRequest) => {

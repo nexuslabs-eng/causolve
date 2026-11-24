@@ -2,7 +2,7 @@ import {
   ChangePasswordFormSchema,
   ChangePasswordResponseSchema,
   ChangePasswordRequestSchema,
-} from "contracts";
+} from "contracts/auth/password-change.schema";
 import { http, HttpResponse } from "msw";
 
 import { apiEndpoint } from "@/lib/api/api-config";

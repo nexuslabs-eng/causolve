@@ -4,17 +4,19 @@ import {
   ResetPasswordRequestSchema,
   ResetPasswordResponseSchema,
   ValidateResetTokenResponseSchema,
-  ChangePasswordRequestSchema,
-  ChangePasswordResponseSchema,
   type ForgotPasswordRequest,
   type ForgotPasswordResponse,
   type ResetPasswordResponse,
   type ResetPasswordRequest,
   type ValidateResetTokenResponse,
   type PasswordResetToken,
+} from "contracts/auth/password-reset.schema";
+import {
+  ChangePasswordRequestSchema,
+  ChangePasswordResponseSchema,
   type ChangePasswordRequest,
   type ChangePasswordResponse,
-} from "contracts";
+} from "contracts/auth/password-change.schema";
 import { axiosClient } from "@/lib/api/axios-client";
 
 export const forgotPassword = async (

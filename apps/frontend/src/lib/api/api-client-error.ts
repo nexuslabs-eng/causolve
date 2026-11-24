@@ -1,4 +1,4 @@
-import type { ApiError } from "contracts";
+import type { ApiError } from "contracts/common/api-error.schema";
 
 type ErrorPayload = ApiError["error"];
 

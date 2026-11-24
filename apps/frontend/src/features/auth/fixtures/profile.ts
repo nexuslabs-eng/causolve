@@ -1,4 +1,4 @@
-import type { JobRole, TeamSize } from "contracts";
+import type { JobRole, TeamSize } from "contracts/onboarding/onboarding.enums";
 
 export const JOB_ROLES: Array<{
   value: JobRole;

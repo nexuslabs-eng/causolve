@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import type { InvitationToken } from "contracts";
+import type { InvitationToken } from "contracts/invitations/invitation-preview.schema";
 
 import { getInvitationPreview } from "@/features/auth/api/invitations";
 

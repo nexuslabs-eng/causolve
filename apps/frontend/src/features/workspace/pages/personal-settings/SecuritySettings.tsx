@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { DeleteAccountDialog } from "@/components/dialog/delete-account-dialog";
 import { useAuthSession } from "@/features/auth/hooks/use-auth-session";
 import { useDeleteAccount } from "@/features/auth/hooks/use-delete-account";
-import { PasswordForm } from "../components/PasswordForm";
+import { PasswordForm } from "@/features/workspace/components/PasswordForm";
 
 export const SecuritySettings = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -23,10 +23,6 @@ export const SecuritySettings = () => {
   return (
     <div>
       <header className="border-b border-border pb-6">
-        <p className="font-mono text-[10px] uppercase text-primary-bright">
-          Personal settings
-        </p>
-
         <h1 className="mt-2 text-2xl font-semibold text-foreground">
           Account & security
         </h1>

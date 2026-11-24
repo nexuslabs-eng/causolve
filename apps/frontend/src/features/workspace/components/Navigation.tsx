@@ -49,7 +49,8 @@ const NavigationItemView = ({
   const Icon = item.icon;
 
   const className = cn(
-    "group flex h-9 w-full items-center gap-3 rounded-md px-2.5 text-sm outline-none transition-colors focus-visible:ring-1 focus-visible:ring-ring",
+    "group flex h-9 w-full items-center gap-3 rounded-md px-2.5 text-sm outline-none transition-colors focus-visible:ring-1 focus-visible:ring-ring cursor-pointer",
+    item.label === "Integrations" && "cursor-not-allowed opacity-60",
     item.active
       ? "bg-accent text-foreground shadow-[inset_2px_0_0_var(--primary)]"
       : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",

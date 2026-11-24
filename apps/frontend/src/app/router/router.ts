@@ -1,29 +1,36 @@
 import { lazy } from "react";
 import { createBrowserRouter, redirect } from "react-router-dom";
 import App from "@/app/App";
-import HomePage from "@/features/marketing/pages/HomePage";
-import MarketingLayout from "@/layouts/MarketingLayout";
-import AuthLayout from "@/layouts/AuthLayout";
 import { AppLoading } from "@/components/loading/AppLoading";
 import RouteErrorBoundary from "@/features/errors/pages/RouteErrorBoundary";
 import { publicAuthRoutes, protectedOnboardingRoutes } from "@/app/router/auth";
 import { PublicRoute } from "@/app/routes/PublicRoute";
 import { ProtectedRoute } from "@/app/routes/ProtectedRoute";
-import { AppLayout } from "@/layouts/AppLayout";
-import { Overview } from "@/features/workspace/pages/Overview";
-import { PersonalSettings } from "@/features/workspace/pages/PersonalSettings";
-import { Settings } from "@/features/workspace/pages/Settings";
-import { SecuritySettings } from "@/features/workspace/pages/SecuritySettings";
-import { SettingsSection } from "@/features/workspace/pages/SettingsSection";
-import { ProfileSettings } from "@/features/workspace/pages/ProfileSettings";
-import { NotificationsSettings } from "@/features/workspace/pages/NotificationsSettings";
-import { PreferencesSettings } from "@/features/workspace/pages/PreferencesSettings";
+import { onboardingRoutes } from "@/app/routes/constants";
+import { authSessionQueryOptions } from "@/features/auth/queries/auth-session-query-options";
+import { queryClient } from "@/lib/query-client";
 
-const NotFound = lazy(() => import("@/features/errors/pages/NotFound"));
-const PrivacyPolicy = lazy(
-  () => import("@/features/legal/pages/PrivacyPolicy"),
-);
-const TermsOfUse = lazy(() => import("@/features/legal/pages/TermsOfUse"));
+import { personalRoutes, workspaceRoutes } from "@/app/routes/setting-routes";
+
+const landingLoader = async () => {
+  try {
+    const session = await queryClient.ensureQueryData(
+      authSessionQueryOptions(),
+    );
+
+    if (!session.authenticated) {
+      return null;
+    }
+
+    if (session.onboarding.status === "COMPLETED") {
+      return redirect("/workspace");
+    }
+
+    return redirect(onboardingRoutes[session.onboarding.nextStep]);
+  } catch {
+    return null;
+  }
+};
 
 export const router = createBrowserRouter([
   {
@@ -36,18 +43,42 @@ export const router = createBrowserRouter([
         Component: PublicRoute,
         children: [
           {
-            Component: MarketingLayout,
+            lazy: async () => {
+              const module = await import("@/layouts/MarketingLayout");
+              return { Component: module.default };
+            },
             children: [
-              { index: true, Component: HomePage },
-              { path: "privacy", Component: PrivacyPolicy },
-              { path: "terms", Component: TermsOfUse },
+              {
+                index: true,
+                loader: landingLoader,
+                lazy: async () => {
+                  const module =
+                    await import("@/features/marketing/pages/HomePage");
+                  return { Component: module.default };
+                },
+              },
+              {
+                path: "privacy",
+                Component: lazy(
+                  () => import("@/features/legal/pages/PrivacyPolicy"),
+                ),
+              },
+              {
+                path: "terms",
+                Component: lazy(
+                  () => import("@/features/legal/pages/TermsOfUse"),
+                ),
+              },
             ],
           },
         ],
       },
 
       {
-        Component: AuthLayout,
+        lazy: async () => {
+          const module = await import("@/layouts/AuthLayout");
+          return { Component: module.default };
+        },
         children: [
           { Component: PublicRoute, children: publicAuthRoutes },
           { Component: ProtectedRoute, children: protectedOnboardingRoutes },
@@ -57,46 +88,45 @@ export const router = createBrowserRouter([
         Component: ProtectedRoute,
         children: [
           {
-            Component: AppLayout,
+            lazy: async () => {
+              const module = await import("@/layouts/AppLayout");
+              return { Component: module.AppLayout };
+            },
             children: [
-              { path: "workspace", Component: Overview },
+              {
+                path: "workspace",
+                lazy: async () => {
+                  const module =
+                    await import("@/features/workspace/pages/Overview");
+                  return { Component: module.Overview };
+                },
+              },
               {
                 path: "settings",
-                Component: PersonalSettings,
-                children: [
-                  {
-                    index: true,
-                    loader: () => redirect("/settings/profile"),
-                  },
-                  { path: "profile", Component: ProfileSettings },
-                  { path: "security", Component: SecuritySettings },
-                  { path: "notifications", Component: NotificationsSettings },
-                  { path: "preferences", Component: PreferencesSettings },
-                ],
+                lazy: async () => {
+                  const module =
+                    await import("@/features/workspace/pages/PersonalSettings");
+                  return { Component: module.PersonalSettings };
+                },
+                children: personalRoutes,
               },
               {
                 path: "workspace/settings",
-                Component: Settings,
-                children: [
-                  {
-                    index: true,
-                    loader: () => redirect("/workspace/settings/general"),
-                  },
-                  { path: "general", Component: SettingsSection },
-                  { path: "members", Component: SettingsSection },
-                  { path: "teams", Component: SettingsSection },
-                  { path: "integrations", Component: SettingsSection },
-                  { path: "investigation", Component: SettingsSection },
-                  { path: "ai-evidence", Component: SettingsSection },
-                  { path: "approvals", Component: SettingsSection },
-                  { path: "audit", Component: SettingsSection },
-                ],
+                lazy: async () => {
+                  const module =
+                    await import("@/features/workspace/pages/WorkspaceSettings");
+                  return { Component: module.WorkspaceSettings };
+                },
+                children: workspaceRoutes,
               },
             ],
           },
         ],
       },
-      { path: "*", Component: NotFound },
+      {
+        path: "*",
+        Component: lazy(() => import("@/features/errors/pages/NotFound")),
+      },
     ],
   },
 ]);

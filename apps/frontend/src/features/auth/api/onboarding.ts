@@ -13,7 +13,7 @@ import {
     type ProfileSetupResponse,
     type SignupCompletion,
     SignupCompletionSchema
-} from "contracts";
+} from "contracts/onboarding/index";
 import { axiosClient } from "@/lib/api/axios-client";
 
 export const createWorkspace = async (

@@ -1,6 +1,9 @@
 import { useState, type SubmitEvent } from "react";
 import { Check, Loader2 } from "lucide-react";
-import type { DateFormat, ServerUserPreferences } from "contracts";
+import { toast } from "sonner";
+import type { DateFormat, ServerUserPreferences } from "contracts/settings/user-preferences.schema";
+import { SettingsLoadError } from "@/features/workspace/components/SettingsLoadError";
+import { SettingsPageLoading } from "@/features/workspace/components/SettingsPageLoading";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,18 +30,37 @@ const DATE_FORMAT_LABELS: Record<DateFormat, string> = {
 
 const PreferencesForm = ({
   initialPreferences,
+  canEdit,
 }: {
-  initialPreferences: ServerUserPreferences;
+  initialPreferences: ServerUserPreferences | null;
+  canEdit: boolean;
 }) => {
   const theme = useThemeStore((state) => state.theme);
   const setTheme = useThemeStore((state) => state.setTheme);
   const updatePreferences = useUpdateUserPreferences();
-  const [timeZone, setTimeZone] = useState(initialPreferences.timeZone);
-  const [dateFormat, setDateFormat] = useState(initialPreferences.dateFormat);
+  const [timeZone, setTimeZone] = useState(initialPreferences?.timeZone ?? "");
+  const [dateFormat, setDateFormat] = useState<
+    ServerUserPreferences["dateFormat"] | ""
+  >(initialPreferences?.dateFormat ?? "");
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    updatePreferences.mutate({ timeZone, dateFormat });
+
+    if (!canEdit || !timeZone || !dateFormat) {
+      return;
+    }
+
+    updatePreferences.mutate(
+      { timeZone, dateFormat },
+      {
+        onSuccess: () => {
+          toast.success("Preferences saved successfully.");
+        },
+        onError: () => {
+          toast.error("Unable to save preferences.");
+        },
+      },
+    );
   };
 
   return (
@@ -91,7 +113,7 @@ const PreferencesForm = ({
           </label>
 
           <Select
-            value={timeZone}
+            value={timeZone || null}
             onValueChange={(value) => {
               if (value !== null) {
                 setTimeZone(value);
@@ -121,7 +143,8 @@ const PreferencesForm = ({
           </label>
 
           <Select
-            value={dateFormat}
+            value={dateFormat || null}
+            disabled={!canEdit}
             onValueChange={(value) => {
               if (value !== null) {
                 setDateFormat(value as DateFormat);
@@ -130,7 +153,7 @@ const PreferencesForm = ({
           >
             <SelectTrigger id="dateFormat" className="mt-2 h-11 w-full">
               <SelectValue>
-                {DATE_FORMAT_LABELS[dateFormat]}
+                {dateFormat ? DATE_FORMAT_LABELS[dateFormat] : undefined}
               </SelectValue>
             </SelectTrigger>
 
@@ -148,8 +171,8 @@ const PreferencesForm = ({
       <div className="flex items-center gap-4">
         <Button
           type="submit"
-          variant="subtle"
-          disabled={updatePreferences.isPending}
+          variant="brand"
+          disabled={!canEdit || updatePreferences.isPending}
         >
           {updatePreferences.isPending ? (
             <Loader2 className="animate-spin" aria-hidden="true" />
@@ -159,17 +182,6 @@ const PreferencesForm = ({
           Save preferences
         </Button>
 
-        {updatePreferences.isSuccess && (
-          <p className="text-sm text-emerald-500" role="status">
-            Preferences saved successfully.
-          </p>
-        )}
-
-        {updatePreferences.isError && (
-          <p className="text-sm text-destructive" role="alert">
-            Unable to save preferences.
-          </p>
-        )}
       </div>
     </form>
   );
@@ -177,14 +189,23 @@ const PreferencesForm = ({
 
 export const PreferencesSettings = () => {
   const preferences = useUserPreferences();
+  const hasPreferences = Boolean(preferences.data);
+  const canEdit = hasPreferences && !preferences.isError;
+  const showLoadError =
+    preferences.isError && !preferences.isPending && !preferences.isFetching;
+
+  if (preferences.isPending) {
+    return (
+      <SettingsPageLoading
+        title="Preferences"
+        description="Configure how Causolve behaves for your account."
+      />
+    );
+  }
 
   return (
     <div>
       <header className="border-b border-border pb-6">
-        <p className="font-mono text-[10px] uppercase text-primary-bright">
-          Personal settings
-        </p>
-
         <h1 className="mt-2 text-2xl font-semibold text-foreground">
           Preferences
         </h1>
@@ -194,27 +215,22 @@ export const PreferencesSettings = () => {
         </p>
       </header>
 
-      {preferences.isPending && (
-        <div className="flex min-h-48 items-center justify-center">
-          <Loader2
-            className="size-5 animate-spin text-primary"
-            aria-label="Loading preferences"
-          />
-        </div>
-      )}
-
-      {preferences.isError && (
-        <p className="mt-8 text-sm text-destructive" role="alert">
-          Unable to load your preferences.
-        </p>
-      )}
-
-      {preferences.data && (
-        <PreferencesForm
-          key={`${preferences.data.timeZone}-${preferences.data.dateFormat}`}
-          initialPreferences={preferences.data}
+      {showLoadError && (
+        <SettingsLoadError
+          message="Unable to load preferences."
+          reason="We could not load your personal preferences."
+          retrying={preferences.isFetching}
+          onRetry={() => {
+            void preferences.refetch();
+          }}
         />
       )}
+
+      <PreferencesForm
+        key={`${preferences.data?.timeZone ?? ""}:${preferences.data?.dateFormat ?? ""}`}
+        initialPreferences={preferences.data ?? null}
+        canEdit={canEdit}
+      />
     </div>
   );
 };

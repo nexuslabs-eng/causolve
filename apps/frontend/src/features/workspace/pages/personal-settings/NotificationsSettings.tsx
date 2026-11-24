@@ -1,9 +1,10 @@
-import { Loader2 } from "lucide-react";
-
 import {
   useNotificationPreferences,
   useUpdateNotificationPreferences,
 } from "@/features/workspace/hooks/use-notification-preferences";
+import { SettingsLoadError } from "@/features/workspace/components/SettingsLoadError";
+import { SettingsPageLoading } from "@/features/workspace/components/SettingsPageLoading";
+import { toast } from "sonner";
 
 type PreferenceKey =
   | "emailNotifications"
@@ -41,20 +42,41 @@ const preferenceItems: Array<{
 export const NotificationsSettings = () => {
   const preferences = useNotificationPreferences();
   const updatePreferences = useUpdateNotificationPreferences();
+  const hasPreferences = Boolean(preferences.data);
+  const canEdit = hasPreferences && !preferences.isError;
+  const showLoadError =
+    preferences.isError &&
+    !preferences.isPending &&
+    !preferences.isFetching;
+
+  if (preferences.isPending) {
+    return (
+      <SettingsPageLoading
+        title="Notifications"
+        description="Configure how Causolve delivers personal notifications."
+      />
+    );
+  }
 
   const handleChange = (key: PreferenceKey, checked: boolean) => {
-    updatePreferences.mutate({
-      [key]: checked,
-    });
+    updatePreferences.mutate(
+      {
+        [key]: checked,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Notification preferences saved.");
+        },
+        onError: () => {
+          toast.error("Unable to save your notification preferences.");
+        },
+      },
+    );
   };
 
   return (
     <div>
       <header className="pb-6">
-        <p className="font-mono text-[10px] uppercase text-primary-bright">
-          Personal settings
-        </p>
-
         <h1 className="mt-2 text-2xl font-semibold text-foreground">
           Notifications
         </h1>
@@ -64,25 +86,20 @@ export const NotificationsSettings = () => {
         </p>
       </header>
 
-      {preferences.isPending && (
-        <div className="mt-8 flex min-h-48 items-center justify-center">
-          <Loader2
-            className="size-5 animate-spin text-primary"
-            aria-label="Loading notification settings"
-          />
-        </div>
+      {showLoadError && (
+        <SettingsLoadError
+          message="Unable to load notification settings."
+          reason="We could not load your notification preferences."
+          retrying={preferences.isFetching}
+          onRetry={() => {
+            void preferences.refetch();
+          }}
+        />
       )}
 
-      {preferences.isError && (
-        <p className="mt-8 text-sm text-destructive" role="alert">
-          Unable to load your notification settings.
-        </p>
-      )}
-
-      {preferences.data && (
-        <section className="mt-8 divide-y divide-border border-y border-border">
+      <section className="mt-8 divide-y divide-border border-y border-border">
           {preferenceItems.map((item) => {
-            const checked = preferences.data[item.key];
+            const checked = preferences.data?.[item.key] ?? false;
 
             return (
               <label
@@ -103,7 +120,7 @@ export const NotificationsSettings = () => {
                   type="checkbox"
                   aria-label={item.title}
                   checked={checked}
-                  disabled={updatePreferences.isPending}
+                disabled={!canEdit || updatePreferences.isPending}
                   onChange={(event) =>
                     handleChange(item.key, event.target.checked)
                   }
@@ -112,8 +129,7 @@ export const NotificationsSettings = () => {
               </label>
             );
           })}
-        </section>
-      )}
+      </section>
 
       {updatePreferences.isPending && (
         <p className="mt-4 text-sm text-muted-foreground" role="status">
@@ -121,17 +137,6 @@ export const NotificationsSettings = () => {
         </p>
       )}
 
-      {updatePreferences.isError && (
-        <p className="mt-4 text-sm text-destructive" role="alert">
-          Unable to save your notification preferences.
-        </p>
-      )}
-
-      {updatePreferences.isSuccess && (
-        <p className="mt-4 text-sm text-emerald-500" role="status">
-          Notification preferences saved.
-        </p>
-      )}
     </div>
   );
 };

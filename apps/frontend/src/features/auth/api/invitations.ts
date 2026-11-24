@@ -7,7 +7,7 @@ import {
     type AcceptInvitationResponse,
     type InvitationPreview,
     type InvitationToken,
-} from "contracts";
+} from "contracts/invitations/index";
 
 import { axiosClient } from "@/lib/api/axios-client";
 

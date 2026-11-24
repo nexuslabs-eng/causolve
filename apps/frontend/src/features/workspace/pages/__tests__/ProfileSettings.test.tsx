@@ -1,10 +1,21 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
-import type { AuthSession } from "contracts";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import type { AuthSession } from "contracts/auth/auth-session.schema";
 
-import { ProfileSettings } from "@/features/workspace/pages/ProfileSettings";
+const { toastSuccess } = vi.hoisted(() => ({
+  toastSuccess: vi.fn(),
+}));
+
+vi.mock("sonner", () => ({
+  toast: {
+    success: toastSuccess,
+    error: vi.fn(),
+  },
+}));
+
+import { ProfileSettings } from "@/features/workspace/pages/personal-settings/ProfileSettings";
 import { authSessionQueryKey } from "@/features/auth/queries/auth-session-query-options";
 import { setAuthSession } from "@/mocks/utils";
 
@@ -57,6 +68,10 @@ const renderProfileSettings = () => {
 };
 
 describe("ProfileSettings", () => {
+  beforeEach(() => {
+    toastSuccess.mockClear();
+  });
+
   it("renders the authenticated user's profile details", async () => {
     renderProfileSettings();
 
@@ -94,7 +109,7 @@ describe("ProfileSettings", () => {
 
     await user.click(saveButton);
 
-    expect(await screen.findByRole("status")).toHaveTextContent(
+    expect(toastSuccess).toHaveBeenCalledWith(
       "Full name updated successfully.",
     );
 

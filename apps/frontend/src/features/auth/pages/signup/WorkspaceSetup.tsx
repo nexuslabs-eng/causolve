@@ -3,7 +3,7 @@ import {
   WorkspaceSetupRequestSchema,
   WorkspaceSlugSchema,
   type WorkspaceSetupRequest,
-} from "contracts";
+} from "contracts/onboarding/index";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {

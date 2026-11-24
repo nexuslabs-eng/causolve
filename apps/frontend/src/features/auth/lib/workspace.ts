@@ -1,6 +1,6 @@
 import type { BaseUIEvent } from "@base-ui/react/types";
 import { type UseMutationResult } from "@tanstack/react-query";
-import { WorkspaceSlugSchema, type WorkspaceSetupRequest } from "contracts";
+import { WorkspaceSlugSchema, type WorkspaceSetupRequest } from "contracts/onboarding/workspace-setup.schema";
 import type { ChangeEvent } from "react";
 import type { UseFormClearErrors, UseFormRegisterReturn, UseFormSetError } from "react-hook-form";
 import { isApiClientError } from "@/lib/api/api-client-error";

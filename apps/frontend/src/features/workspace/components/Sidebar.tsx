@@ -96,7 +96,15 @@ const Switcher = ({
   );
 };
 
-const UserMenu = ({ collapsed }: { collapsed: boolean }) => {
+const UserMenu = ({
+  collapsed,
+  mobile,
+  menuContainer,
+}: {
+  collapsed: boolean;
+  mobile: boolean;
+  menuContainer?: React.RefObject<HTMLElement | null>;
+}) => {
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const { data: session } = useAuthSession();
   const logout = useLogout("/");
@@ -114,7 +122,7 @@ const UserMenu = ({ collapsed }: { collapsed: boolean }) => {
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu modal={!mobile}>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
@@ -146,6 +154,7 @@ const UserMenu = ({ collapsed }: { collapsed: boolean }) => {
         <DropdownMenuContent
           align="end"
           side={collapsed ? "right" : "top"}
+          container={menuContainer}
           className="w-52"
         >
           <DropdownMenuLabel>{userName}</DropdownMenuLabel>
@@ -248,7 +257,11 @@ export const Sidebar = ({
 
       <div className="shrink-0 space-y-3 border-t border-border p-2.5">
         <SettingsLink collapsed={compact} onNavigate={onNavigate} />
-        <UserMenu collapsed={compact} />
+        <UserMenu
+          collapsed={compact}
+          mobile={mobile}
+          menuContainer={menuContainer}
+        />
       </div>
     </aside>
   );

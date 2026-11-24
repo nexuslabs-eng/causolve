@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { getAuthSession } from "@/features/auth/api/auth-session";
 import { queryClient } from "@/lib/query-client";
-import type { AuthSession } from "contracts";
+import type { AuthSession } from "contracts/auth/auth-session.schema";
 
 export const authSessionQueryKey = ["auth", "session"] as const;
 

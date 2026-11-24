@@ -1,5 +1,5 @@
 import type { Response } from 'express';
-import type { ApiError } from 'contracts';
+import type { ApiError } from 'contracts/common/api-error.schema';
 import { logger } from './logger.js';
 
 const sendResponse = (res: Response, status: number, body: unknown): void => {

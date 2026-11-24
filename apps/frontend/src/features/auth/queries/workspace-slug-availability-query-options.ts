@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import type { WorkspaceSlug } from "contracts";
+import type { WorkspaceSlug } from "contracts/onboarding/workspace-setup.schema";
 import { checkWorkspaceSlugAvailability } from "@/features/auth/api/onboarding";
 
 export const workspaceSlugAvailabilityQueryOptions = (

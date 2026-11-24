@@ -1,4 +1,4 @@
-import { VerifyEmailOtpRequestSchema, VerifyEmailOtpResponseSchema } from "contracts";
+import { VerifyEmailOtpRequestSchema, VerifyEmailOtpResponseSchema } from "contracts/auth/email-verification.schema";
 import { http, HttpResponse } from "msw";
 import {
     apiError,

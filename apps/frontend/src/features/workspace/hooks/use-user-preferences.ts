@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { UpdateUserPreferencesRequest } from "contracts";
+import type { UpdateUserPreferencesRequest } from "contracts/settings/user-preferences.schema";
 import { updateUserPreferences } from "@/features/workspace/api/user-preferences";
 import {
   userPreferencesQueryKey,

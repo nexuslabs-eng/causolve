@@ -104,7 +104,9 @@ export const Header = ({
           {workspaceName}
         </span>
         <span className="hidden text-muted-foreground sm:inline">/</span>
-        <span className="truncate font-medium text-foreground">{pageLabel}</span>
+        <span className="truncate font-medium text-foreground">
+          {pageLabel}
+        </span>
         <span className="ml-1 hidden border-l border-border pl-3 font-mono text-[10px] uppercase text-muted-foreground lg:inline">
           Production
         </span>
@@ -140,6 +142,7 @@ export const Header = ({
           <Plus />
           Create incident
         </Button>
+
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -162,6 +165,7 @@ export const Header = ({
           </TooltipTrigger>
           <TooltipContent>Notifications</TooltipContent>
         </Tooltip>
+
         <Tooltip>
           <TooltipTrigger asChild>
             <Button

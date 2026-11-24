@@ -1,4 +1,4 @@
-import { CommandCenterSchema, type CommandCenter } from "contracts";
+import { CommandCenterSchema, type CommandCenter } from "contracts/incidents/command-center.schema";
 
 const fixture = {
   incident: {

@@ -27,7 +27,7 @@ export const AppLayout = () => {
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="flex h-svh overflow-hidden bg-background text-foreground">
+      <div className="fixed inset-0 flex min-h-0 min-w-0 overflow-hidden bg-background text-foreground">
         <div
           className={`relative hidden h-full shrink-0 border-r border-border transition-[width] duration-200 md:block ${collapsed ? "w-18" : "w-62"}`}
         >
@@ -53,13 +53,13 @@ export const AppLayout = () => {
           </SheetContent>
         </Sheet>
 
-        <div className="flex min-w-0 flex-1 flex-col">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
           <Header
             onOpenNavigation={() => setMobileOpen(true)}
             collapsed={collapsed}
             onToggleSidebar={() => setCollapsed((value) => !value)}
           />
-          <main className="min-h-0 flex-1 overflow-y-auto bg-background scrollbar-thin">
+          <main id="app-main-scroll" className="min-h-0 min-w-0 flex-1 overflow-y-auto bg-background scrollbar-thin">
             <Outlet />
           </main>
         </div>

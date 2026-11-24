@@ -1,7 +1,7 @@
 import {
   WorkspaceSetupRequestSchema,
   WorkspaceSetupResponseSchema,
-} from "contracts";
+} from "contracts/onboarding/workspace-setup.schema";
 import { http, HttpResponse } from "msw";
 import {
   apiError,

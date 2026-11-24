@@ -1,4 +1,6 @@
-import type { Evidence, EvidenceHypothesisRelation, Hypothesis } from "contracts";
+import type { Evidence } from "contracts/investigations/evidence.schema";
+import type { EvidenceHypothesisRelation } from "contracts/investigations/evidence-relation.schema";
+import type { Hypothesis } from "contracts/investigations/hypothesis.schema";
 import { Check, MinusCircle, Terminal, XCircle } from "lucide-react";
 import { getEvidenceDetail, getEvidenceQuality, getEvidenceSourceLabel } from "@/features/marketing/fixtures/incident-mock";
 import { cn } from "@/lib/utils";

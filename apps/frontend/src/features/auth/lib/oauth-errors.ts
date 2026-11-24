@@ -1,4 +1,4 @@
-import type { OAuthErrorCode } from "contracts";
+import type { OAuthErrorCode } from "contracts/auth/auth-session.schema";
 
 const oauthErrorMessages: Record<OAuthErrorCode, string> = {
     OAUTH_AUTHENTICATION_FAILED: "Social authentication failed. Please try again.",
