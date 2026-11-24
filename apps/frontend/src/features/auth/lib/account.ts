@@ -7,65 +7,65 @@ import type { NavigateFunction } from "react-router-dom";
 import type { UseFormSetError } from "react-hook-form";
 
 export const getSignupProviderHandles = (setIsProviderLoading: SetIsProviderLoading) => {
-    const signupWithGoogle = async () => {
-        setIsProviderLoading(prev => ({ ...prev, google: true }));
+  const signupWithGoogle = async () => {
+    setIsProviderLoading((prev) => ({ ...prev, google: true }));
 
-        try {
-            await continueWithGoogle();
-        } catch (err) {
-            console.error("Error signing up google auth:", err)
-        } finally{
-            setIsProviderLoading(prev => ({ ...prev, google: false }));
-        }
-    };
+    try {
+      await continueWithGoogle();
+    } catch (err) {
+      console.error("Error signing up google auth:", err);
+    } finally {
+      setIsProviderLoading((prev) => ({ ...prev, google: false }));
+    }
+  };
 
-    const signupWithGithub = async () => {
-        setIsProviderLoading(prev => ({ ...prev, github: true }));
+  const signupWithGithub = async () => {
+    setIsProviderLoading((prev) => ({ ...prev, github: true }));
 
-        try {
-            await continueWithGithub();
-        } catch (err) {
-            console.error("Error singing up github auth:", err)
-        } finally {
-            setIsProviderLoading(prev => ({ ...prev, github: false }));
-        }
-    };
+    try {
+      await continueWithGithub();
+    } catch (err) {
+      console.error("Error singing up github auth:", err);
+    } finally {
+      setIsProviderLoading((prev) => ({ ...prev, github: false }));
+    }
+  };
 
-    return { signupWithGoogle, signupWithGithub };
+  return { signupWithGoogle, signupWithGithub };
 };
 
 type SetError = UseFormSetError<{
-    fullName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }>;
 
 export const continueWithAccount = async (
-    values: SignupAccountValues,
-    navigate: NavigateFunction,
-    setError: SetError
+  values: SignupAccountValues,
+  navigate: NavigateFunction,
+  setError: SetError,
 ) => {
-    try {
-        await signupAccount({
-            email: values.email,
-            fullName: values.fullName,
-            password: values.password,
-        });
-        const session = await refreshAuthSession()
+  try {
+    await signupAccount({
+      email: values.email,
+      fullName: values.fullName,
+      password: values.password,
+    });
+    const session = await refreshAuthSession();
 
-        if (session.authenticated && session.onboarding.nextStep === "VERIFY_EMAIL") {
-            navigate("/signup/verify-email", { replace: true });
-        }
-    } catch (error: unknown) {
-        if (isApiClientError(error) && error.code === "EMAIL_ALREADY_REGISTERED") {
-            setError("email", {
-                message: "An account already exists for this email.",
-            });
-            return;
-        }
-        setError("root", {
-            message: "Unable to create your account. Please try again.",
-        });
+    if (session.authenticated && session.onboarding.nextStep === "VERIFY_EMAIL") {
+      await navigate("/signup/verify-email", { replace: true });
     }
+  } catch (error: unknown) {
+    if (isApiClientError(error) && error.code === "EMAIL_ALREADY_REGISTERED") {
+      setError("email", {
+        message: "An account already exists for this email.",
+      });
+      return;
+    }
+    setError("root", {
+      message: "Unable to create your account. Please try again.",
+    });
+  }
 };

@@ -1,48 +1,41 @@
 import { create } from "zustand";
 
-type CommandCenterTab = 
-"overview" |
-"hypothesis" |
-"evidence" |
-"timeline" |
-"remediation";
+type CommandCenterTab = "overview" | "hypothesis" | "evidence" | "timeline" | "remediation";
 
 type IncidentWorkspaceStore = {
-    activeTab: CommandCenterTab;
-    selectedHypothesisId: string | null;
-    selectedEvidenceId: string | null;
+  activeTab: CommandCenterTab;
+  selectedHypothesisId: string | null;
+  selectedEvidenceId: string | null;
 
+  setActiveTab: (tab: CommandCenterTab) => void;
+  selectHypothesis: (id: string | null) => void;
+  selectEvidence: (id: string | null) => void;
 
-    setActiveTab: (tab: CommandCenterTab) => void;
-    selectHypothesis: (id: string | null) => void;
-    selectEvidence: (id: string | null) => void;
-
-    resetWorkspace: () => void;
-}
-
-const initialState = {
-    activeTab: "overview" as CommandCenterTab,
-    selectedHypothesisId: null,
-    selectedEvidenceId: null,
+  resetWorkspace: () => void;
 };
 
-export const useIncidentWorkspaceStore = 
-    create<IncidentWorkspaceStore>(set => ({
-        ...initialState,
+const initialState = {
+  activeTab: "overview" as CommandCenterTab,
+  selectedHypothesisId: null,
+  selectedEvidenceId: null,
+};
 
-        setActiveTab: (activeTab) => {
-            set({ activeTab });
-        },
+export const useIncidentWorkspaceStore = create<IncidentWorkspaceStore>((set) => ({
+  ...initialState,
 
-        selectHypothesis: (selectedHypothesisId) => {
-            set({ selectedHypothesisId });
-        },
+  setActiveTab: (activeTab) => {
+    set({ activeTab });
+  },
 
-        selectEvidence: (selectedEvidenceId) => {
-            set({ selectedEvidenceId });
-        },
+  selectHypothesis: (selectedHypothesisId) => {
+    set({ selectedHypothesisId });
+  },
 
-        resetWorkspace: () => {
-            set(initialState);
-        }
-    }))
+  selectEvidence: (selectedEvidenceId) => {
+    set({ selectedEvidenceId });
+  },
+
+  resetWorkspace: () => {
+    set(initialState);
+  },
+}));

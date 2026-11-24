@@ -37,4 +37,4 @@ export const FinalCta = () => {
       </div>
     </section>
   );
-}
+};

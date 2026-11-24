@@ -1,50 +1,47 @@
 .graphic {
-    position: relative;
-    display: grid;
-    place-items: center;
-    width: 100%;
-    height: 208px;
-    transform: translate(
-        var(--offset-x, 0px),
-        var(--offset-y, 0px)
-    );
-    transition: transform 180ms ease-out;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 208px;
+  transform: translate(var(--offset-x, 0px), var(--offset-y, 0px));
+  transition: transform 180ms ease-out;
 }
 
 .brand {
-    position: relative;
-    z-index: 1;
-    padding: 20px;
-    background: var(--background);
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  background: var(--background);
 }
 
 .axis {
-    position: absolute;
-    inset: 50% 0 auto;
-    height: 1px;
-    background: var(--border-strong);
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 1px;
+  background: var(--border-strong);
 }
 
 .scan {
-    position: absolute;
-    inset: 24px auto 24px 0;
-    width: 1px;
-    background: var(--primary-bright);
-    animation: scan 2.8s ease-in-out infinite;
+  position: absolute;
+  inset: 24px auto 24px 0;
+  width: 1px;
+  background: var(--primary-bright);
+  animation: scan 2.8s ease-in-out infinite;
 }
 
 .cornerStart,
 .cornerEnd {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    border-color: var(--border-strong);
-    border-style: solid;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--border-strong);
+  border-style: solid;
 }
 
 .cornerStart {
-    inset: 12px auto auto 0;
-    border-width: 1px 0 0 1px;
+  inset: 12px auto auto 0;
+  border-width: 1px 0 0 1px;
 }
 
 .cornerEnd {
@@ -53,67 +50,68 @@
 }
 
 .signals {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 18px;
 }
 
 .signal {
-    width: 28px;
-    height: 3px;
-    background: var(--primary-bright);
-    animation: signal 1.4s ease-in-out infinite;
+  width: 28px;
+  height: 3px;
+  background: var(--primary-bright);
+  animation: signal 1.4s ease-in-out infinite;
 }
 
 .signal:nth-child(2) {
-    background: var(--info);
+  background: var(--info);
 }
 
 .signal:nth-child(3) {
-    background: var(--success);
+  background: var(--success);
 }
 
 @keyframes scan {
-    0% {
-        left: 0;
-        opacity: 0;
-    }
-    20% {
-        opacity: 0.6;
-    }
-    80% {
-        opacity: 0.6;
-    }
-    100% {
-        left: 100%;
-        opacity: 0;
-    }
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.6;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
 }
 
 @keyframes signal {
-    0%, 100% {
-        opacity: 0.25;
-        transform: scaleX(0.5);
-    }
-    50% {
-        opacity: 1;
-        transform: scaleX(1);
-    }
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scaleX(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .graphic {
-        transform: none;
-        transition: none;
-    }
+  .graphic {
+    transform: none;
+    transition: none;
+  }
 
-    .scan {
-        display: none;
-    }
+  .scan {
+    display: none;
+  }
 
-    .signal {
-        animation: none;
-        opacity: 0.75;
-    }
+  .signal {
+    animation: none;
+    opacity: 0.75;
+  }
 }

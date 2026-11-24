@@ -49,7 +49,7 @@ export const IncidentCommandCenter = () => {
             revealed={revealed}
             running={running}
           />
-          
+
           <EvidenceFeed
             evidence={EVIDENCE}
             hypotheses={HYPOTHESES}

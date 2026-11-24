@@ -4,13 +4,7 @@ import { validateFormData } from "../../middleware/formValidate.middleware.js";
 import { isAuthenticated } from "../../middleware/auth.middleware.js";
 import { requireOrganizationMembership } from "../../middleware/organization.middleware.js";
 import { requireRole } from "../../middleware/rbac.middleware.js";
-import {
-  createTeam,
-  listTeams,
-  getTeam,
-  updateTeam,
-  deleteTeam,
-} from "./teams.controller.js";
+import { createTeam, listTeams, getTeam, updateTeam, deleteTeam } from "./teams.controller.js";
 
 const router = Router();
 

@@ -22,8 +22,7 @@ const PASSWORD_RESETS_STORAGE_KEY = "causolve_mock_password_resets";
 const accounts = new Map<string, MockAccount>();
 const passwordResets = new Map<string, MockPasswordReset>();
 
-const anonymousSession = () =>
-  AuthSessionSchema.parse({ authenticated: false, oauthError: null });
+const anonymousSession = () => AuthSessionSchema.parse({ authenticated: false, oauthError: null });
 
 const getStorage = () => {
   try {
@@ -38,10 +37,7 @@ const persistAccounts = () => {
 
   if (!storage) return;
 
-  storage.setItem(
-    ACCOUNTS_STORAGE_KEY,
-    JSON.stringify(Object.fromEntries(accounts.entries())),
-  );
+  storage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(Object.fromEntries(accounts.entries())));
 };
 
 const persistSession = (session: AuthSession) => {
@@ -101,16 +97,10 @@ const restorePasswordResets = () => {
   if (!serializedResets) return;
 
   try {
-    const persistedResets = JSON.parse(serializedResets) as Record<
-      string,
-      MockPasswordReset
-    >;
+    const persistedResets = JSON.parse(serializedResets) as Record<string, MockPasswordReset>;
 
     for (const [token, reset] of Object.entries(persistedResets)) {
-      if (
-        typeof reset.email === "string" &&
-        typeof reset.expiresAt === "number"
-      ) {
+      if (typeof reset.email === "string" && typeof reset.expiresAt === "number") {
         passwordResets.set(token, reset);
       }
     }
@@ -150,11 +140,9 @@ const createId = () => {
   return "00000000-0000-4000-8000-000000000000";
 };
 
-const createNumericCode = () =>
-  Math.floor(100000 + Math.random() * 900000).toString();
+const createNumericCode = () => Math.floor(100000 + Math.random() * 900000).toString();
 
-const createResetToken = () =>
-  `${createId().replaceAll("-", "")}${createId().replaceAll("-", "")}`;
+const createResetToken = () => `${createId().replaceAll("-", "")}${createId().replaceAll("-", "")}`;
 
 export const getAuthSession = () => authSession;
 
@@ -227,8 +215,7 @@ export const authenticateMockAccount = (email: string, password: string) => {
   return account.session;
 };
 
-export const hasMockAccount = (email: string) =>
-  accounts.has(normalizeEmail(email));
+export const hasMockAccount = (email: string) => accounts.has(normalizeEmail(email));
 
 export const issueVerificationCode = (email: string) => {
   const account = accounts.get(normalizeEmail(email));
@@ -272,9 +259,7 @@ export const getMockPasswordResetToken = (email: string) => {
   const normalizedEmail = normalizeEmail(email);
 
   return (
-    [...passwordResets.entries()].find(
-      ([, reset]) => reset.email === normalizedEmail,
-    )?.[0] ?? null
+    [...passwordResets.entries()].find(([, reset]) => reset.email === normalizedEmail)?.[0] ?? null
   );
 };
 
@@ -306,11 +291,7 @@ export const resetMockPassword = (token: string, password: string) => {
   return true;
 };
 
-export const updateMockPassword = (
-  email: string,
-  currentPassword: string,
-  newPassword: string,
-) => {
+export const updateMockPassword = (email: string, currentPassword: string, newPassword: string) => {
   const account = accounts.get(normalizeEmail(email));
 
   if (!account || account.password !== currentPassword) return false;

@@ -1,4 +1,4 @@
-import type { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from "express";
 
 type AsyncHandler<Params = Record<string, string>, ReqBody = unknown> = (
   req: Request<Params, unknown, ReqBody>,

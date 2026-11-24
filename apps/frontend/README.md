@@ -7,9 +7,12 @@ The Causolve frontend is a React and TypeScript PWA for the public marketing exp
 - Render the marketing site and product interface.
 - Manage client-only UI state with Zustand.
 - Manage server state with TanStack Query.
-- Validate API requests and responses with the shared `contracts` package.
+- Validate API requests and responses with direct imports from the shared
+  `contracts` package.
 - Communicate with the backend through the shared Axios client.
 - Receive deterministic development responses through MSW.
+- Render personal and workspace settings with server-backed forms,
+  loading/error states, shared validation, and disabled fallback states.
 
 ## Structure
 
@@ -26,7 +29,7 @@ src/
 `-- test/         Shared Vitest setup
 ```
 
-Feature-specific code stays inside `features/`. Shared visual primitives belong in `components/`, while API and query logic remains separate from page components.
+Feature-specific code stays inside `features/`. Shared visual primitives belong in `components/`, while API and query logic remains separate from page components. Settings routes are lazy-loaded so their pages, queries, and schemas are fetched only when the route is opened.
 
 ## Authentication
 
@@ -43,10 +46,25 @@ pnpm --filter frontend dev
 pnpm --filter frontend test
 pnpm --filter frontend lint
 pnpm --filter frontend build
+pnpm check
 ```
 
 Set `VITE_API_URL` to override the default API origin of `http://localhost:3000`.
 
 ## Current Scope
 
-The frontend currently includes the marketing page, login, signup and onboarding, email verification, workspace setup, profile setup, password recovery, session-aware routing, global loading and error states, PWA prompts, and a temporary Command Center data-flow screen.
+The frontend currently includes the marketing page, login, signup and
+onboarding, email verification, workspace setup, profile setup, password
+recovery, session-aware routing, global loading and error states, PWA
+prompts, and the authenticated workspace.
+
+The workspace includes personal settings for profile, account security,
+notifications, and preferences, plus workspace settings for general
+configuration, members and roles, teams, investigation configuration, AI
+and evidence policies, approvals and remediation, audit controls, and
+integration cards. Personal and workspace settings are organized as
+lazy-loaded routes and use TanStack Query, React Hook Form, Zod contracts,
+and reusable loading/error UI.
+
+Integrations are currently presentation-only. Their cards and disabled
+connect controls are ready for the later integration implementation.

@@ -223,7 +223,8 @@ export const EVIDENCE_RELATIONS = [
     relation: "CONTRADICTS",
     contradictionSeverity: "STRONG",
     weight: 94,
-    reasoning: "The same failure on the prior version strongly contradicts a new deployment regression.",
+    reasoning:
+      "The same failure on the prior version strongly contradicts a new deployment regression.",
   },
   {
     id: IDS.relation31,
@@ -278,14 +279,62 @@ export const RANKING_CHANGES = [
 ] satisfies HypothesisRankingChange[];
 
 export const CAPABILITIES = [
-  { capability: "RUNTIME_STATE", status: "AVAILABLE", freshness: 98, reason: null, updatedAt: SCENARIO_NOW },
-  { capability: "DEPLOYMENTS", status: "AVAILABLE", freshness: 96, reason: null, updatedAt: SCENARIO_NOW },
-  { capability: "LOG_SEARCH", status: "FAILED", freshness: null, reason: "Provider timeout", updatedAt: SCENARIO_NOW },
-  { capability: "METRICS", status: "AVAILABLE", freshness: 98, reason: null, updatedAt: SCENARIO_NOW },
-  { capability: "INCIDENT_HISTORY", status: "AVAILABLE", freshness: 91, reason: null, updatedAt: SCENARIO_NOW },
-  { capability: "RUNBOOKS", status: "PARTIAL", freshness: 84, reason: "Secondary provider steps only", updatedAt: SCENARIO_NOW },
-  { capability: "AI_REASONING", status: "AVAILABLE", freshness: 100, reason: null, updatedAt: SCENARIO_NOW },
-  { capability: "REMEDIATION_AUTOMATION", status: "AVAILABLE", freshness: 100, reason: "Policy gated", updatedAt: SCENARIO_NOW },
+  {
+    capability: "RUNTIME_STATE",
+    status: "AVAILABLE",
+    freshness: 98,
+    reason: null,
+    updatedAt: SCENARIO_NOW,
+  },
+  {
+    capability: "DEPLOYMENTS",
+    status: "AVAILABLE",
+    freshness: 96,
+    reason: null,
+    updatedAt: SCENARIO_NOW,
+  },
+  {
+    capability: "LOG_SEARCH",
+    status: "FAILED",
+    freshness: null,
+    reason: "Provider timeout",
+    updatedAt: SCENARIO_NOW,
+  },
+  {
+    capability: "METRICS",
+    status: "AVAILABLE",
+    freshness: 98,
+    reason: null,
+    updatedAt: SCENARIO_NOW,
+  },
+  {
+    capability: "INCIDENT_HISTORY",
+    status: "AVAILABLE",
+    freshness: 91,
+    reason: null,
+    updatedAt: SCENARIO_NOW,
+  },
+  {
+    capability: "RUNBOOKS",
+    status: "PARTIAL",
+    freshness: 84,
+    reason: "Secondary provider steps only",
+    updatedAt: SCENARIO_NOW,
+  },
+  {
+    capability: "AI_REASONING",
+    status: "AVAILABLE",
+    freshness: 100,
+    reason: null,
+    updatedAt: SCENARIO_NOW,
+  },
+  {
+    capability: "REMEDIATION_AUTOMATION",
+    status: "AVAILABLE",
+    freshness: 100,
+    reason: "Policy gated",
+    updatedAt: SCENARIO_NOW,
+  },
 ] satisfies CapabilityState[];
 
 export const INVESTIGATION_INTEGRITY = {
@@ -305,7 +354,8 @@ export const RECOMMENDATION = {
   hypothesisId: IDS.h2,
   actionType: "TRAFFIC_SHIFT",
   summary: "Shift payment traffic to the secondary provider",
-  reasoning: "Provider degradation is the leading explanation and the secondary provider remains healthy.",
+  reasoning:
+    "Provider degradation is the leading explanation and the secondary provider remains healthy.",
   technicalRisk: "MEDIUM",
   blastRadius: "SERVICE",
   supportingEvidenceIds: [IDS.ev31],
@@ -319,7 +369,9 @@ export const RECOMMENDATION = {
 export const APPROVAL_POLICY = {
   recommendationId: IDS.recommendation,
   requirements: [{ role: "INCIDENT_COMMANDER", count: 1 }],
-  policyReasons: ["Traffic shifting affects a production service while investigation integrity is degraded."],
+  policyReasons: [
+    "Traffic shifting affects a production service while investigation integrity is degraded.",
+  ],
   currentApprovedCount: 0,
   satisfied: false,
 } satisfies ApprovalPolicy;
@@ -349,13 +401,21 @@ export const VERIFICATION_CHECKS = VERIFICATION.checks.map((check, index) => ({
 export const INVESTIGATION_HISTORY = [
   { at: "13:58", event: "Incident acknowledged", detail: "HIGH, checkout-api" },
   { at: "14:01", event: "H1 ranked leading", detail: "deployment timing correlation" },
-  { at: "14:04", event: "Controlled comparison contradicts H1", detail: "EV-24, strong contradiction" },
+  {
+    at: "14:04",
+    event: "Controlled comparison contradicts H1",
+    detail: "EV-24, strong contradiction",
+  },
   { at: "14:04", event: "H1 weakened", detail: "leading to weakened" },
   { at: "14:06", event: "Provider evidence supports H2", detail: "EV-31, high quality" },
   { at: "14:06", event: "H2 becomes leading", detail: "plausible to leading" },
   { at: "14:07", event: "Log Search fails", detail: "provider timeout" },
   { at: "14:07", event: "Evidence coverage falls", detail: "72% coverage" },
-  { at: "14:07", event: "Investigation integrity becomes DEGRADED", detail: "limited independent signals" },
+  {
+    at: "14:07",
+    event: "Investigation integrity becomes DEGRADED",
+    detail: "limited independent signals",
+  },
 ];
 
 const evidenceDetails: Record<string, string> = {
@@ -424,7 +484,8 @@ export const getEvidenceQuality = (evidence: Evidence): EvidenceQuality => {
   return "LOW";
 };
 
-export const getEvidenceDetail = (evidence: Evidence) => evidenceDetails[evidence.reference] ?? evidence.source;
+export const getEvidenceDetail = (evidence: Evidence) =>
+  evidenceDetails[evidence.reference] ?? evidence.source;
 
 export const getEvidenceSourceLabel = (evidence: Evidence) =>
   evidenceSourceLabels[evidence.reference] ?? sourceLabels[evidence.sourceType];

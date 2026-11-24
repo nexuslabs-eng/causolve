@@ -1,11 +1,4 @@
-import {
-  Bell,
-  BookOpen,
-  ChevronsRight,
-  Menu,
-  Plus,
-  Search,
-} from "lucide-react";
+import { Bell, BookOpen, ChevronsRight, Menu, Plus, Search } from "lucide-react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -18,11 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useAuthSession } from "@/features/auth/hooks/use-auth-session";
 import { useLogout } from "@/features/auth/hooks/use-logout";
 
@@ -32,18 +21,12 @@ interface HeaderProps {
   onToggleSidebar: () => void;
 }
 
-export const Header = ({
-  onOpenNavigation,
-  collapsed,
-  onToggleSidebar,
-}: HeaderProps) => {
+export const Header = ({ onOpenNavigation, collapsed, onToggleSidebar }: HeaderProps) => {
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const { pathname } = useLocation();
   const { data: session } = useAuthSession();
   const logout = useLogout("/");
-  const userName = session?.authenticated
-    ? session.user.fullName
-    : "Causolve user";
+  const userName = session?.authenticated ? session.user.fullName : "Causolve user";
 
   const initials = userName
     .split(" ")
@@ -56,8 +39,7 @@ export const Header = ({
     ? (session.activeWorkspace?.name ?? "Causolve workspace")
     : "Causolve workspace";
 
-  const isPersonalSettings =
-    pathname === "/settings" || pathname.startsWith("/settings/");
+  const isPersonalSettings = pathname === "/settings" || pathname.startsWith("/settings/");
   const isWorkspaceSettings = pathname.startsWith("/workspace/settings");
   const sectionLabel = pathname.split("/").filter(Boolean).at(-1);
 
@@ -100,13 +82,9 @@ export const Header = ({
       )}
 
       <div className="flex min-w-0 items-center gap-2 text-sm">
-        <span className="hidden text-muted-foreground sm:inline">
-          {workspaceName}
-        </span>
+        <span className="hidden text-muted-foreground sm:inline">{workspaceName}</span>
         <span className="hidden text-muted-foreground sm:inline">/</span>
-        <span className="truncate font-medium text-foreground">
-          {pageLabel}
-        </span>
+        <span className="truncate font-medium text-foreground">{pageLabel}</span>
         <span className="ml-1 hidden border-l border-border pl-3 font-mono text-[10px] uppercase text-muted-foreground lg:inline">
           Production
         </span>
@@ -126,12 +104,7 @@ export const Header = ({
         </button>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              aria-label="Search"
-            >
+            <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Search">
               <Search />
             </Button>
           </TooltipTrigger>
@@ -145,12 +118,7 @@ export const Header = ({
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              variant="brand"
-              size="icon"
-              className="sm:hidden"
-              aria-label="Create incident"
-            >
+            <Button variant="brand" size="icon" className="sm:hidden" aria-label="Create incident">
               <Plus />
             </Button>
           </TooltipTrigger>
@@ -199,9 +167,7 @@ export const Header = ({
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Preferences</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => setLogoutDialogOpen(true)}>
-              Sign out
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLogoutDialogOpen(true)}>Sign out</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

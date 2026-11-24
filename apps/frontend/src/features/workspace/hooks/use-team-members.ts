@@ -1,9 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { AddTeamMemberRequest } from "contracts/teams/team-members.schema";
-import {
-  addTeamMember,
-  removeTeamMember,
-} from "@/features/workspace/api/team-members";
+import { addTeamMember, removeTeamMember } from "@/features/workspace/api/team-members";
 import {
   teamMembersQueryKey,
   teamMembersQueryOptions,
@@ -33,10 +30,7 @@ export const useAddTeamMember = () => {
 
     onSuccess: (_response, variables) => {
       void queryClient.invalidateQueries({
-        queryKey: teamMembersQueryKey(
-          variables.organizationId,
-          variables.teamId,
-        ),
+        queryKey: teamMembersQueryKey(variables.organizationId, variables.teamId),
       });
     },
   });
@@ -58,10 +52,7 @@ export const useRemoveTeamMember = () => {
 
     onSuccess: (_response, variables) => {
       void queryClient.invalidateQueries({
-        queryKey: teamMembersQueryKey(
-          variables.organizationId,
-          variables.teamId,
-        ),
+        queryKey: teamMembersQueryKey(variables.organizationId, variables.teamId),
       });
 
       void queryClient.invalidateQueries({

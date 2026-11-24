@@ -7,7 +7,5 @@ const ROLE_RANKS: Record<Role, number> = {
   ADMIN: 3,
 };
 
-export const meetsMinimumRole = (
-  currentRole: Role,
-  minimumRole: Role,
-): boolean => ROLE_RANKS[currentRole] >= ROLE_RANKS[minimumRole];
+export const meetsMinimumRole = (currentRole: Role, minimumRole: Role): boolean =>
+  ROLE_RANKS[currentRole] >= ROLE_RANKS[minimumRole];

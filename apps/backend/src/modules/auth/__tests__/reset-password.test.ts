@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import request from "supertest";
 import { ResetPasswordResponseSchema, ValidateResetTokenResponseSchema } from "contracts";
 import app from "../../../app.js";
@@ -96,9 +96,7 @@ describe("GET /auth/reset-password/validate", () => {
     });
     prismaMock.user.findUnique.mockResolvedValue(fakeUser);
 
-    const response = await request(app).get(
-      `/auth/reset-password/validate?token=${VALID_TOKEN}`,
-    );
+    const response = await request(app).get(`/auth/reset-password/validate?token=${VALID_TOKEN}`);
 
     expect(response.status).toBe(200);
     const body = ValidateResetTokenResponseSchema.parse(response.body);
@@ -108,9 +106,7 @@ describe("GET /auth/reset-password/validate", () => {
   it("rejects an unrecognized token", async () => {
     prismaMock.user.findUnique.mockResolvedValue(null);
 
-    const response = await request(app).get(
-      `/auth/reset-password/validate?token=${VALID_TOKEN}`,
-    );
+    const response = await request(app).get(`/auth/reset-password/validate?token=${VALID_TOKEN}`);
 
     expect(response.status).toBe(400);
     expect(response.body).toMatchObject({
@@ -124,9 +120,7 @@ describe("GET /auth/reset-password/validate", () => {
     });
     prismaMock.user.findUnique.mockResolvedValue(fakeUser);
 
-    const response = await request(app).get(
-      `/auth/reset-password/validate?token=${VALID_TOKEN}`,
-    );
+    const response = await request(app).get(`/auth/reset-password/validate?token=${VALID_TOKEN}`);
 
     expect(response.status).toBe(400);
     expect(response.body).toMatchObject({
@@ -135,9 +129,7 @@ describe("GET /auth/reset-password/validate", () => {
   });
 
   it("rejects a malformed token without touching the database", async () => {
-    const response = await request(app).get(
-      "/auth/reset-password/validate?token=too-short",
-    );
+    const response = await request(app).get("/auth/reset-password/validate?token=too-short");
 
     expect(response.status).toBe(400);
     expect(response.body).toMatchObject({

@@ -27,6 +27,4 @@ export type ChangePasswordForm = z.infer<typeof ChangePasswordFormSchema>;
 
 export type ChangePasswordRequest = z.infer<typeof ChangePasswordRequestSchema>;
 
-export type ChangePasswordResponse = z.infer<
-  typeof ChangePasswordResponseSchema
->;
+export type ChangePasswordResponse = z.infer<typeof ChangePasswordResponseSchema>;

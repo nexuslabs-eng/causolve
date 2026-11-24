@@ -31,13 +31,10 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--normal-bg": "var(--surface-raised)",
           "--normal-text": "var(--foreground)",
           "--normal-border": "var(--border)",
-          "--success-border":
-            "color-mix(in oklab, var(--success) 30%, transparent)",
-          "--error-border":
-            "color-mix(in oklab, var(--destructive) 30%, transparent)",
+          "--success-border": "color-mix(in oklab, var(--success) 30%, transparent)",
+          "--error-border": "color-mix(in oklab, var(--destructive) 30%, transparent)",
           "--info-border": "color-mix(in oklab, var(--info) 30%, transparent)",
-          "--warning-border":
-            "color-mix(in oklab, var(--caution) 30%, transparent)",
+          "--warning-border": "color-mix(in oklab, var(--caution) 30%, transparent)",
           "--border-radius": "var(--radius)",
         } as React.CSSProperties
       }
@@ -47,8 +44,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
             "border bg-surface-raised text-foreground shadow-panel data-[type=success]:!border-success/30 data-[type=error]:!border-destructive/30 data-[type=info]:!border-info/30 data-[type=warning]:!border-caution/30",
           title: "text-sm font-medium",
           description: "text-xs text-muted-foreground",
-          closeButton:
-            "border-border bg-surface-inset text-muted-foreground hover:text-foreground",
+          closeButton: "border-border bg-surface-inset text-muted-foreground hover:text-foreground",
         },
       }}
       {...props}

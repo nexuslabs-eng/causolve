@@ -13,9 +13,7 @@ const endpoint = (organizationId: string) =>
 export const getAiEvidenceSettings = async (
   organizationId: string,
 ): Promise<AiEvidenceSettings> => {
-  const response = await axiosClient.get<unknown, unknown>(
-    endpoint(organizationId),
-  );
+  const response = await axiosClient.get<unknown, unknown>(endpoint(organizationId));
 
   return AiEvidenceSettingsSchema.parse(response);
 };
@@ -26,10 +24,7 @@ export const updateAiEvidenceSettings = async (
 ): Promise<AiEvidenceSettings> => {
   const payload = UpdateAiEvidenceSettingsRequestSchema.parse(input);
 
-  const response = await axiosClient.patch<unknown, unknown>(
-    endpoint(organizationId),
-    payload,
-  );
+  const response = await axiosClient.patch<unknown, unknown>(endpoint(organizationId), payload);
 
   return AiEvidenceSettingsSchema.parse(response);
 };

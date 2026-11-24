@@ -5,20 +5,15 @@ import { github } from "../../infrastructure/githubOAuth.js";
 import { env } from "../../infrastructure/keys.js";
 import { prisma } from "@causolve/database";
 
-export const githubSignIn = tryCatchWrapper(
-  async (req: Request, res: Response): Promise<void> => {
-    const state = generateState();
+export const githubSignIn = tryCatchWrapper(async (req: Request, res: Response): Promise<void> => {
+  const state = generateState();
 
-    const url = github.createAuthorizationURL(state, [
-      "read:user",
-      "user:email",
-    ]);
+  const url = github.createAuthorizationURL(state, ["read:user", "user:email"]);
 
-    req.session.oauthState = state;
+  req.session.oauthState = state;
 
-    res.redirect(url.toString());
-  },
-);
+  res.redirect(url.toString());
+});
 
 export const githubCallBack = tryCatchWrapper(
   async (req: Request, res: Response): Promise<void> => {

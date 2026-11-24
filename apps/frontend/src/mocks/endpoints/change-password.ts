@@ -12,20 +12,16 @@ export const changePassword = http.post(
   apiEndpoint("/auth/change-password"),
   async ({ request }) => {
     if (!authSession.authenticated) {
-      return HttpResponse.json(
-        apiError("UNAUTHENTICATED", "You must be signed in."),
-        { status: 401 },
-      );
+      return HttpResponse.json(apiError("UNAUTHENTICATED", "You must be signed in."), {
+        status: 401,
+      });
     }
 
     const result = ChangePasswordFormSchema.safeParse(await request.json());
 
     if (!result.success) {
       return HttpResponse.json(
-        apiError(
-          "INVALID_PASSWORD_REQUEST",
-          "Check the password fields and try again.",
-        ),
+        apiError("INVALID_PASSWORD_REQUEST", "Check the password fields and try again."),
         { status: 422 },
       );
     }
@@ -42,10 +38,9 @@ export const changePassword = http.post(
         requestPayload.newPassword,
       )
     ) {
-      return HttpResponse.json(
-        apiError("INVALID_PASSWORD", "The current password is incorrect."),
-        { status: 400 },
-      );
+      return HttpResponse.json(apiError("INVALID_PASSWORD", "The current password is incorrect."), {
+        status: 400,
+      });
     }
 
     const changedAt = new Date().toISOString();

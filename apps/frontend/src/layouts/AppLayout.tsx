@@ -19,10 +19,7 @@ export const AppLayout = () => {
   const mobileSheetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    localStorage.setItem(
-      SIDEBAR_COLLAPSED_STORAGE_KEY,
-      collapsed ? "true" : "false",
-    );
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, collapsed ? "true" : "false");
   }, [collapsed]);
 
   return (
@@ -31,10 +28,7 @@ export const AppLayout = () => {
         <div
           className={`relative hidden h-full shrink-0 border-r border-border transition-[width] duration-200 md:block ${collapsed ? "w-18" : "w-62"}`}
         >
-          <Sidebar
-            collapsed={collapsed}
-            onToggle={() => setCollapsed((value) => !value)}
-          />
+          <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((value) => !value)} />
         </div>
 
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -59,7 +53,10 @@ export const AppLayout = () => {
             collapsed={collapsed}
             onToggleSidebar={() => setCollapsed((value) => !value)}
           />
-          <main id="app-main-scroll" className="min-h-0 min-w-0 flex-1 overflow-y-auto bg-background scrollbar-thin">
+          <main
+            id="app-main-scroll"
+            className="min-h-0 min-w-0 flex-1 overflow-y-auto bg-background scrollbar-thin"
+          >
             <Outlet />
           </main>
         </div>

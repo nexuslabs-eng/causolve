@@ -20,10 +20,7 @@ import {
 } from "@/features/auth/schemas/invitation.schemas";
 import { useAcceptInvitation } from "@/features/auth/hooks/use-accept-invitation";
 import { isApiClientError } from "@/lib/api/api-client-error";
-import {
-  ROLE_LABELS,
-  JOB_ROLES_LABELS,
-} from "@/features/workspace/lib/invite-members";
+import { ROLE_LABELS, JOB_ROLES_LABELS } from "@/features/workspace/lib/invite-members";
 
 const getPreviewErrorMessage = (error: unknown) => {
   if (!isApiClientError(error)) {
@@ -127,18 +124,14 @@ const AcceptInvitation = () => {
       <AuthStatusPanel
         icon={CheckCircle}
         title="Invitation unavailable"
-        description={getInvitationStatusMessage(
-          invitation?.status ?? "UNAVAILABLE",
-        )}
+        description={getInvitationStatusMessage(invitation?.status ?? "UNAVAILABLE")}
       />
     );
   }
 
   return (
     <>
-      <AuthBackButton
-        disabled={isSubmitting || acceptInvitationMutation.isPending}
-      />
+      <AuthBackButton disabled={isSubmitting || acceptInvitationMutation.isPending} />
 
       <AuthFormHeader
         title={`Join ${invitation.organization.name}`}
@@ -180,9 +173,7 @@ const AcceptInvitation = () => {
         </Field>
 
         <Field name="invitation-role">
-          <FieldLabel htmlFor="invitation-role">
-            Professional job role
-          </FieldLabel>
+          <FieldLabel htmlFor="invitation-role">Professional job role</FieldLabel>
 
           <Input
             id="invitation-role"
@@ -207,9 +198,7 @@ const AcceptInvitation = () => {
               {...register("fullName")}
             />
 
-            <FieldError match={Boolean(errors.fullName)}>
-              {errors.fullName?.message}
-            </FieldError>
+            <FieldError match={Boolean(errors.fullName)}>{errors.fullName?.message}</FieldError>
           </Field>
 
           <Field name="password" invalid={Boolean(errors.password)}>
@@ -223,15 +212,10 @@ const AcceptInvitation = () => {
               {...register("password")}
             />
 
-            <FieldError match={Boolean(errors.password)}>
-              {errors.password?.message}
-            </FieldError>
+            <FieldError match={Boolean(errors.password)}>{errors.password?.message}</FieldError>
           </Field>
 
-          <Field
-            name="confirmPassword"
-            invalid={Boolean(errors.confirmPassword)}
-          >
+          <Field name="confirmPassword" invalid={Boolean(errors.confirmPassword)}>
             <FieldLabel htmlFor="confirmPassword">Confirm password</FieldLabel>
 
             <PasswordInput
@@ -251,9 +235,7 @@ const AcceptInvitation = () => {
         <AuthSubmitButton
           loading={isSubmitting || acceptInvitationMutation.isPending}
           loadingLabel="Joining workspace"
-          disabled={
-            !isValid || isSubmitting || acceptInvitationMutation.isPending
-          }
+          disabled={!isValid || isSubmitting || acceptInvitationMutation.isPending}
         >
           Join workspace
         </AuthSubmitButton>

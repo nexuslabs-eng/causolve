@@ -25,14 +25,14 @@ export default defineConfig({
 
   webServer: [
     {
-      command: "pnpm exec vite --host localhost",
+      command: "pnpm --filter frontend dev",
       cwd: ".",
       url: "http://localhost:5173/src/app/AppRuntime.tsx",
       reuseExistingServer: false,
       timeout: 120_000,
       env: {
         VITE_ENABLE_MSW: "false",
-      }
+      },
     },
     {
       command:

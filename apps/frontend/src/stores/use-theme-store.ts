@@ -18,18 +18,14 @@ let removeSystemThemeListener: (() => void) | null = null;
 const getSystemTheme = (): ResolvedTheme => {
   if (typeof window === "undefined") return "dark";
 
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 };
 
 const resolveTheme = (theme: Theme): ResolvedTheme =>
   theme === "system" ? getSystemTheme() : theme;
 
 const updateBrowserThemeColor = () => {
-  const themeColorMeta = document.querySelector<HTMLMetaElement>(
-    'meta[name="theme-color"]',
-  );
+  const themeColorMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
   const backgroundColor = getComputedStyle(document.documentElement)
     .getPropertyValue("--background")
     .trim();
@@ -71,11 +67,7 @@ const saveTheme = (theme: Theme) => {
 const getInitialTheme = (): Theme => {
   const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
 
-  if (
-    savedTheme === "dark" ||
-    savedTheme === "light" ||
-    savedTheme === "system"
-  ) {
+  if (savedTheme === "dark" || savedTheme === "light" || savedTheme === "system") {
     return savedTheme;
   }
 
@@ -103,8 +95,7 @@ export const useThemeStore = create<ThemeState>((set, get) => ({
   toggleTheme: () => {
     const currentTheme = get().theme;
     const resolvedTheme = resolveTheme(currentTheme);
-    const nextTheme: ResolvedTheme =
-      resolvedTheme === "dark" ? "light" : "dark";
+    const nextTheme: ResolvedTheme = resolvedTheme === "dark" ? "light" : "dark";
 
     get().setTheme(nextTheme);
   },

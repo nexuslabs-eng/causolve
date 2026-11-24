@@ -6,12 +6,7 @@ import {
 } from "contracts/onboarding/index";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { AuthFormHeader } from "@/features/auth/components/AuthFormHeader";
 import { AuthStepProgress } from "@/features/auth/components/AuthStepProgress";
@@ -67,23 +62,17 @@ const WorkspaceSetup = () => {
 
   const debouncedSlug = useDebounced(validSlug, 400);
 
-  const slugAvailability = useQuery(
-    workspaceSlugAvailabilityQueryOptions(debouncedSlug),
-  );
+  const slugAvailability = useQuery(workspaceSlugAvailabilityQueryOptions(debouncedSlug));
 
   const isDebouncing = validSlug !== debouncedSlug;
 
-  const hasCurrentAvailabilityResult =
-    Boolean(validSlug) && validSlug === debouncedSlug;
+  const hasCurrentAvailabilityResult = Boolean(validSlug) && validSlug === debouncedSlug;
 
   const isCheckingAvailability =
     Boolean(validSlug) &&
-    (isDebouncing ||
-      (hasCurrentAvailabilityResult && slugAvailability.isFetching));
+    (isDebouncing || (hasCurrentAvailabilityResult && slugAvailability.isFetching));
 
-  const currentAvailability = hasCurrentAvailabilityResult
-    ? slugAvailability.data
-    : undefined;
+  const currentAvailability = hasCurrentAvailabilityResult ? slugAvailability.data : undefined;
 
   const availabilityError =
     !validSlug || isDebouncing || !hasCurrentAvailabilityResult
@@ -98,9 +87,7 @@ const WorkspaceSetup = () => {
   let slugAvailabilityMessage = "";
 
   if (isCheckingAvailability) {
-    slugAvailabilityIcon = (
-      <Loader className="size-4 animate-spin text-muted-foreground" />
-    );
+    slugAvailabilityIcon = <Loader className="size-4 animate-spin text-muted-foreground" />;
     slugAvailabilityMessage = "Checking workspace URL availability.";
   } else if (currentAvailability) {
     if (currentAvailability.available) {
@@ -114,10 +101,7 @@ const WorkspaceSetup = () => {
 
   return (
     <>
-      <AuthBackButton
-        disabled={isSubmitting}
-        onClick={() => navigate("/signup/account")}
-      />
+      <AuthBackButton disabled={isSubmitting} onClick={() => navigate("/signup/account")} />
 
       <AuthStepProgress currentStep={2} totalSteps={3} label="Workspace" />
 
@@ -135,9 +119,7 @@ const WorkspaceSetup = () => {
 
       <form
         noValidate
-        onSubmit={handleSubmit((values) =>
-          continueWithWorkspace(values, navigate, setError),
-        )}
+        onSubmit={handleSubmit((values) => continueWithWorkspace(values, navigate, setError))}
       >
         <div className="space-y-5">
           <Field name="name" invalid={Boolean(errors.name)}>
@@ -149,15 +131,10 @@ const WorkspaceSetup = () => {
               {...register("name")}
             />
 
-            <FieldError match={Boolean(errors.name)}>
-              {errors.name?.message}
-            </FieldError>
+            <FieldError match={Boolean(errors.name)}>{errors.name?.message}</FieldError>
           </Field>
 
-          <Field
-            name="slug"
-            invalid={Boolean(errors.slug || availabilityError)}
-          >
+          <Field name="slug" invalid={Boolean(errors.slug || availabilityError)}>
             <FieldLabel>Workspace URL</FieldLabel>
 
             <div className="relative">
@@ -182,8 +159,7 @@ const WorkspaceSetup = () => {
             </span>
 
             <FieldDescription>
-              Use 3-63 lowercase letters or numbers, separated by single
-              hyphens.
+              Use 3-63 lowercase letters or numbers, separated by single hyphens.
             </FieldDescription>
 
             <FieldError match={Boolean(errors.slug || availabilityError)}>
@@ -203,10 +179,7 @@ const WorkspaceSetup = () => {
                   value={field.value ?? null}
                   onValueChange={field.onChange}
                 >
-                  <SelectTrigger
-                    className="w-full"
-                    aria-invalid={Boolean(errors.teamSize)}
-                  >
+                  <SelectTrigger className="w-full" aria-invalid={Boolean(errors.teamSize)}>
                     <SelectValue placeholder="Select team size" />
                   </SelectTrigger>
 
@@ -221,16 +194,12 @@ const WorkspaceSetup = () => {
               )}
             />
 
-            <FieldError match={Boolean(errors.teamSize)}>
-              {errors.teamSize?.message}
-            </FieldError>
+            <FieldError match={Boolean(errors.teamSize)}>{errors.teamSize?.message}</FieldError>
           </Field>
         </div>
 
         <AuthSubmitButton
-          disabled={
-            !isValid || isCheckingAvailability || Boolean(availabilityError)
-          }
+          disabled={!isValid || isCheckingAvailability || Boolean(availabilityError)}
           loading={isSubmitting}
           loadingLabel="Creating workspace"
         >

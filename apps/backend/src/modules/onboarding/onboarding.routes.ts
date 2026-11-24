@@ -1,8 +1,5 @@
 import { Router } from "express";
-import {
-  ProfileSetupRequestSchema,
-  WorkspaceSetupRequestSchema,
-} from "contracts";
+import { ProfileSetupRequestSchema, WorkspaceSetupRequestSchema } from "contracts";
 import { validateFormData } from "../../middleware/formValidate.middleware.js";
 import { isAuthenticated } from "../../middleware/auth.middleware.js";
 import {
@@ -21,11 +18,7 @@ router.post(
   createWorkspace,
 );
 
-router.get(
-  "/workspace-slug-availability",
-  isAuthenticated,
-  checkWorkspaceSlugAvailability,
-);
+router.get("/workspace-slug-availability", isAuthenticated, checkWorkspaceSlugAvailability);
 
 router.post(
   "/profile",

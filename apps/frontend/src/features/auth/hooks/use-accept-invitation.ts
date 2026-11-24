@@ -5,18 +5,18 @@ import { acceptInvitation } from "@/features/auth/api/invitations";
 import { refreshAuthSession } from "@/features/auth/queries/auth-session-query-options";
 
 export const useAcceptInvitation = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return useMutation({
-        mutationFn: acceptInvitation,
+  return useMutation({
+    mutationFn: acceptInvitation,
 
-        onSuccess: async () => {
-            await refreshAuthSession();
+    onSuccess: async () => {
+      await refreshAuthSession();
 
-            navigate("/workspace", {
-                replace: true,
-                flushSync: true,
-            });
-        },
-    });
+      await navigate("/workspace", {
+        replace: true,
+        flushSync: true,
+      });
+    },
+  });
 };

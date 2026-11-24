@@ -17,26 +17,18 @@ const requireAuthentication = () => {
     return null;
   }
 
-  return HttpResponse.json(
-    apiError("UNAUTHENTICATED", "You must be signed in."),
-    { status: 401 },
-  );
+  return HttpResponse.json(apiError("UNAUTHENTICATED", "You must be signed in."), { status: 401 });
 };
 
-export const getNotificationPreferences = http.get(
-  apiEndpoint("/settings/notifications"),
-  () => {
-    const authenticationError = requireAuthentication();
+export const getNotificationPreferences = http.get(apiEndpoint("/settings/notifications"), () => {
+  const authenticationError = requireAuthentication();
 
-    if (authenticationError) {
-      return authenticationError;
-    }
+  if (authenticationError) {
+    return authenticationError;
+  }
 
-    return HttpResponse.json(
-      NotificationPreferencesSchema.parse(notificationPreferences),
-    );
-  },
-);
+  return HttpResponse.json(NotificationPreferencesSchema.parse(notificationPreferences));
+});
 
 export const updateNotificationPreferences = http.patch(
   apiEndpoint("/settings/notifications"),
@@ -47,16 +39,11 @@ export const updateNotificationPreferences = http.patch(
       return authenticationError;
     }
 
-    const result = UpdateNotificationPreferencesRequestSchema.safeParse(
-      await request.json(),
-    );
+    const result = UpdateNotificationPreferencesRequestSchema.safeParse(await request.json());
 
     if (!result.success) {
       return HttpResponse.json(
-        apiError(
-          "INVALID_NOTIFICATION_PREFERENCES",
-          "Invalid notification preferences.",
-        ),
+        apiError("INVALID_NOTIFICATION_PREFERENCES", "Invalid notification preferences."),
         { status: 422 },
       );
     }
@@ -68,8 +55,6 @@ export const updateNotificationPreferences = http.patch(
 
     setNotificationPreferences(updatedPreferences);
 
-    return HttpResponse.json(
-      NotificationPreferencesSchema.parse(updatedPreferences),
-    );
+    return HttpResponse.json(NotificationPreferencesSchema.parse(updatedPreferences));
   },
 );

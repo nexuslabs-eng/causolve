@@ -7,7 +7,6 @@ import {
   RESET_PASSWORD,
 } from "../support/password-recovery";
 
-
 test.describe("password recovery", () => {
   test.describe.configure({ timeout: 200000 });
 
@@ -76,7 +75,9 @@ test.describe("password recovery", () => {
     await expect(page).toHaveURL(/\/password-updated$/, { timeout: 60000 });
 
     await page.goto(resetUrl);
-    await expect(page.getByRole("heading", { name: /reset link unavailable|invalid reset link/i })).toBeVisible({
+    await expect(
+      page.getByRole("heading", { name: /reset link unavailable|invalid reset link/i }),
+    ).toBeVisible({
       timeout: 60000,
     });
     await expect(page.getByLabel("New password")).toHaveCount(0);

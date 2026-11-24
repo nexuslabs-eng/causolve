@@ -1,10 +1,6 @@
 import { z } from "zod";
 import { RoleSchema } from "../common/enums.js";
-import {
-  DateTimeSchema,
-  NonEmptyStringSchema,
-  IdSchema,
-} from "../common/primitives.js";
+import { DateTimeSchema, NonEmptyStringSchema, IdSchema } from "../common/primitives.js";
 import { InvitationStatusSchema } from "./invitation.enums.js";
 import { JobRoleSchema } from "../onboarding/onboarding.enums.js";
 
@@ -31,6 +27,4 @@ export const InvitationListResponseSchema = z.object({
 });
 
 export type InvitationListItem = z.infer<typeof InvitationListItemSchema>;
-export type InvitationListResponse = z.infer<
-  typeof InvitationListResponseSchema
->;
+export type InvitationListResponse = z.infer<typeof InvitationListResponseSchema>;

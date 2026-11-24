@@ -78,16 +78,16 @@ remain managed through `apps/ai/pyproject.toml` and `apps/ai/uv.lock`.
 
 All variables use the `AI_` prefix.
 
-| Variable suffix | Purpose |
-|---|---|
-| `APP_ENV` | `development`, `test`, or `production` |
-| `DOCS_ENABLED` | Enable `/docs` and `/openapi.json`; defaults to false |
-| `LOG_LEVEL` | `DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL` |
-| `INTERNAL_API_KEY` | Shared backend-to-AI bearer secret |
-| `GEMINI_API_KEY` | Provider credential; keep blank in `.env.example` |
-| `GEMINI_MODEL` | Gemini model identifier |
-| `GEMINI_TIMEOUT_SECONDS` | Request timeout, 1–300 seconds; defaults to 60 |
-| `EXECUTION_TIMEOUT_SECONDS` | Overall graph deadline; must exceed provider timeout |
+| Variable suffix             | Purpose                                               |
+| --------------------------- | ----------------------------------------------------- |
+| `APP_ENV`                   | `development`, `test`, or `production`                |
+| `DOCS_ENABLED`              | Enable `/docs` and `/openapi.json`; defaults to false |
+| `LOG_LEVEL`                 | `DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL`    |
+| `INTERNAL_API_KEY`          | Shared backend-to-AI bearer secret                    |
+| `GEMINI_API_KEY`            | Provider credential; keep blank in `.env.example`     |
+| `GEMINI_MODEL`              | Gemini model identifier                               |
+| `GEMINI_TIMEOUT_SECONDS`    | Request timeout, 1–300 seconds; defaults to 60        |
+| `EXECUTION_TIMEOUT_SECONDS` | Overall graph deadline; must exceed provider timeout  |
 
 Settings load from `apps/ai/.env`, with process environment variables taking
 precedence. Restart the service after changing configuration.

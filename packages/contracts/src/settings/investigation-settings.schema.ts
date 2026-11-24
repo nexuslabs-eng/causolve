@@ -18,12 +18,9 @@ export const InvestigationSettingsSchema = z.object({
   requireEvidenceAttribution: z.boolean(),
 });
 
-export const UpdateInvestigationSettingsRequestSchema =
-  InvestigationSettingsSchema;
+export const UpdateInvestigationSettingsRequestSchema = InvestigationSettingsSchema;
 
-export type EvidenceCollectionTimeout = z.infer<
-  typeof EvidenceCollectionTimeoutSchema
->;
+export type EvidenceCollectionTimeout = z.infer<typeof EvidenceCollectionTimeoutSchema>;
 
 export type InvestigationSettings = z.infer<typeof InvestigationSettingsSchema>;
 

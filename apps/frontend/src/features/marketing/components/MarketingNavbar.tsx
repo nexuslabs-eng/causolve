@@ -22,7 +22,6 @@ const MarketingNavbar = () => {
 
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -86,10 +85,7 @@ const MarketingNavbar = () => {
               aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
               className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground md:hidden cursor-pointer"
             >
-              {mobileNavOpen 
-                ? <X className="h-4 w-4" /> 
-                : <Menu className="h-4 w-4" />
-              }
+              {mobileNavOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </Button>
           </div>
 
@@ -107,16 +103,24 @@ const MarketingNavbar = () => {
                   </a>
                 ))}
                 <div className="mt-3 flex flex-col gap-2 border-t border-border pt-3">
-                  <Button variant="ghost" size="sm" onClick={() => {
-                    setMobileNavOpen(false);
-                    navigate("/login");
-                  }}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={async () => {
+                      setMobileNavOpen(false);
+                      await navigate("/login");
+                    }}
+                  >
                     Sign in
                   </Button>
-                  <Button variant="brand" size="sm" onClick={() => {
-                    setMobileNavOpen(false);
-                    navigate("/signup/account");
-                  }}>
+                  <Button
+                    variant="brand"
+                    size="sm"
+                    onClick={async () => {
+                      setMobileNavOpen(false);
+                      await navigate("/signup/account");
+                    }}
+                  >
                     Request Access
                   </Button>
                 </div>
@@ -127,6 +131,6 @@ const MarketingNavbar = () => {
       </div>
     </header>
   );
-}
+};
 
 export default MarketingNavbar;

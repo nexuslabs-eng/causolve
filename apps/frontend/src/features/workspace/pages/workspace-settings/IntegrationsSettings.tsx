@@ -5,13 +5,10 @@ export const IntegrationsSettings = () => {
   return (
     <div className="@container/integrations min-w-0">
       <header className="border-b border-border pb-5">
-        <h1 className="mt-2 text-2xl font-semibold text-foreground">
-          Integrations
-        </h1>
+        <h1 className="mt-2 text-2xl font-semibold text-foreground">Integrations</h1>
 
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          Connect the tools your workspace uses for incident response and
-          investigation work.
+          Connect the tools your workspace uses for incident response and investigation work.
         </p>
       </header>
 

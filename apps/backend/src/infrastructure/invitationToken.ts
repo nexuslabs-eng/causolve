@@ -13,11 +13,7 @@ export const findInvitationByToken = async (rawToken: string) => {
   });
 };
 
-export const isInvitationExpired = (expiresAt: Date): boolean =>
-  expiresAt < new Date();
+export const isInvitationExpired = (expiresAt: Date): boolean => expiresAt < new Date();
 
-export const getEffectiveInvitationStatus = (
-  status: string,
-  expiresAt: Date,
-): string =>
+export const getEffectiveInvitationStatus = (status: string, expiresAt: Date): string =>
   status === "PENDING" && isInvitationExpired(expiresAt) ? "EXPIRED" : status;

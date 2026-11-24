@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import type { NextFunction, Request, Response } from "express";
 import type { Role } from "@causolve/database";
 import { requireRole } from "../rbac.middleware.js";

@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { SignupCompletionSchema } from "contracts";
@@ -75,9 +75,7 @@ describe("GET /onboarding/completion", () => {
       organization: buildFakeOrganization(),
       user: { jobRole: null },
     };
-    prismaMock.membership.findFirst.mockResolvedValue(
-      membershipWithIncompleteProfile,
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(membershipWithIncompleteProfile);
 
     const response = await agent.get("/onboarding/completion");
 

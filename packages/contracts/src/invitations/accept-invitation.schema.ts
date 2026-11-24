@@ -18,9 +18,5 @@ export const AcceptInvitationResponseSchema = z.object({
   }),
 });
 
-export type AcceptInvitationRequest = z.infer<
-  typeof AcceptInvitationRequestSchema
->;
-export type AcceptInvitationResponse = z.infer<
-  typeof AcceptInvitationResponseSchema
->;
+export type AcceptInvitationRequest = z.infer<typeof AcceptInvitationRequestSchema>;
+export type AcceptInvitationResponse = z.infer<typeof AcceptInvitationResponseSchema>;

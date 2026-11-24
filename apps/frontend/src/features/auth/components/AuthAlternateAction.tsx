@@ -14,22 +14,16 @@ export const AuthAlternateAction = ({
   linkLabel,
   to,
   className,
-}: AuthAlternateActionProps) => { 
-    
-    return (
-        <p
-            className={cn(
-            "mt-7 text-center text-sm text-muted-foreground",
-            className,
-            )}
-        >
-            {message}{" "}
-            <Link
-                to={to}
-                className="font-medium text-primary-bright transition-colors hover:text-primary"
-            >
-            {linkLabel}
-            </Link>
-        </p>
-    )
+}: AuthAlternateActionProps) => {
+  return (
+    <p className={cn("mt-7 text-center text-sm text-muted-foreground", className)}>
+      {message}{" "}
+      <Link
+        to={to}
+        className="font-medium text-primary-bright transition-colors hover:text-primary"
+      >
+        {linkLabel}
+      </Link>
+    </p>
+  );
 };

@@ -62,10 +62,10 @@ unassigned service.
 **Errors**
 
 | Status | Code                 | Meaning                                                    |
-| ------ | -------------------- | ----------------------------------------------------------- |
-| 400    | (validation)          | malformed body                                             |
-| 404    | `TEAM_NOT_FOUND`      | `teamId` was given but doesn't exist in this organization   |
-| 409    | `SERVICE_NAME_TAKEN`  | another service in this organization already has this name |
+| ------ | -------------------- | ---------------------------------------------------------- |
+| 400    | (validation)         | malformed body                                             |
+| 404    | `TEAM_NOT_FOUND`     | `teamId` was given but doesn't exist in this organization  |
+| 409    | `SERVICE_NAME_TAKEN` | another service in this organization already has this name |
 
 ---
 
@@ -103,7 +103,7 @@ unassigned service.
 **Errors**
 
 | Status | Code              | Meaning                         |
-| ------ | ----------------- | -------------------------------- |
+| ------ | ----------------- | ------------------------------- |
 | 400    | `INVALID_REQUEST` | malformed pagination parameters |
 
 ---
@@ -117,7 +117,7 @@ unassigned service.
 **Errors**
 
 | Status | Code                | Meaning                                                                                                                             |
-| ------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| ------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | 404    | `SERVICE_NOT_FOUND` | no service with this ID exists in this organization (also returned if the service exists but belongs to a _different_ organization) |
 
 ---
@@ -146,5 +146,5 @@ against `:organizationId` whenever it's provided, including on reassignment).
 **Errors**
 
 | Status | Code                | Meaning               |
-| ------ | ------------------- | ---------------------- |
+| ------ | ------------------- | --------------------- |
 | 404    | `SERVICE_NOT_FOUND` | same meaning as `GET` |

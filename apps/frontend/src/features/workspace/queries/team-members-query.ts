@@ -1,8 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import {
-  getTeamMembers,
-  getWorkspaceMembers,
-} from "@/features/workspace/api/team-members";
+import { getTeamMembers, getWorkspaceMembers } from "@/features/workspace/api/team-members";
 
 export const workspaceMembersQueryKey = (organizationId: string) =>
   ["workspace", "members", organizationId] as const;
@@ -18,10 +15,7 @@ export const workspaceMembersQueryOptions = (organizationId: string) =>
     retry: false,
   });
 
-export const teamMembersQueryOptions = (
-  organizationId: string,
-  teamId: string,
-) =>
+export const teamMembersQueryOptions = (organizationId: string, teamId: string) =>
   queryOptions({
     queryKey: teamMembersQueryKey(organizationId, teamId),
     queryFn: () => getTeamMembers(organizationId, teamId),

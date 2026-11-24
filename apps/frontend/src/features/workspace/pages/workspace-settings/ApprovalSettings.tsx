@@ -18,15 +18,10 @@ export const ApprovalSettings = () => {
   const updateMutation = useUpdateApprovalSettings();
   const settings = settingsQuery.data ?? null;
 
-  const canEdit =
-    Boolean(settings) &&
-    !settingsQuery.isPending &&
-    !settingsQuery.isError;
+  const canEdit = Boolean(settings) && !settingsQuery.isPending && !settingsQuery.isError;
 
   const showLoadError =
-    settingsQuery.isError &&
-    !settingsQuery.isPending &&
-    !settingsQuery.isFetching;
+    settingsQuery.isError && !settingsQuery.isPending && !settingsQuery.isFetching;
 
   if (settingsQuery.isPending) {
     return (

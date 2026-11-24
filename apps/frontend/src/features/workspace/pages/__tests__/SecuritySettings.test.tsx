@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { MemoryRouter } from "react-router-dom";
 
 import { SecuritySettings } from "@/features/workspace/pages/personal-settings/SecuritySettings";
@@ -31,9 +31,7 @@ describe("SecuritySettings", () => {
   it("renders account verification and password security controls", () => {
     renderSecuritySettings();
 
-    expect(
-      screen.getByRole("heading", { name: "Account & security" }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Account & security" })).toBeInTheDocument();
     expect(screen.getByText("samuel@example.com")).toBeInTheDocument();
     expect(screen.getByText("Verified")).toBeInTheDocument();
     expect(screen.getByLabelText("Current password")).toBeInTheDocument();
@@ -48,15 +46,11 @@ describe("SecuritySettings", () => {
 
     await user.click(screen.getByRole("button", { name: "Change password" }));
 
-    expect(
-      await screen.findByText("Current password is required."),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Current password is required.")).toBeInTheDocument();
     expect(
       await screen.findByText("Password must contain at least 10 characters."),
     ).toBeInTheDocument();
-    expect(
-      await screen.findByText("Confirm your new password."),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Confirm your new password.")).toBeInTheDocument();
   });
 
   it("shows the shared mismatch error for different passwords", async () => {
@@ -64,19 +58,11 @@ describe("SecuritySettings", () => {
 
     renderSecuritySettings();
 
-    await user.type(
-      screen.getByLabelText("Current password"),
-      "CurrentPassword123!",
-    );
+    await user.type(screen.getByLabelText("Current password"), "CurrentPassword123!");
     await user.type(screen.getByLabelText("New password"), "NewPassword123!");
-    await user.type(
-      screen.getByLabelText("Confirm new password"),
-      "DifferentPassword123!",
-    );
+    await user.type(screen.getByLabelText("Confirm new password"), "DifferentPassword123!");
     await user.click(screen.getByRole("button", { name: "Change password" }));
 
-    expect(
-      await screen.findByText("Passwords do not match."),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Passwords do not match.")).toBeInTheDocument();
   });
 });

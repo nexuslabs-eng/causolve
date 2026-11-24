@@ -2,10 +2,7 @@ import { Request, Response } from "express";
 import { prisma } from "@causolve/database";
 import { type CreateHypothesisRequest, type Hypothesis } from "contracts";
 import tryCatchWrapper from "../../../infrastructure/tryCatchWrapper.js";
-import {
-  sendSuccess,
-  sendError,
-} from "../../../infrastructure/responseHandler.js";
+import { sendSuccess, sendError } from "../../../infrastructure/responseHandler.js";
 
 const toHypothesisResponse = (hypothesis: {
   id: string;
@@ -29,11 +26,7 @@ const toHypothesisResponse = (hypothesis: {
 
 export const createHypothesis = tryCatchWrapper(
   async (
-    req: Request<
-      { organizationId: string; incidentId: string },
-      unknown,
-      CreateHypothesisRequest
-    >,
+    req: Request<{ organizationId: string; incidentId: string }, unknown, CreateHypothesisRequest>,
     res: Response,
   ): Promise<void> => {
     const { organizationId, incidentId } = req.params;

@@ -28,9 +28,7 @@ export const AuditSettings = () => {
   }
 
   const showLoadError =
-    settingsQuery.isError &&
-    !settingsQuery.isPending &&
-    !settingsQuery.isFetching;
+    settingsQuery.isError && !settingsQuery.isPending && !settingsQuery.isFetching;
 
   return (
     <div className="min-w-0">

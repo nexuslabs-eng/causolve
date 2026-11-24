@@ -11,6 +11,4 @@ export const UpdateApprovalSettingsRequestSchema = ApprovalSettingsSchema;
 
 export type ApprovalSettings = z.infer<typeof ApprovalSettingsSchema>;
 
-export type UpdateApprovalSettingsRequest = z.infer<
-  typeof UpdateApprovalSettingsRequestSchema
->;
+export type UpdateApprovalSettingsRequest = z.infer<typeof UpdateApprovalSettingsRequestSchema>;

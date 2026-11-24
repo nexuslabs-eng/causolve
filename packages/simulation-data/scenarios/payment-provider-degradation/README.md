@@ -9,7 +9,7 @@ performed during that run.
 
 ## Structure
 
-``` text
+```text
 topology/     Services and dependencies
 operations/   Incident source data, deployments, changes, runtime observations
 telemetry/    Alerts, metrics, logs, traces, dependency observations
@@ -67,7 +67,7 @@ tools must behave as if the simulation is unfolding in time.
 
 Every time-aware query must use the active simulation time as `asOf`.
 
-``` text
+```text
 visible record time <= asOf
 effective end = min(requested end, asOf)
 ```

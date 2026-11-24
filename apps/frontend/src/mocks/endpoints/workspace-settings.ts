@@ -11,10 +11,9 @@ const STORAGE_KEY = "causolve_mock_workspace_settings";
 
 const requireWorkspaceAuthentication = () => {
   if (!authSession.authenticated) {
-    return HttpResponse.json(
-      apiError("UNAUTHENTICATED", "You must be signed in."),
-      { status: 401 },
-    );
+    return HttpResponse.json(apiError("UNAUTHENTICATED", "You must be signed in."), {
+      status: 401,
+    });
   }
 
   if (!authSession.activeWorkspace) {
@@ -50,41 +49,34 @@ const getStoredSettings = () => {
 
     const parsed = WorkspaceSettingsSchema.safeParse(JSON.parse(stored));
 
-    return parsed.success
-      ? parsed.data
-      : WorkspaceSettingsSchema.parse(fallback);
+    return parsed.success ? parsed.data : WorkspaceSettingsSchema.parse(fallback);
   } catch {
     return WorkspaceSettingsSchema.parse(fallback);
   }
 };
 
-const persistSettings = (
-  settings: ReturnType<typeof WorkspaceSettingsSchema.parse>,
-) => {
+const persistSettings = (settings: ReturnType<typeof WorkspaceSettingsSchema.parse>) => {
   globalThis.localStorage?.setItem(STORAGE_KEY, JSON.stringify(settings));
 };
 
-export const getWorkspaceSettings = http.get(
-  apiEndpoint("/workspace/settings/general"),
-  () => {
-    const authenticationError = requireWorkspaceAuthentication();
+export const getWorkspaceSettings = http.get(apiEndpoint("/workspace/settings/general"), () => {
+  const authenticationError = requireWorkspaceAuthentication();
 
-    if (authenticationError) {
-      return authenticationError;
-    }
+  if (authenticationError) {
+    return authenticationError;
+  }
 
-    const settings = getStoredSettings();
+  const settings = getStoredSettings();
 
-    if (!settings) {
-      return HttpResponse.json(
-        apiError("WORKSPACE_NOT_FOUND", "Workspace settings were not found."),
-        { status: 404 },
-      );
-    }
+  if (!settings) {
+    return HttpResponse.json(
+      apiError("WORKSPACE_NOT_FOUND", "Workspace settings were not found."),
+      { status: 404 },
+    );
+  }
 
-    return HttpResponse.json(WorkspaceSettingsSchema.parse(settings));
-  },
-);
+  return HttpResponse.json(WorkspaceSettingsSchema.parse(settings));
+});
 
 export const updateWorkspaceSettings = http.patch(
   apiEndpoint("/workspace/settings/general"),
@@ -95,9 +87,7 @@ export const updateWorkspaceSettings = http.patch(
       return authenticationError;
     }
 
-    const result = UpdateWorkspaceSettingsRequestSchema.safeParse(
-      await request.json(),
-    );
+    const result = UpdateWorkspaceSettingsRequestSchema.safeParse(await request.json());
 
     if (!result.success) {
       return HttpResponse.json(

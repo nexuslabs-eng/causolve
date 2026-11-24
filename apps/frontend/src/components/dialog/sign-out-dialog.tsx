@@ -27,21 +27,23 @@ export const SignOutDialog = ({ open, loading, onOpenChange, onConfirm }: SignOu
             You will need to sign in again to access this workspace.
           </DialogDescription>
           <div className="mt-6 flex justify-end gap-2">
-            <Button type="button" variant="subtle" disabled={loading} onClick={() => onOpenChange(false)}>
-              Cancel
-            </Button>
             <Button
               type="button"
+              variant="subtle"
               disabled={loading}
-              variant="brand"
-              onClick={onConfirm}
+              onClick={() => onOpenChange(false)}
             >
+              Cancel
+            </Button>
+            <Button type="button" disabled={loading} variant="brand" onClick={onConfirm}>
               {loading ? (
                 <>
                   <Loader aria-hidden="true" className="animate-spin" />
                   Signing out
                 </>
-              ) : "Sign out"}
+              ) : (
+                "Sign out"
+              )}
             </Button>
           </div>
         </DialogContent>

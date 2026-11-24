@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { DeleteTeamResponseSchema } from "contracts";
@@ -25,9 +25,7 @@ describe("DELETE /organizations/:organizationId/teams/:teamId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
     prismaMock.team.findFirst.mockResolvedValue(buildFakeTeam());
 
     const response = await agent.delete(
@@ -46,9 +44,7 @@ describe("DELETE /organizations/:organizationId/teams/:teamId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
 
     const response = await agent.delete(
       `/organizations/${MOCK_ORGANIZATION_ID}/teams/${MOCK_TEAM_ID}`,
@@ -62,9 +58,7 @@ describe("DELETE /organizations/:organizationId/teams/:teamId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
     prismaMock.team.findFirst.mockResolvedValue(null);
 
     const response = await agent.delete(

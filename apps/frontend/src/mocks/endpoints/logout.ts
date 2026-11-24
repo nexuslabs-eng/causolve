@@ -1,4 +1,7 @@
-import { AnonymousAuthSessionSchema, LogoutResponseSchema } from "contracts/auth/auth-session.schema";
+import {
+  AnonymousAuthSessionSchema,
+  LogoutResponseSchema,
+} from "contracts/auth/auth-session.schema";
 import { http, HttpResponse } from "msw";
 import { clearMockSession } from "@/mocks/utils";
 import { apiEndpoint } from "@/lib/api/api-config";

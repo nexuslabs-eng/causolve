@@ -33,12 +33,9 @@ export const forgotPassword = async (
 export const validateResetToken = async (
   token: PasswordResetToken,
 ): Promise<ValidateResetTokenResponse> => {
-  const response = await axiosClient.get<unknown, unknown>(
-    "/auth/reset-password/validate",
-    {
-      params: { token },
-    },
-  );
+  const response = await axiosClient.get<unknown, unknown>("/auth/reset-password/validate", {
+    params: { token },
+  });
 
   return ValidateResetTokenResponseSchema.parse(response);
 };
@@ -59,10 +56,7 @@ export const changePassword = async (
 ): Promise<ChangePasswordResponse> => {
   const payload = ChangePasswordRequestSchema.parse(input);
 
-  const response = await axiosClient.post<unknown, unknown>(
-    "/auth/change-password",
-    payload,
-  );
+  const response = await axiosClient.post<unknown, unknown>("/auth/change-password", payload);
 
   return ChangePasswordResponseSchema.parse(response);
 };

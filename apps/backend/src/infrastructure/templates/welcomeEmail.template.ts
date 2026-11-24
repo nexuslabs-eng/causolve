@@ -4,8 +4,11 @@ interface WelcomeEmailContent {
   html: string;
 }
 
-export const welcomeEmailTemplate = (fullName: string, continueUrl: string): WelcomeEmailContent => {
-  const subject = 'Welcome to Causolve';
+export const welcomeEmailTemplate = (
+  fullName: string,
+  continueUrl: string,
+): WelcomeEmailContent => {
+  const subject = "Welcome to Causolve";
 
   const text = `Hi ${fullName},\n\nYour email is verified - welcome to Causolve.\n\nContinue setting up your workspace here: ${continueUrl}`;
 

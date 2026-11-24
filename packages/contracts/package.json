@@ -2,6 +2,10 @@
   "name": "contracts",
   "version": "1.0.0",
   "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
@@ -16,18 +20,13 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:ai-contracts": "tsx scripts/check-ai-contracts.ts"
+    "test:ai-contracts": "vpx scripts/check-ai-contracts.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
   "dependencies": {
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
-    "tsx": "^4.23.13",
     "typescript": "^7.0.2"
   }
 }

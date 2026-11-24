@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { InvitationListResponseSchema } from "contracts";
@@ -24,16 +24,12 @@ describe("GET /organizations/:organizationId/invitations", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
     const fakeInvitation = buildFakeInvitation();
     prismaMock.invitation.findMany.mockResolvedValue([fakeInvitation]);
     prismaMock.invitation.count.mockResolvedValue(1);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/invitations`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`);
 
     expect(response.status).toBe(200);
     const body = InvitationListResponseSchema.parse(response.body);
@@ -57,18 +53,14 @@ describe("GET /organizations/:organizationId/invitations", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
     const staleInvitation = buildFakeInvitation({
       expiresAt: new Date(Date.now() - 60 * 1000),
     });
     prismaMock.invitation.findMany.mockResolvedValue([staleInvitation]);
     prismaMock.invitation.count.mockResolvedValue(1);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/invitations`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`);
 
     expect(response.status).toBe(200);
     const body = InvitationListResponseSchema.parse(response.body);
@@ -79,9 +71,7 @@ describe("GET /organizations/:organizationId/invitations", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
     const orphanedInvitation = buildFakeInvitation({
       invitedById: null,
       invitedBy: null,
@@ -89,9 +79,7 @@ describe("GET /organizations/:organizationId/invitations", () => {
     prismaMock.invitation.findMany.mockResolvedValue([orphanedInvitation]);
     prismaMock.invitation.count.mockResolvedValue(1);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/invitations`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`);
 
     expect(response.status).toBe(200);
     const body = InvitationListResponseSchema.parse(response.body);
@@ -102,9 +90,7 @@ describe("GET /organizations/:organizationId/invitations", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
     prismaMock.invitation.findMany.mockResolvedValue([]);
     prismaMock.invitation.count.mockResolvedValue(25);
 
@@ -128,13 +114,9 @@ describe("GET /organizations/:organizationId/invitations", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ADMIN" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ADMIN" }));
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/invitations?page=0`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/invitations?page=0`);
 
     expect(response.status).toBe(400);
     expect(prismaMock.invitation.findMany).not.toHaveBeenCalled();
@@ -144,13 +126,9 @@ describe("GET /organizations/:organizationId/invitations", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/invitations`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`);
 
     expect(response.status).toBe(403);
     expect(prismaMock.invitation.findMany).not.toHaveBeenCalled();
@@ -162,9 +140,7 @@ describe("GET /organizations/:organizationId/invitations", () => {
 
     prismaMock.membership.findFirst.mockResolvedValue(null);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/invitations`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`);
 
     expect(response.status).toBe(404);
     expect(response.body).toMatchObject({
@@ -173,9 +149,7 @@ describe("GET /organizations/:organizationId/invitations", () => {
   });
 
   it("rejects an unauthenticated request", async () => {
-    const response = await request(app).get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/invitations`,
-    );
+    const response = await request(app).get(`/organizations/${MOCK_ORGANIZATION_ID}/invitations`);
 
     expect(response.status).toBe(401);
   });

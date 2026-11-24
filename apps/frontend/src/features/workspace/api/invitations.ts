@@ -46,9 +46,7 @@ export const resendInvitation = async (
   invitationId: string,
 ): Promise<ResendInvitationResponse> => {
   const response = await axiosClient.post<unknown, unknown>(
-    `${invitationEndpoint(organizationId)}/${encodeURIComponent(
-      invitationId,
-    )}/resend`,
+    `${invitationEndpoint(organizationId)}/${encodeURIComponent(invitationId)}/resend`,
   );
 
   return ResendInvitationResponseSchema.parse(response);
@@ -59,9 +57,7 @@ export const revokeInvitation = async (
   invitationId: string,
 ): Promise<RevokeInvitationResponse> => {
   const response = await axiosClient.post<unknown, unknown>(
-    `${invitationEndpoint(organizationId)}/${encodeURIComponent(
-      invitationId,
-    )}/revoke`,
+    `${invitationEndpoint(organizationId)}/${encodeURIComponent(invitationId)}/revoke`,
   );
 
   return RevokeInvitationResponseSchema.parse(response);

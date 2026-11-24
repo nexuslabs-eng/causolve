@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { TeamListResponseSchema } from "contracts";
@@ -24,16 +24,12 @@ describe("GET /organizations/:organizationId/teams", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "OBSERVER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "OBSERVER" }));
     const fakeTeam = buildFakeTeam();
     prismaMock.team.findMany.mockResolvedValue([fakeTeam]);
     prismaMock.team.count.mockResolvedValue(1);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/teams`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/teams`);
 
     expect(response.status).toBe(200);
     const body = TeamListResponseSchema.parse(response.body);
@@ -54,9 +50,7 @@ describe("GET /organizations/:organizationId/teams", () => {
     prismaMock.team.findMany.mockResolvedValue([]);
     prismaMock.team.count.mockResolvedValue(25);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/teams?page=2&limit=5`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/teams?page=2&limit=5`);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
@@ -76,9 +70,7 @@ describe("GET /organizations/:organizationId/teams", () => {
 
     prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership());
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/teams?page=0`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/teams?page=0`);
 
     expect(response.status).toBe(400);
     expect(prismaMock.team.findMany).not.toHaveBeenCalled();
@@ -90,9 +82,7 @@ describe("GET /organizations/:organizationId/teams", () => {
 
     prismaMock.membership.findFirst.mockResolvedValue(null);
 
-    const response = await agent.get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/teams`,
-    );
+    const response = await agent.get(`/organizations/${MOCK_ORGANIZATION_ID}/teams`);
 
     expect(response.status).toBe(404);
     expect(response.body).toMatchObject({
@@ -101,9 +91,7 @@ describe("GET /organizations/:organizationId/teams", () => {
   });
 
   it("rejects an unauthenticated request", async () => {
-    const response = await request(app).get(
-      `/organizations/${MOCK_ORGANIZATION_ID}/teams`,
-    );
+    const response = await request(app).get(`/organizations/${MOCK_ORGANIZATION_ID}/teams`);
 
     expect(response.status).toBe(401);
   });

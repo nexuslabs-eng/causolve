@@ -5,11 +5,11 @@ import { IncidentCommandCenter } from "@/features/marketing/components/incident-
 
 const Hero = () => {
   const navigate = useNavigate();
-  
+
   return (
     <section id="top" className="relative overflow-hidden">
       <div className="grid-backdrop pointer-events-none absolute inset-0 mask-[radial-gradient(120%_70%_at_50%_0%,black,transparent_75%)]" />
-      
+
       <div
         className="pointer-events-none absolute left-1/2 -top-72 h-136 w-5xl -translate-x-1/2 rounded-full opacity-[0.16] blur-3xl"
         style={{ background: "radial-gradient(closest-side, var(--primary), transparent)" }}
@@ -27,17 +27,24 @@ const Hero = () => {
           </h1>
 
           <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-muted-foreground sm:text-base">
-            Causolve helps engineering teams investigate incidents, challenge competing root-cause hypotheses, and recommend the safest next action based on evidence quality, contradictions, and system integrity. Humans authorize every consequential remediation.
+            Causolve helps engineering teams investigate incidents, challenge competing root-cause
+            hypotheses, and recommend the safest next action based on evidence quality,
+            contradictions, and system integrity. Humans authorize every consequential remediation.
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button variant="brand" size="lg" className="w-full gap-2 sm:w-auto" onClick={() => navigate("signup/account")}>
+            <Button
+              variant="brand"
+              size="lg"
+              className="w-full gap-2 sm:w-auto"
+              onClick={() => navigate("signup/account")}
+            >
               Request Access
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button 
-              variant="ghost" 
-              size="lg"  
+            <Button
+              variant="ghost"
+              size="lg"
               className="w-full sm:w-auto justify-center gap-2 items-center"
               onClick={() => navigate("/#how-it-works")}
             >
@@ -50,10 +57,9 @@ const Hero = () => {
         <div className="mx-auto mt-14 max-w-5xl sm:mt-16">
           <IncidentCommandCenter />
         </div>
-
       </div>
     </section>
   );
-}
+};
 
 export default Hero;

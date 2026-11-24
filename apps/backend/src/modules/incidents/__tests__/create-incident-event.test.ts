@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { IncidentEventSchema } from "contracts";
@@ -26,9 +26,7 @@ describe("POST /organizations/:organizationId/incidents/:incidentId/events", () 
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
     prismaMock.incident.findFirst.mockResolvedValue(buildFakeIncident());
     const fakeEvent = buildFakeIncidentEvent({
       type: "note",
@@ -37,9 +35,7 @@ describe("POST /organizations/:organizationId/incidents/:incidentId/events", () 
     prismaMock.incidentEvent.create.mockResolvedValue(fakeEvent);
 
     const response = await agent
-      .post(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`,
-      )
+      .post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`)
       .send({ type: "note", message: "Paged the payments on-call." });
 
     expect(response.status).toBe(201);
@@ -51,19 +47,13 @@ describe("POST /organizations/:organizationId/incidents/:incidentId/events", () 
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
     prismaMock.incident.findFirst.mockResolvedValue(buildFakeIncident());
     const metadata = { runbookId: "rb-42" };
-    prismaMock.incidentEvent.create.mockResolvedValue(
-      buildFakeIncidentEvent({ metadata }),
-    );
+    prismaMock.incidentEvent.create.mockResolvedValue(buildFakeIncidentEvent({ metadata }));
 
     const response = await agent
-      .post(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`,
-      )
+      .post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`)
       .send({ type: "note", message: "Linked the relevant runbook.", metadata });
 
     expect(response.status).toBe(201);
@@ -76,15 +66,11 @@ describe("POST /organizations/:organizationId/incidents/:incidentId/events", () 
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
     prismaMock.incident.findFirst.mockResolvedValue(null);
 
     const response = await agent
-      .post(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`,
-      )
+      .post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`)
       .send({ type: "note", message: "Paged the payments on-call." });
 
     expect(response.status).toBe(404);
@@ -97,14 +83,10 @@ describe("POST /organizations/:organizationId/incidents/:incidentId/events", () 
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "OBSERVER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "OBSERVER" }));
 
     const response = await agent
-      .post(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`,
-      )
+      .post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`)
       .send({ type: "note", message: "Paged the payments on-call." });
 
     expect(response.status).toBe(403);
@@ -115,14 +97,10 @@ describe("POST /organizations/:organizationId/incidents/:incidentId/events", () 
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
 
     const response = await agent
-      .post(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`,
-      )
+      .post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`)
       .send({ type: "", message: "" });
 
     expect(response.status).toBe(400);
@@ -131,9 +109,7 @@ describe("POST /organizations/:organizationId/incidents/:incidentId/events", () 
 
   it("rejects an unauthenticated request", async () => {
     const response = await request(app)
-      .post(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`,
-      )
+      .post(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}/events`)
       .send({ type: "note", message: "Paged the payments on-call." });
 
     expect(response.status).toBe(401);

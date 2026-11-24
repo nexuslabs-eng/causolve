@@ -29,28 +29,26 @@ export const AuthStatusPanel = ({
   children,
   tone = "info",
   className,
-}: AuthStatusPanelProps) => { 
-    
-    return (
+}: AuthStatusPanelProps) => {
+  return (
     <div className={cn("w-full flex flex-col", className)}>
-        <div
+      <div
         className={cn(
-            "flex h-11 w-11 items-center justify-center rounded-md border",
-            toneStyles[tone],
+          "flex h-11 w-11 items-center justify-center rounded-md border",
+          toneStyles[tone],
         )}
-        >
-            <Icon aria-hidden="true" className={cn("h-5 w-5", iconStatus === "loading" ? "animate-spin" : "")} />
-        </div>
+      >
+        <Icon
+          aria-hidden="true"
+          className={cn("h-5 w-5", iconStatus === "loading" ? "animate-spin" : "")}
+        />
+      </div>
 
-        <h1 className="mt-7 text-3xl font-semibold leading-tight text-foreground">
-        {title}
-        </h1>
+      <h1 className="mt-7 text-3xl font-semibold leading-tight text-foreground">{title}</h1>
 
-        <div className="mt-3 text-sm leading-relaxed text-muted-foreground">
-        {description}
-        </div>
+      <div className="mt-3 text-sm leading-relaxed text-muted-foreground">{description}</div>
 
-        {children ? <div className="mt-8 self-start">{children}</div> : null}
+      {children ? <div className="mt-8 self-start">{children}</div> : null}
     </div>
-    )
+  );
 };

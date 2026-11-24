@@ -16,10 +16,7 @@ import {
   InvitationTokenRequestSchema,
 } from "contracts";
 import tryCatchWrapper from "../../infrastructure/tryCatchWrapper.js";
-import {
-  sendSuccess,
-  sendError,
-} from "../../infrastructure/responseHandler.js";
+import { sendSuccess, sendError } from "../../infrastructure/responseHandler.js";
 import { logger } from "../../infrastructure/logger.js";
 import { welcomeEmailTemplate } from "../../infrastructure/templates/welcomeEmail.template.js";
 import { sendEmail } from "../../infrastructure/email.service.js";
@@ -62,9 +59,7 @@ const toInvitationResponse = (invitation: {
   ) as Invitation["status"],
   createdAt: invitation.createdAt.toISOString(),
   expiresAt: invitation.expiresAt.toISOString(),
-  acceptedAt: invitation.acceptedAt
-    ? invitation.acceptedAt.toISOString()
-    : null,
+  acceptedAt: invitation.acceptedAt ? invitation.acceptedAt.toISOString() : null,
   revokedAt: invitation.revokedAt ? invitation.revokedAt.toISOString() : null,
 });
 
@@ -101,10 +96,7 @@ export const createInvitation = tryCatchWrapper(
       return;
     }
     const rawToken = crypto.randomBytes(32).toString("hex");
-    const tokenHash = crypto
-      .createHash("sha256")
-      .update(rawToken)
-      .digest("hex");
+    const tokenHash = crypto.createHash("sha256").update(rawToken).digest("hex");
     const expiresAt = new Date(Date.now() + INVITATION_EXPIRY_MS);
 
     const invitation = await prisma.invitation.create({
@@ -207,10 +199,7 @@ export const resendInvitation = tryCatchWrapper(
       return;
     }
     const rawToken = crypto.randomBytes(32).toString("hex");
-    const tokenHash = crypto
-      .createHash("sha256")
-      .update(rawToken)
-      .digest("hex");
+    const tokenHash = crypto.createHash("sha256").update(rawToken).digest("hex");
     const expiresAt = new Date(Date.now() + INVITATION_EXPIRY_MS);
 
     await prisma.invitation.update({
@@ -244,12 +233,7 @@ export const previewInvitation = tryCatchWrapper(
   async (req: Request, res: Response): Promise<void> => {
     const result = InvitationTokenRequestSchema.safeParse(req.query);
     if (!result.success) {
-      sendError(
-        res,
-        400,
-        "INVALID_REQUEST",
-        "A valid invitation token is required.",
-      );
+      sendError(res, 400, "INVALID_REQUEST", "A valid invitation token is required.");
       return;
     }
     const { token } = result.data;
@@ -259,10 +243,7 @@ export const previewInvitation = tryCatchWrapper(
       sendError(res, 404, "INVITATION_NOT_FOUND", "Invitation not found.");
       return;
     }
-    const status = getEffectiveInvitationStatus(
-      invitation.status,
-      invitation.expiresAt,
-    );
+    const status = getEffectiveInvitationStatus(invitation.status, invitation.expiresAt);
 
     const response: InvitationPreview = {
       invitationId: invitation.id,
@@ -295,12 +276,7 @@ export const revokeInvitation = tryCatchWrapper(
     }
 
     if (existingInvitation.status !== "PENDING") {
-      sendError(
-        res,
-        409,
-        "INVITATION_NOT_PENDING",
-        "Only a pending invitation can be revoked.",
-      );
+      sendError(res, 409, "INVITATION_NOT_PENDING", "Only a pending invitation can be revoked.");
       return;
     }
 
@@ -320,10 +296,7 @@ export const revokeInvitation = tryCatchWrapper(
 );
 
 export const acceptInvitation = tryCatchWrapper(
-  async (
-    req: Request<unknown, unknown, AcceptInvitationRequest>,
-    res: Response,
-  ): Promise<void> => {
+  async (req: Request<unknown, unknown, AcceptInvitationRequest>, res: Response): Promise<void> => {
     const { token, fullName, password } = req.body;
 
     const invitation = await findInvitationByToken(token);
@@ -331,17 +304,9 @@ export const acceptInvitation = tryCatchWrapper(
       sendError(res, 404, "INVITATION_NOT_FOUND", "Invitation not found.");
       return;
     }
-    const status = getEffectiveInvitationStatus(
-      invitation.status,
-      invitation.expiresAt,
-    );
+    const status = getEffectiveInvitationStatus(invitation.status, invitation.expiresAt);
     if (status !== "PENDING") {
-      sendError(
-        res,
-        409,
-        "INVITATION_NOT_PENDING",
-        "This invitation can no longer be accepted",
-      );
+      sendError(res, 409, "INVITATION_NOT_PENDING", "This invitation can no longer be accepted");
       return;
     }
     const existingUser = await prisma.user.findUnique({
@@ -388,10 +353,7 @@ export const acceptInvitation = tryCatchWrapper(
     req.session.userId = user.id;
 
     try {
-      const { subject, text, html } = welcomeEmailTemplate(
-        user.fullName,
-        env.CLIENT_URL,
-      );
+      const { subject, text, html } = welcomeEmailTemplate(user.fullName, env.CLIENT_URL);
       await sendEmail({ to: user.email, subject, text, html });
     } catch (error) {
       logger.error({ err: error }, "Failed to send welcome email");

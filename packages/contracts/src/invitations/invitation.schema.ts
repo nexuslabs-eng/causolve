@@ -1,10 +1,6 @@
 import { z } from "zod";
 import { RoleSchema } from "../common/enums.js";
-import {
-  DateTimeSchema,
-  NonEmptyStringSchema,
-  IdSchema,
-} from "../common/primitives.js";
+import { DateTimeSchema, NonEmptyStringSchema, IdSchema } from "../common/primitives.js";
 import { InvitationStatusSchema } from "./invitation.enums.js";
 import { JobRoleSchema } from "../onboarding/onboarding.enums.js";
 

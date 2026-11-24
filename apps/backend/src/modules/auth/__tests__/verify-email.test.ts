@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { VerifyEmailOtpResponseSchema } from "contracts";
@@ -38,9 +38,7 @@ describe("POST /auth/verify-email", () => {
     });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const response = await agent
-      .post("/auth/verify-email")
-      .send({ otp: CORRECT_OTP });
+    const response = await agent.post("/auth/verify-email").send({ otp: CORRECT_OTP });
 
     expect(response.status).toBe(200);
     const body = VerifyEmailOtpResponseSchema.parse(response.body);
@@ -60,9 +58,7 @@ describe("POST /auth/verify-email", () => {
     });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const response = await agent
-      .post("/auth/verify-email")
-      .send({ otp: "000000" });
+    const response = await agent.post("/auth/verify-email").send({ otp: "000000" });
 
     expect(response.status).toBe(400);
     expect(response.body).toMatchObject({
@@ -85,9 +81,7 @@ describe("POST /auth/verify-email", () => {
     });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const response = await agent
-      .post("/auth/verify-email")
-      .send({ otp: CORRECT_OTP });
+    const response = await agent.post("/auth/verify-email").send({ otp: CORRECT_OTP });
 
     expect(response.status).toBe(400);
     expect(response.body).toMatchObject({
@@ -105,9 +99,7 @@ describe("POST /auth/verify-email", () => {
     });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const response = await agent
-      .post("/auth/verify-email")
-      .send({ otp: CORRECT_OTP });
+    const response = await agent.post("/auth/verify-email").send({ otp: CORRECT_OTP });
 
     expect(response.status).toBe(429);
     expect(response.body).toMatchObject({
@@ -125,9 +117,7 @@ describe("POST /auth/verify-email", () => {
     });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    const response = await agent
-      .post("/auth/verify-email")
-      .send({ otp: CORRECT_OTP });
+    const response = await agent.post("/auth/verify-email").send({ otp: CORRECT_OTP });
 
     expect(response.status).toBe(409);
     expect(response.body).toMatchObject({
@@ -136,9 +126,7 @@ describe("POST /auth/verify-email", () => {
   });
 
   it("rejects an unauthenticated request", async () => {
-    const response = await request(app)
-      .post("/auth/verify-email")
-      .send({ otp: CORRECT_OTP });
+    const response = await request(app).post("/auth/verify-email").send({ otp: CORRECT_OTP });
 
     expect(response.status).toBe(401);
     expect(response.body).toMatchObject({ error: { code: "UNAUTHENTICATED" } });

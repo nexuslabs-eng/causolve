@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-export const useInView = <T extends HTMLElement = HTMLDivElement> (rootMargin = "-15% 0px") => {
+export const useInView = <T extends HTMLElement = HTMLDivElement>(rootMargin = "-15% 0px") => {
   const ref = useRef<T | null>(null);
-  const [inView, setInView] = useState(
-    () => typeof IntersectionObserver === "undefined",
-  );
+  const [inView, setInView] = useState(() => typeof IntersectionObserver === "undefined");
 
   useEffect(() => {
     const el = ref.current;
@@ -25,4 +23,4 @@ export const useInView = <T extends HTMLElement = HTMLDivElement> (rootMargin = 
   }, [rootMargin]);
 
   return { ref, inView };
-}
+};

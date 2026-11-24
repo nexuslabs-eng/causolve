@@ -8,16 +8,14 @@ export const personalRoutes: RouteObject[] = [
   {
     path: "profile",
     lazy: async () => {
-      const module =
-        await import("@/features/workspace/pages/personal-settings/ProfileSettings");
+      const module = await import("@/features/workspace/pages/personal-settings/ProfileSettings");
       return { Component: module.ProfileSettings };
     },
   },
   {
     path: "security",
     lazy: async () => {
-      const module =
-        await import("@/features/workspace/pages/personal-settings/SecuritySettings");
+      const module = await import("@/features/workspace/pages/personal-settings/SecuritySettings");
       return { Component: module.SecuritySettings };
     },
   },
@@ -47,24 +45,21 @@ export const workspaceRoutes: RouteObject[] = [
   {
     path: "general",
     lazy: async () => {
-      const module =
-        await import("@/features/workspace/pages/workspace-settings/GeneralSettings");
+      const module = await import("@/features/workspace/pages/workspace-settings/GeneralSettings");
       return { Component: module.GeneralSettings };
     },
   },
   {
     path: "members",
     lazy: async () => {
-      const module =
-        await import("@/features/workspace/pages/workspace-settings/MembersSettings");
+      const module = await import("@/features/workspace/pages/workspace-settings/MembersSettings");
       return { Component: module.MembersSettings };
     },
   },
   {
     path: "teams",
     lazy: async () => {
-      const module =
-        await import("@/features/workspace/pages/workspace-settings/TeamsSettings");
+      const module = await import("@/features/workspace/pages/workspace-settings/TeamsSettings");
       return { Component: module.TeamsSettings };
     },
   },
@@ -95,16 +90,14 @@ export const workspaceRoutes: RouteObject[] = [
   {
     path: "approvals",
     lazy: async () => {
-      const module =
-        await import("@/features/workspace/pages/workspace-settings/ApprovalSettings");
+      const module = await import("@/features/workspace/pages/workspace-settings/ApprovalSettings");
       return { Component: module.ApprovalSettings };
     },
   },
   {
     path: "audit",
     lazy: async () => {
-      const module =
-        await import("@/features/workspace/pages/workspace-settings/AuditSettings");
+      const module = await import("@/features/workspace/pages/workspace-settings/AuditSettings");
       return { Component: module.AuditSettings };
     },
   },

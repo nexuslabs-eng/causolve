@@ -9,10 +9,7 @@ import {
   PaginationQuerySchema,
 } from "contracts";
 import tryCatchWrapper from "../../infrastructure/tryCatchWrapper.js";
-import {
-  sendSuccess,
-  sendError,
-} from "../../infrastructure/responseHandler.js";
+import { sendSuccess, sendError } from "../../infrastructure/responseHandler.js";
 
 const toServiceResponse = (service: {
   id: string;
@@ -55,10 +52,7 @@ export const createService = tryCatchWrapper(
         data: { organizationId, name, environment, teamId },
       });
     } catch (error) {
-      if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === "P2002"
-      ) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
         sendError(
           res,
           409,
@@ -75,10 +69,7 @@ export const createService = tryCatchWrapper(
 );
 
 export const listServices = tryCatchWrapper(
-  async (
-    req: Request<{ organizationId: string }>,
-    res: Response,
-  ): Promise<void> => {
+  async (req: Request<{ organizationId: string }>, res: Response): Promise<void> => {
     const { organizationId } = req.params;
 
     const result = PaginationQuerySchema.safeParse(req.query);
@@ -131,11 +122,7 @@ export const getService = tryCatchWrapper(
 
 export const updateService = tryCatchWrapper(
   async (
-    req: Request<
-      { organizationId: string; serviceId: string },
-      unknown,
-      UpdateServiceRequest
-    >,
+    req: Request<{ organizationId: string; serviceId: string }, unknown, UpdateServiceRequest>,
     res: Response,
   ): Promise<void> => {
     const { organizationId, serviceId } = req.params;
@@ -167,10 +154,7 @@ export const updateService = tryCatchWrapper(
         data: { name, environment, teamId },
       });
     } catch (error) {
-      if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === "P2002"
-      ) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
         sendError(
           res,
           409,

@@ -1,5 +1,5 @@
 import type { PrismaClient } from "@causolve/database";
-import { beforeEach, vi } from "vitest";
+import { beforeEach, vi } from "vite-plus/test";
 import { mockDeep, mockReset, type DeepMockProxy } from "vitest-mock-extended";
 
 // A fully mocked Prisma client, standing in for the real Postgres-backed

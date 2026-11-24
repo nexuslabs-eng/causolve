@@ -56,9 +56,7 @@ export const GeneralSettingsForm = ({ settings, canEdit }: Props) => {
     <>
       <header className="flex min-w-0 items-start justify-between gap-4 border-b border-border pb-5">
         <div className="min-w-0 flex-1">
-          <h1 className="mt-2 text-2xl font-semibold text-foreground">
-            General
-          </h1>
+          <h1 className="mt-2 text-2xl font-semibold text-foreground">General</h1>
 
           <p className="mt-2 text-sm text-muted-foreground">
             Manage the basic configuration for this workspace.
@@ -66,12 +64,7 @@ export const GeneralSettingsForm = ({ settings, canEdit }: Props) => {
         </div>
 
         {canEdit && !isEditing && (
-          <Button
-            className="shrink-0"
-            type="button"
-            variant="subtle"
-            onClick={handleEdit}
-          >
+          <Button className="shrink-0" type="button" variant="subtle" onClick={handleEdit}>
             <Pencil />
             Edit
           </Button>
@@ -80,37 +73,22 @@ export const GeneralSettingsForm = ({ settings, canEdit }: Props) => {
 
       {requestError && !dismissedError && (
         <div className="mt-5">
-          <AuthErrorBanner onDismiss={dismissError}>
-            {requestError}
-          </AuthErrorBanner>
+          <AuthErrorBanner onDismiss={dismissError}>{requestError}</AuthErrorBanner>
         </div>
       )}
 
-      <form
-        noValidate
-        onSubmit={handleSubmit}
-        className="mt-6 min-w-0 space-y-6"
-      >
+      <form noValidate onSubmit={handleSubmit} className="mt-6 min-w-0 space-y-6">
         <Field name="name" invalid={isEditing && Boolean(errors.name)}>
           <FieldLabel>Workspace name</FieldLabel>
 
-          <Input
-            autoComplete="organization"
-            disabled={controlsDisabled}
-            {...register("name")}
-          />
+          <Input autoComplete="organization" disabled={controlsDisabled} {...register("name")} />
 
           {isEditing && (
-            <FieldError match={Boolean(errors.name)}>
-              {errors.name?.message}
-            </FieldError>
+            <FieldError match={Boolean(errors.name)}>{errors.name?.message}</FieldError>
           )}
         </Field>
 
-        <Field
-          name="slug"
-          invalid={isEditing && Boolean(errors.slug || slugAvailabilityError)}
-        >
+        <Field name="slug" invalid={isEditing && Boolean(errors.slug || slugAvailabilityError)}>
           <FieldLabel>Workspace URL</FieldLabel>
 
           <div className="relative">
@@ -119,9 +97,7 @@ export const GeneralSettingsForm = ({ settings, canEdit }: Props) => {
               autoComplete="off"
               spellCheck={false}
               disabled={controlsDisabled}
-              aria-invalid={
-                isEditing && Boolean(errors.slug || slugAvailabilityError)
-              }
+              aria-invalid={isEditing && Boolean(errors.slug || slugAvailabilityError)}
               {...register("slug")}
             />
 
@@ -141,9 +117,7 @@ export const GeneralSettingsForm = ({ settings, canEdit }: Props) => {
                 {isCheckingSlugAvailability
                   ? "Checking workspace URL availability."
                   : (slugAvailabilityError ??
-                    (slugAvailabilityAvailable
-                      ? "Workspace URL is available."
-                      : ""))}
+                    (slugAvailabilityAvailable ? "Workspace URL is available." : ""))}
               </span>
 
               <FieldError match={Boolean(errors.slug || slugAvailabilityError)}>
@@ -185,20 +159,13 @@ export const GeneralSettingsForm = ({ settings, canEdit }: Props) => {
           />
 
           {isEditing && (
-            <FieldError match={Boolean(errors.teamSize)}>
-              {errors.teamSize?.message}
-            </FieldError>
+            <FieldError match={Boolean(errors.teamSize)}>{errors.teamSize?.message}</FieldError>
           )}
         </Field>
 
         {isEditing && (
           <div className="flex justify-end gap-3 border-t border-border pt-5">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleCancel}
-              disabled={isSaving}
-            >
+            <Button type="button" variant="outline" onClick={handleCancel} disabled={isSaving}>
               <X />
               Cancel
             </Button>

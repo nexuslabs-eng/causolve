@@ -6,7 +6,6 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { cn } from "@/lib/utils";
 import { TOOLS, POINTS } from "@/features/marketing/fixtures/investigation-data";
 
-
 export const InvestigationSection = () => {
   const reduced = useReducedMotion();
   const { ref, inView } = useInView<HTMLDivElement>();
@@ -16,9 +15,7 @@ export const InvestigationSection = () => {
     if (!inView || reduced) return;
 
     const resetTimer = window.setTimeout(() => setDone(0), 0);
-    const timers = TOOLS.map((_, i) =>
-      window.setTimeout(() => setDone(i + 1), 1240 * (i + 1)),
-    );
+    const timers = TOOLS.map((_, i) => window.setTimeout(() => setDone(i + 1), 1240 * (i + 1)));
 
     return () => {
       window.clearTimeout(resetTimer);
@@ -34,15 +31,18 @@ export const InvestigationSection = () => {
       <div className="mx-auto w-full max-w-310 px-5 py-20 sm:px-8 lg:py-28">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <SectionHeading   
+            <SectionHeading
               eyebrow="AI investigation"
               title="Investigation through controlled capabilities, not open-ended access."
               description="Causolve gives the investigation agent a fixed set of read-only capabilities. It runs them in sequence, records what each returned, and assembles a structured hypothesis from the results."
             />
-            
+
             <ul className="mt-8 space-y-3.5">
               {POINTS.map((point) => (
-                <li key={point} className="flex gap-3 text-[13.5px] leading-relaxed text-muted-foreground">
+                <li
+                  key={point}
+                  className="flex gap-3 text-[13.5px] leading-relaxed text-muted-foreground"
+                >
                   <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary-bright" />
                   {point}
                 </li>
@@ -103,20 +103,19 @@ export const InvestigationSection = () => {
                     <div className="min-w-0">
                       <p className="truncate font-mono text-[12px] text-foreground">
                         {tool.name}
-                        <span className="text-muted-foreground">
-                          ({tool.args})
-                        </span>
+                        <span className="text-muted-foreground">({tool.args})</span>
                       </p>
 
                       <p
                         className={cn(
                           "mt-1 font-mono text-[10.5px] transition-opacity duration-300",
-                          finished ? "text-success/90 opacity-100" : "text-muted-foreground opacity-60",
+                          finished
+                            ? "text-success/90 opacity-100"
+                            : "text-muted-foreground opacity-60",
                         )}
                       >
                         {finished ? `→ ${tool.result}` : active ? "executing" : "queued"}
                       </p>
-
                     </div>
                   </li>
                 );
@@ -152,7 +151,6 @@ export const InvestigationSection = () => {
                     {complete ? "91%" : "--"}
                   </p>
                 </div>
-
               </div>
 
               <div className="mt-3 h-0.75 w-full overflow-hidden rounded-full bg-surface-raised">
@@ -162,10 +160,9 @@ export const InvestigationSection = () => {
                 />
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </section>
   );
-}
+};

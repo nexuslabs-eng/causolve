@@ -72,11 +72,7 @@ const prepare = async (): Promise<void> => {
     "e2e-completed-workspace",
   );
 
-  await createUser(
-    "e2e.unverified@causolve.test",
-    "Unverified E2E User",
-    passwordHash,
-  );
+  await createUser("e2e.unverified@causolve.test", "Unverified E2E User", passwordHash);
 
   await createUser(
     "e2e.onboarding@causolve.test",

@@ -29,11 +29,7 @@ export const requireOrganizationMembership = async (
   });
 
   if (!membership) {
-    throw new ErrorResponse(
-      "Organization not found",
-      404,
-      "ORGANIZATION_NOT_FOUND",
-    );
+    throw new ErrorResponse("Organization not found", 404, "ORGANIZATION_NOT_FOUND");
   }
   req.membership = { organizationId, role: membership.role };
   next();

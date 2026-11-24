@@ -47,10 +47,10 @@ No request body.
 
 **Errors**
 
-| Status | Code                        | Meaning                                                    |
-| ------ | --------------------------- | ------------------------------------------------------------- |
-| 404    | `INCIDENT_NOT_FOUND`        | no incident with this ID exists in this organization          |
-| 409    | `INVESTIGATION_ALREADY_EXISTS` | an investigation was already started for this incident     |
+| Status | Code                           | Meaning                                                |
+| ------ | ------------------------------ | ------------------------------------------------------ |
+| 404    | `INCIDENT_NOT_FOUND`           | no incident with this ID exists in this organization   |
+| 409    | `INVESTIGATION_ALREADY_EXISTS` | an investigation was already started for this incident |
 
 ---
 
@@ -62,7 +62,7 @@ No request body.
 
 **Errors**
 
-| Status | Code                     | Meaning                                                |
-| ------ | ------------------------ | --------------------------------------------------------- |
-| 404    | `INCIDENT_NOT_FOUND`     | no incident with this ID exists in this organization       |
+| Status | Code                      | Meaning                                                       |
+| ------ | ------------------------- | ------------------------------------------------------------- |
+| 404    | `INCIDENT_NOT_FOUND`      | no incident with this ID exists in this organization          |
 | 404    | `INVESTIGATION_NOT_FOUND` | the incident exists but no investigation has been started yet |

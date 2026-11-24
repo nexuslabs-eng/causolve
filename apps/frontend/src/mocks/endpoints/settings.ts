@@ -68,17 +68,15 @@ const requireWorkspace = (organizationId: string) => {
   const session = getAuthSession();
 
   if (!session.authenticated) {
-    return HttpResponse.json(
-      apiError("UNAUTHENTICATED", "You must be signed in."),
-      { status: 401 },
-    );
+    return HttpResponse.json(apiError("UNAUTHENTICATED", "You must be signed in."), {
+      status: 401,
+    });
   }
 
   if (session.activeWorkspace?.organizationId !== organizationId) {
-    return HttpResponse.json(
-      apiError("ORGANIZATION_NOT_FOUND", "Organization not found."),
-      { status: 404 },
-    );
+    return HttpResponse.json(apiError("ORGANIZATION_NOT_FOUND", "Organization not found."), {
+      status: 404,
+    });
   }
 
   return null;
@@ -97,12 +95,7 @@ const readStore = (): Record<string, Record<string, unknown>> => {
   }
 };
 
-const readStored = <T>(
-  organizationId: string,
-  key: string,
-  schema: z.ZodType<T>,
-  fallback: T,
-) => {
+const readStored = <T>(organizationId: string, key: string, schema: z.ZodType<T>, fallback: T) => {
   const stored = readStore()[organizationId]?.[key];
   const result = schema.safeParse(stored);
 
@@ -196,9 +189,7 @@ export const updateAiEvidenceSettings = http.patch(
 
     if (authenticationError) return authenticationError;
 
-    const result = UpdateAiEvidenceSettingsRequestSchema.safeParse(
-      await readRequestBody(request),
-    );
+    const result = UpdateAiEvidenceSettingsRequestSchema.safeParse(await readRequestBody(request));
 
     if (!result.success) {
       return HttpResponse.json(
@@ -221,12 +212,7 @@ export const getApprovalSettings = http.get(
     if (authenticationError) return authenticationError;
 
     return HttpResponse.json(
-      readStored(
-        organizationId,
-        "approval",
-        ApprovalSettingsSchema,
-        DEFAULT_APPROVAL_SETTINGS,
-      ),
+      readStored(organizationId, "approval", ApprovalSettingsSchema, DEFAULT_APPROVAL_SETTINGS),
     );
   },
 );
@@ -239,9 +225,7 @@ export const updateApprovalSettings = http.patch(
 
     if (authenticationError) return authenticationError;
 
-    const result = UpdateApprovalSettingsRequestSchema.safeParse(
-      await readRequestBody(request),
-    );
+    const result = UpdateApprovalSettingsRequestSchema.safeParse(await readRequestBody(request));
 
     if (!result.success) {
       return HttpResponse.json(
@@ -264,12 +248,7 @@ export const getAuditSettings = http.get(
     if (authenticationError) return authenticationError;
 
     return HttpResponse.json(
-      readStored(
-        organizationId,
-        "audit",
-        AuditSettingsSchema,
-        DEFAULT_AUDIT_SETTINGS,
-      ),
+      readStored(organizationId, "audit", AuditSettingsSchema, DEFAULT_AUDIT_SETTINGS),
     );
   },
 );
@@ -282,15 +261,12 @@ export const updateAuditSettings = http.patch(
 
     if (authenticationError) return authenticationError;
 
-    const result = UpdateAuditSettingsRequestSchema.safeParse(
-      await readRequestBody(request),
-    );
+    const result = UpdateAuditSettingsRequestSchema.safeParse(await readRequestBody(request));
 
     if (!result.success) {
-      return HttpResponse.json(
-        apiError("INVALID_AUDIT_SETTINGS", "Invalid audit settings."),
-        { status: 422 },
-      );
+      return HttpResponse.json(apiError("INVALID_AUDIT_SETTINGS", "Invalid audit settings."), {
+        status: 422,
+      });
     }
 
     writeStored(organizationId, "audit", result.data);

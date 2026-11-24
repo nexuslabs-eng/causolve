@@ -1,10 +1,4 @@
-import {
-  ArrowUpRight,
-  CheckCircle2,
-  Clock3,
-  ShieldCheck,
-  Siren,
-} from "lucide-react";
+import { ArrowUpRight, CheckCircle2, Clock3, ShieldCheck, Siren } from "lucide-react";
 import { commandCenterFixture } from "@/mocks/fixtures/command-center";
 
 const { incident, investigation, approvalPolicy } = commandCenterFixture;
@@ -88,19 +82,13 @@ export const Overview = () => {
     <div className="mx-auto w-full max-w-360 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       <div className="flex flex-col gap-2 border-b border-border pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="font-mono text-[10px] uppercase text-primary-bright">
-            Causolve workspace
-          </p>
-          <h1 className="mt-2 text-2xl font-semibold text-foreground">
-            Overview
-          </h1>
+          <p className="font-mono text-[10px] uppercase text-primary-bright">Causolve workspace</p>
+          <h1 className="mt-2 text-2xl font-semibold text-foreground">Overview</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Operational context across your workspace.
           </p>
         </div>
-        <p className="font-mono text-[11px] text-muted-foreground">
-          Updated moments ago
-        </p>
+        <p className="font-mono text-[11px] text-muted-foreground">Updated moments ago</p>
       </div>
 
       <section
@@ -113,14 +101,10 @@ export const Overview = () => {
             className={`py-5 px-5 ${index > 0 ? "border-border border-t-0" : ""} ${index % 2 === 1 ? "sm:border-l" : ""} ${index > 1 ? "sm:border-t xl:border-t-0" : ""} ${index > 0 ? "xl:border-l" : ""}`}
           >
             <div className="flex items-center justify-between gap-3">
-              <p className="text-xs font-medium text-muted-foreground">
-                {label}
-              </p>
+              <p className="text-xs font-medium text-muted-foreground">{label}</p>
               <Icon className={`size-4 ${tone}`} />
             </div>
-            <p className="mt-3 text-2xl font-semibold tabular-nums text-foreground">
-              {value}
-            </p>
+            <p className="mt-3 text-2xl font-semibold tabular-nums text-foreground">{value}</p>
             <p className="mt-1 text-xs text-muted-foreground">{detail}</p>
           </div>
         ))}
@@ -130,10 +114,7 @@ export const Overview = () => {
         <section aria-labelledby="active-incidents-heading">
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <h2
-                id="active-incidents-heading"
-                className="text-sm font-semibold text-foreground"
-              >
+              <h2 id="active-incidents-heading" className="text-sm font-semibold text-foreground">
                 Active incidents
               </h2>
               <p className="mt-1 text-xs text-muted-foreground">
@@ -156,9 +137,7 @@ export const Overview = () => {
                   <th className="px-3 py-2.5 font-medium">Severity</th>
                   <th className="px-3 py-2.5 font-medium">Service</th>
                   <th className="px-3 py-2.5 font-medium">Status</th>
-                  <th className="px-3 py-2.5 text-right font-medium">
-                    Started
-                  </th>
+                  <th className="px-3 py-2.5 text-right font-medium">Started</th>
                 </tr>
               </thead>
               <tbody>
@@ -171,9 +150,7 @@ export const Overview = () => {
                       <span className="font-mono text-[10px] text-muted-foreground">
                         {incident.id}
                       </span>
-                      <span className="ml-2 font-medium text-foreground">
-                        {incident.title}
-                      </span>
+                      <span className="ml-2 font-medium text-foreground">{incident.title}</span>
                     </td>
                     <td className="px-3 py-3">
                       <Severity value={incident.severity} />
@@ -181,9 +158,7 @@ export const Overview = () => {
                     <td className="px-3 py-3 font-mono text-[11px] text-muted-foreground">
                       {incident.service}
                     </td>
-                    <td className="px-3 py-3 text-foreground">
-                      {incident.status}
-                    </td>
+                    <td className="px-3 py-3 text-foreground">{incident.status}</td>
                     <td className="px-3 py-3 text-right tabular-nums text-muted-foreground">
                       {incident.started}
                     </td>
@@ -195,19 +170,12 @@ export const Overview = () => {
 
           <div className="space-y-2 md:hidden">
             {incidents.map((incident) => (
-              <article
-                key={incident.id}
-                className="rounded-md border border-border bg-surface p-3"
-              >
+              <article key={incident.id} className="rounded-md border border-border bg-surface p-3">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="font-mono text-[10px] text-muted-foreground">
-                    {incident.id}
-                  </span>
+                  <span className="font-mono text-[10px] text-muted-foreground">{incident.id}</span>
                   <Severity value={incident.severity} />
                 </div>
-                <h3 className="mt-2 text-sm font-medium text-foreground">
-                  {incident.title}
-                </h3>
+                <h3 className="mt-2 text-sm font-medium text-foreground">{incident.title}</h3>
                 <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
                   <span className="font-mono">{incident.service}</span>
                   <span>{incident.status}</span>
@@ -222,10 +190,7 @@ export const Overview = () => {
           aria-labelledby="recent-activity-heading"
           className="xl:border-l xl:border-border xl:pl-7"
         >
-          <h2
-            id="recent-activity-heading"
-            className="text-sm font-semibold text-foreground"
-          >
+          <h2 id="recent-activity-heading" className="text-sm font-semibold text-foreground">
             Recent activity
           </h2>
           <p className="mt-1 text-xs text-muted-foreground">
@@ -240,13 +205,9 @@ export const Overview = () => {
                 {index < activity.length - 1 && (
                   <span className="absolute bottom-0 left-5 top-5 w-px bg-border" />
                 )}
-                <span className="font-mono text-[10px] text-muted-foreground">
-                  {item.time}
-                </span>
+                <span className="font-mono text-[10px] text-muted-foreground">{item.time}</span>
                 <div>
-                  <p className="text-xs font-medium text-foreground">
-                    {item.title}
-                  </p>
+                  <p className="text-xs font-medium text-foreground">{item.title}</p>
                   <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                     {item.detail}
                   </p>

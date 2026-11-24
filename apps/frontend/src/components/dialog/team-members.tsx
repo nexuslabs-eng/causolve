@@ -35,11 +35,7 @@ import {
 import { SettingsLoadError } from "@/features/workspace/components/SettingsLoadError";
 import { ROLE_LABELS } from "@/features/workspace/lib/invite-members";
 import { isApiClientError } from "@/lib/api/api-client-error";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 type TeamMembersFormValues = {
   membershipId: string;
@@ -58,9 +54,7 @@ const TeamMembersDialog = ({
   team,
   onOpenChange,
 }: TeamMembersDialogProps) => {
-  const [removingMembershipId, setRemovingMembershipId] = useState<
-    string | null
-  >(null);
+  const [removingMembershipId, setRemovingMembershipId] = useState<string | null>(null);
 
   const form = useForm<TeamMembersFormValues>({
     resolver: zodResolver(AddTeamMemberRequestSchema),
@@ -121,9 +115,7 @@ const TeamMembersDialog = ({
         },
         onError: (error: unknown) => {
           toast.error(
-            isApiClientError(error)
-              ? error.message
-              : "Unable to add this member to the team.",
+            isApiClientError(error) ? error.message : "Unable to add this member to the team.",
           );
         },
       },
@@ -151,17 +143,14 @@ const TeamMembersDialog = ({
         onError: (error: unknown) => {
           setRemovingMembershipId(null);
           toast.error(
-            isApiClientError(error)
-              ? error.message
-              : "Unable to remove this member from the team.",
+            isApiClientError(error) ? error.message : "Unable to remove this member from the team.",
           );
         },
       },
     );
   };
 
-  const loadingMembers =
-    workspaceMembersQuery.isPending || teamMembersQuery.isPending;
+  const loadingMembers = workspaceMembersQuery.isPending || teamMembersQuery.isPending;
 
   const loadingFailed =
     !loadingMembers &&
@@ -170,10 +159,7 @@ const TeamMembersDialog = ({
     (workspaceMembersQuery.isError || teamMembersQuery.isError);
 
   const retryMembers = () => {
-    void Promise.all([
-      workspaceMembersQuery.refetch(),
-      teamMembersQuery.refetch(),
-    ]);
+    void Promise.all([workspaceMembersQuery.refetch(), teamMembersQuery.refetch()]);
   };
 
   const formError = addMemberMutation.error;
@@ -195,10 +181,7 @@ const TeamMembersDialog = ({
               <SettingsLoadError
                 message="Team members could not be loaded."
                 reason="The team membership service is unavailable."
-                retrying={
-                  workspaceMembersQuery.isFetching ||
-                  teamMembersQuery.isFetching
-                }
+                retrying={workspaceMembersQuery.isFetching || teamMembersQuery.isFetching}
                 onRetry={retryMembers}
               />
             )}
@@ -220,61 +203,50 @@ const TeamMembersDialog = ({
                   </div>
                 )}
 
-                {!loadingMembers &&
-                  !loadingFailed &&
-                  currentMembers.length === 0 && (
-                    <p className="mt-4 text-sm text-muted-foreground">
-                      No members have been added to this team yet.
-                    </p>
-                  )}
+                {!loadingMembers && !loadingFailed && currentMembers.length === 0 && (
+                  <p className="mt-4 text-sm text-muted-foreground">
+                    No members have been added to this team yet.
+                  </p>
+                )}
 
-                {!loadingMembers &&
-                  !loadingFailed &&
-                  currentMembers.length > 0 && (
-                    <div className="mt-4 divide-y divide-border border border-border">
-                      {currentMembers.map((member) => (
-                        <div
-                          key={member.membershipId}
-                          className="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between"
-                        >
-                          <div className="min-w-0">
-                            <p className="truncate text-sm font-medium">
-                              {member.fullName}
-                            </p>
-                            <p className="truncate text-sm text-muted-foreground">
-                              {member.email}
-                            </p>
-                            <p className="mt-1 text-xs text-muted-foreground">
-                              {ROLE_LABELS[member.role]}
-                            </p>
-                          </div>
-
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                type="button"
-                                size="icon"
-                                variant="ghost"
-                                aria-label={`Remove ${member.fullName}`}
-                                disabled={
-                                  removingMembershipId === member.membershipId
-                                }
-                                onClick={() => handleRemoveMember(member)}
-                              >
-                                {removingMembershipId ===
-                                member.membershipId ? (
-                                  <Loader2 className="animate-spin" />
-                                ) : (
-                                  <Trash2 />
-                                )}
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>Remove member</TooltipContent>
-                          </Tooltip>
+                {!loadingMembers && !loadingFailed && currentMembers.length > 0 && (
+                  <div className="mt-4 divide-y divide-border border border-border">
+                    {currentMembers.map((member) => (
+                      <div
+                        key={member.membershipId}
+                        className="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between"
+                      >
+                        <div className="min-w-0">
+                          <p className="truncate text-sm font-medium">{member.fullName}</p>
+                          <p className="truncate text-sm text-muted-foreground">{member.email}</p>
+                          <p className="mt-1 text-xs text-muted-foreground">
+                            {ROLE_LABELS[member.role]}
+                          </p>
                         </div>
-                      ))}
-                    </div>
-                  )}
+
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              type="button"
+                              size="icon"
+                              variant="ghost"
+                              aria-label={`Remove ${member.fullName}`}
+                              disabled={removingMembershipId === member.membershipId}
+                              onClick={() => handleRemoveMember(member)}
+                            >
+                              {removingMembershipId === member.membershipId ? (
+                                <Loader2 className="animate-spin" />
+                              ) : (
+                                <Trash2 />
+                              )}
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Remove member</TooltipContent>
+                        </Tooltip>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </section>
 
               <section className="border-t border-border pt-6">
@@ -288,44 +260,38 @@ const TeamMembersDialog = ({
                   className="mt-4 space-y-4"
                   onSubmit={form.handleSubmit(handleAddMember)}
                 >
-                  <Field
-                    name="membershipId"
-                    invalid={Boolean(form.formState.errors.membershipId)}
-                  >
+                  <Field name="membershipId" invalid={Boolean(form.formState.errors.membershipId)}>
                     <FieldLabel>Workspace member</FieldLabel>
 
                     <div className="flex items-end gap-2">
                       <div className="min-w-0 flex-1">
-                      <Select
-                      value={membershipId || null}
-                      onValueChange={(value) => {
-                        form.setValue("membershipId", value ?? "", {
-                          shouldDirty: true,
-                          shouldValidate: true,
-                        });
-                      }}
-                      disabled={
-                        loadingMembers ||
-                        availableMembers.length === 0 ||
-                        addMemberMutation.isPending
-                      }
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a member" />
-                      </SelectTrigger>
+                        <Select
+                          value={membershipId || null}
+                          onValueChange={(value) => {
+                            form.setValue("membershipId", value ?? "", {
+                              shouldDirty: true,
+                              shouldValidate: true,
+                            });
+                          }}
+                          disabled={
+                            loadingMembers ||
+                            availableMembers.length === 0 ||
+                            addMemberMutation.isPending
+                          }
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a member" />
+                          </SelectTrigger>
 
-                      <SelectContent>
-                        {availableMembers.map((member) => (
-                          <SelectItem
-                            key={member.membershipId}
-                            value={member.membershipId}
-                          >
-                            {member.fullName} · {member.email}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    </div>
+                          <SelectContent>
+                            {availableMembers.map((member) => (
+                              <SelectItem key={member.membershipId} value={member.membershipId}>
+                                {member.fullName} · {member.email}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
 
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -346,9 +312,7 @@ const TeamMembersDialog = ({
                               <Plus />
                             )}
                             <span className="hidden sm:inline">
-                              {addMemberMutation.isPending
-                                ? "Adding..."
-                                : "Add member"}
+                              {addMemberMutation.isPending ? "Adding..." : "Add member"}
                             </span>
                           </Button>
                         </TooltipTrigger>
@@ -356,20 +320,16 @@ const TeamMembersDialog = ({
                       </Tooltip>
                     </div>
 
-                    <FieldError
-                      match={Boolean(form.formState.errors.membershipId)}
-                    >
+                    <FieldError match={Boolean(form.formState.errors.membershipId)}>
                       {form.formState.errors.membershipId?.message}
                     </FieldError>
                   </Field>
 
-                  {availableMembers.length === 0 &&
-                    !loadingMembers &&
-                    !loadingFailed && (
-                      <p className="text-sm text-muted-foreground">
-                        All workspace members are already part of this team.
-                      </p>
-                    )}
+                  {availableMembers.length === 0 && !loadingMembers && !loadingFailed && (
+                    <p className="text-sm text-muted-foreground">
+                      All workspace members are already part of this team.
+                    </p>
+                  )}
 
                   {formError && (
                     <p className="text-sm text-destructive">
@@ -378,17 +338,12 @@ const TeamMembersDialog = ({
                         : "Unable to add this member to the team."}
                     </p>
                   )}
-
                 </form>
               </section>
             </div>
 
             <div className="mt-6 flex justify-end border-t border-border pt-5">
-              <Button
-                type="button"
-                variant="subtle"
-                onClick={() => onOpenChange(false)}
-              >
+              <Button type="button" variant="subtle" onClick={() => onOpenChange(false)}>
                 Close
               </Button>
             </div>

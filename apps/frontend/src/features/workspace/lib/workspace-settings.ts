@@ -39,8 +39,7 @@ export const WORKSPACE_SETTINGS = [
     key: "approvals",
     label: "Approvals & remediation",
     title: "Approvals & remediation",
-    description:
-      "Configure authorization requirements for high-impact actions.",
+    description: "Configure authorization requirements for high-impact actions.",
   },
   {
     key: "audit",
@@ -53,5 +52,4 @@ export const WORKSPACE_SETTINGS = [
 export type WorkspaceSettingKey = (typeof WORKSPACE_SETTINGS)[number]["key"];
 
 export const getWorkspaceSetting = (key: string) =>
-  WORKSPACE_SETTINGS.find((setting) => setting.key === key) ??
-  WORKSPACE_SETTINGS[0];
+  WORKSPACE_SETTINGS.find((setting) => setting.key === key) ?? WORKSPACE_SETTINGS[0];

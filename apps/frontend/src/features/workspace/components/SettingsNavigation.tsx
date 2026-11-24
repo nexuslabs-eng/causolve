@@ -30,8 +30,7 @@ export const SettingsNavigation = ({ scope }: { scope: SettingsScope }) => {
   const { pathname } = useLocation();
   const items = itemsByScope[scope];
 
-  const title =
-    scope === "workspace" ? "Workspace settings" : "Personal settings";
+  const title = scope === "workspace" ? "Workspace settings" : "Personal settings";
 
   return (
     <nav aria-label={title} className="h-fit min-w-0">

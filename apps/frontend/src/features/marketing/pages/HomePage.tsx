@@ -7,18 +7,17 @@ import { CapabilitiesSection } from "@/features/marketing/components/Capabilitie
 import { FinalCta } from "@/features/marketing/components/FinalCta";
 
 const HomePage = () => {
-    
-    return (
-        <main>
-            <Hero />
-            <ProblemSection />
-            <LifecycleSection />
-            <InvestigationSection />
-            <ControlSection />
-            <CapabilitiesSection />
-            <FinalCta />
-        </main>
-    )
-}
+  return (
+    <main>
+      <Hero />
+      <ProblemSection />
+      <LifecycleSection />
+      <InvestigationSection />
+      <ControlSection />
+      <CapabilitiesSection />
+      <FinalCta />
+    </main>
+  );
+};
 
 export default HomePage;

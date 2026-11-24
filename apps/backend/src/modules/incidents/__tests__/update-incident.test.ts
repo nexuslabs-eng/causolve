@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import request from "supertest";
 import argon2 from "argon2";
 import { IncidentSchema } from "contracts";
@@ -26,9 +26,7 @@ describe("PATCH /organizations/:organizationId/incidents/:incidentId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
     const existingIncident = buildFakeIncident({ status: "DETECTED" });
     prismaMock.incident.findFirst.mockResolvedValue(existingIncident);
     const updatedIncident = buildFakeIncident({
@@ -38,9 +36,7 @@ describe("PATCH /organizations/:organizationId/incidents/:incidentId", () => {
     prismaMock.incident.update.mockResolvedValue(updatedIncident);
 
     const response = await agent
-      .patch(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`,
-      )
+      .patch(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`)
       .send({ status: "ACKNOWLEDGED" });
 
     expect(response.status).toBe(200);
@@ -48,9 +44,7 @@ describe("PATCH /organizations/:organizationId/incidents/:incidentId", () => {
     expect(body.status).toBe("ACKNOWLEDGED");
     expect(body.acknowledgedAt).not.toBeNull();
     expect(prismaMock.incidentEvent.createMany).toHaveBeenCalledWith({
-      data: [
-        expect.objectContaining({ type: "incident.status_changed" }),
-      ],
+      data: [expect.objectContaining({ type: "incident.status_changed" })],
     });
   });
 
@@ -65,14 +59,10 @@ describe("PATCH /organizations/:organizationId/incidents/:incidentId", () => {
       .mockResolvedValueOnce(buildFakeMembership({ userId: MOCK_USER_ID }));
     const existingIncident = buildFakeIncident({ commanderId: null });
     prismaMock.incident.findFirst.mockResolvedValue(existingIncident);
-    prismaMock.incident.update.mockResolvedValue(
-      buildFakeIncident({ commanderId: MOCK_USER_ID }),
-    );
+    prismaMock.incident.update.mockResolvedValue(buildFakeIncident({ commanderId: MOCK_USER_ID }));
 
     const response = await agent
-      .patch(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`,
-      )
+      .patch(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`)
       .send({ commanderId: MOCK_USER_ID });
 
     expect(response.status).toBe(200);
@@ -93,9 +83,7 @@ describe("PATCH /organizations/:organizationId/incidents/:incidentId", () => {
     prismaMock.incident.findFirst.mockResolvedValue(buildFakeIncident());
 
     const response = await agent
-      .patch(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`,
-      )
+      .patch(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`)
       .send({ commanderId: MOCK_USER_ID });
 
     expect(response.status).toBe(404);
@@ -109,14 +97,10 @@ describe("PATCH /organizations/:organizationId/incidents/:incidentId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "OBSERVER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "OBSERVER" }));
 
     const response = await agent
-      .patch(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`,
-      )
+      .patch(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`)
       .send({ status: "ACKNOWLEDGED" });
 
     expect(response.status).toBe(403);
@@ -127,15 +111,11 @@ describe("PATCH /organizations/:organizationId/incidents/:incidentId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
     prismaMock.incident.findFirst.mockResolvedValue(null);
 
     const response = await agent
-      .patch(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`,
-      )
+      .patch(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`)
       .send({ status: "ACKNOWLEDGED" });
 
     expect(response.status).toBe(404);
@@ -148,14 +128,10 @@ describe("PATCH /organizations/:organizationId/incidents/:incidentId", () => {
     const fakeUser = buildFakeUser({ passwordHash });
     const agent = await loginAsFakeUser(app, fakeUser, CORRECT_PASSWORD);
 
-    prismaMock.membership.findFirst.mockResolvedValue(
-      buildFakeMembership({ role: "ENGINEER" }),
-    );
+    prismaMock.membership.findFirst.mockResolvedValue(buildFakeMembership({ role: "ENGINEER" }));
 
     const response = await agent
-      .patch(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`,
-      )
+      .patch(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`)
       .send({ status: "NOT_A_REAL_STATUS" });
 
     expect(response.status).toBe(400);
@@ -164,9 +140,7 @@ describe("PATCH /organizations/:organizationId/incidents/:incidentId", () => {
 
   it("rejects an unauthenticated request", async () => {
     const response = await request(app)
-      .patch(
-        `/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`,
-      )
+      .patch(`/organizations/${MOCK_ORGANIZATION_ID}/incidents/${MOCK_INCIDENT_ID}`)
       .send({ status: "ACKNOWLEDGED" });
 
     expect(response.status).toBe(401);

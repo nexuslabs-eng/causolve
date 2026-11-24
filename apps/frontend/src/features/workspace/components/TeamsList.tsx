@@ -3,11 +3,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Edit3, Loader2, Plus, Trash2, Users } from "lucide-react";
 import type { Team, TeamListResponse } from "contracts/teams/team.schema";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { SettingsLoadError } from "@/features/workspace/components/SettingsLoadError";
 
 const features = tableFeatures({});
@@ -47,10 +43,7 @@ export const TeamsList = ({
         role="status"
         aria-label="Loading teams"
       >
-        <Loader2
-          aria-hidden="true"
-          className="size-4 animate-spin text-primary"
-        />
+        <Loader2 aria-hidden="true" className="size-4 animate-spin text-primary" />
       </div>
     );
   if (failed || !data)
@@ -70,12 +63,7 @@ export const TeamsList = ({
         <p className="mt-1 text-sm text-muted-foreground">
           Create a team to organize members operationally.
         </p>
-        <Button
-          className="mt-4"
-          type="button"
-          variant="subtle"
-          onClick={onCreate}
-        >
+        <Button className="mt-4" type="button" variant="subtle" onClick={onCreate}>
           <Plus aria-hidden="true" />
           Create team
         </Button>
@@ -138,9 +126,7 @@ const TeamsTable = ({
     {
       accessorKey: "name",
       header: "Team",
-      cell: (info) => (
-        <p className="font-medium text-foreground">{info.getValue<string>()}</p>
-      ),
+      cell: (info) => <p className="font-medium text-foreground">{info.getValue<string>()}</p>,
     },
     {
       accessorKey: "createdAt",
@@ -232,9 +218,7 @@ const TeamsTable = ({
                   scope="col"
                   className="whitespace-nowrap px-4 py-3 font-medium last:text-right"
                 >
-                  {header.isPlaceholder ? null : (
-                    <table.FlexRender header={header} />
-                  )}
+                  {header.isPlaceholder ? null : <table.FlexRender header={header} />}
                 </th>
               ))}
             </tr>

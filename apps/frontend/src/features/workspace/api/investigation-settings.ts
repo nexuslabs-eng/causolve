@@ -13,9 +13,7 @@ const endpoint = (organizationId: string) =>
 export const getInvestigationSettings = async (
   organizationId: string,
 ): Promise<InvestigationSettings> => {
-  const response = await axiosClient.get<unknown, unknown>(
-    endpoint(organizationId),
-  );
+  const response = await axiosClient.get<unknown, unknown>(endpoint(organizationId));
 
   return InvestigationSettingsSchema.parse(response);
 };
@@ -26,10 +24,7 @@ export const updateInvestigationSettings = async (
 ): Promise<InvestigationSettings> => {
   const payload = UpdateInvestigationSettingsRequestSchema.parse(input);
 
-  const response = await axiosClient.patch<unknown, unknown>(
-    endpoint(organizationId),
-    payload,
-  );
+  const response = await axiosClient.patch<unknown, unknown>(endpoint(organizationId), payload);
 
   return InvestigationSettingsSchema.parse(response);
 };

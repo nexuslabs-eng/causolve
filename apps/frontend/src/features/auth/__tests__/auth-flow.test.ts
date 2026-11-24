@@ -1,6 +1,6 @@
 // @vitest-environment node
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { signupAccount, verifyEmailOtp } from "@/features/auth/api/auth";
 import { getAuthSession, logout } from "@/features/auth/api/auth-session";
 import { getMockVerificationCode } from "@/mocks/utils";

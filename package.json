@@ -1,9 +1,12 @@
 {
   "name": "causolve",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "concurrently -n frontend,backend -c blue,green \"pnpm --filter frontend dev\" \"pnpm --filter @causolve/backend dev\"",
+    "dev": "vp run -r --parallel dev",
+    "lint": "vp run -r --parallel lint",
+    "check": "vp check",
     "ai:dev": "uv run --locked --directory apps/ai uvicorn app.main:create_app --factory --reload --host 127.0.0.1 --port 8000",
     "ai:test": "uv run --locked --directory apps/ai pytest",
     "ai:lint": "uv run --locked --directory apps/ai ruff check .",
@@ -12,7 +15,11 @@
     "ai:check": "pnpm ai:lint && uv run --locked --directory apps/ai ruff format --check . && pnpm ai:test && pnpm ai:contracts",
     "ai:test:gemini": "uv run --locked --directory apps/ai pytest tests/smoke/test_gemini_provider.py --run-external -s",
     "ai:smoke": "uv run --locked --directory apps/ai pytest tests/smoke/test_live_investigation.py --run-external -s",
-    "generate:manifest": "node packages/simulation-data/scripts/generate-manifest.mjs"
+    "generate:manifest": "node packages/simulation-data/scripts/generate-manifest.mjs",
+    "prepare": "vp config"
+  },
+  "devDependencies": {
+    "vite-plus": "catalog:"
   },
   "devEngines": {
     "packageManager": {
@@ -21,9 +28,5 @@
       "onFail": "download"
     }
   },
-  "packageManager": "pnpm@12.3.4",
-  "type": "module",
-  "devDependencies": {
-    "concurrently": "^10.0.5"
-  }
+  "packageManager": "pnpm@12.3.4"
 }

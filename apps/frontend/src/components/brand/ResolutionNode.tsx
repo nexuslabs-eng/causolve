@@ -60,4 +60,4 @@ export const ResolutionNode = ({ className, active = false, title }: ResolutionN
       />
     </svg>
   );
-}
+};

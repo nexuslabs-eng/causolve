@@ -11,10 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { InviteMembersForm } from "@/components/dialog/invite-members-form";
-import type {
-  InvitationSuccessStateProps,
-  InviteMembersDialogProps,
-} from "@/types/invitations";
+import type { InvitationSuccessStateProps, InviteMembersDialogProps } from "@/types/invitations";
 
 const InviteMembersDialog = ({
   open,
@@ -43,10 +40,7 @@ const InviteMembersDialog = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4">
           <DialogContent className="max-h-[min(90vh,720px)] max-w-2xl overflow-y-auto">
             {sent ? (
-              <SuccessState
-                count={sentCount}
-                onClose={() => handleOpenChange(false)}
-              />
+              <SuccessState count={sentCount} onClose={() => handleOpenChange(false)} />
             ) : (
               <>
                 <div className="flex items-start gap-3">
@@ -58,8 +52,7 @@ const InviteMembersDialog = ({
                     <DialogTitle>Invite team members</DialogTitle>
 
                     <DialogDescription>
-                      Invite teammates to collaborate in{" "}
-                      {workspaceName ?? "your"} workspace.
+                      Invite teammates to collaborate in {workspaceName ?? "your"} workspace.
                     </DialogDescription>
                   </div>
                 </div>

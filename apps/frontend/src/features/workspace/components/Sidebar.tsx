@@ -1,10 +1,4 @@
-import {
-  ChevronsLeft,
-  ChevronDown,
-  LogOut,
-  SlidersHorizontal,
-  UserRound,
-} from "lucide-react";
+import { ChevronsLeft, ChevronDown, LogOut, SlidersHorizontal, UserRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ResolutionNode } from "@/components/brand/ResolutionNode";
 import { Button } from "@/components/ui/button";
@@ -16,20 +10,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { SignOutDialog } from "@/components/dialog/sign-out-dialog";
 import { useAuthSession } from "@/features/auth/hooks/use-auth-session";
 import { useLogout } from "@/features/auth/hooks/use-logout";
-import {
-  Navigation,
-  SettingsLink,
-} from "@/features/workspace/components/Navigation";
+import { Navigation, SettingsLink } from "@/features/workspace/components/Navigation";
 
 const Switcher = ({
   collapsed,
@@ -79,16 +66,10 @@ const Switcher = ({
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="start"
-        container={menuContainer}
-        className="w-60"
-      >
+      <DropdownMenuContent align="start" container={menuContainer} className="w-60">
         <DropdownMenuLabel>Workspace</DropdownMenuLabel>
 
-        <DropdownMenuItem
-          onClick={() => navigate("/workspace/settings/general")}
-        >
+        <DropdownMenuItem onClick={() => navigate("/workspace/settings/general")}>
           Workspace settings
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -108,9 +89,7 @@ const UserMenu = ({
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const { data: session } = useAuthSession();
   const logout = useLogout("/");
-  const userName = session?.authenticated
-    ? session.user.fullName
-    : "Causolve user";
+  const userName = session?.authenticated ? session.user.fullName : "Causolve user";
   const userEmail = session?.authenticated ? session.user.email : "";
 
   const initials = userName
@@ -203,10 +182,7 @@ export const Sidebar = ({
   const compact = mobile ? false : collapsed;
 
   return (
-    <aside
-      className="flex h-full min-h-0 flex-col bg-surface-inset"
-      aria-label="Workspace sidebar"
-    >
+    <aside className="flex h-full min-h-0 flex-col bg-surface-inset" aria-label="Workspace sidebar">
       <div
         className={cn(
           "flex h-14 shrink-0 items-center border-b border-border px-3",
@@ -214,14 +190,9 @@ export const Sidebar = ({
         )}
       >
         <div className="flex min-w-0 items-center gap-2.5">
-          <ResolutionNode
-            className="h-6 shrink-0 text-primary-bright"
-            title="Causolve"
-          />
+          <ResolutionNode className="h-6 shrink-0 text-primary-bright" title="Causolve" />
           {!compact && (
-            <span className="truncate text-sm font-semibold text-foreground">
-              Causolve
-            </span>
+            <span className="truncate text-sm font-semibold text-foreground">Causolve</span>
           )}
         </div>
 
@@ -244,11 +215,7 @@ export const Sidebar = ({
       </div>
 
       <div className="shrink-0 border-b border-border p-2.5">
-        <Switcher
-          collapsed={compact}
-          mobile={mobile}
-          menuContainer={menuContainer}
-        />
+        <Switcher collapsed={compact} mobile={mobile} menuContainer={menuContainer} />
       </div>
 
       <div className="min-h-0 flex-1 px-2.5 py-4 overflow-y-auto scrollbar-thin">
@@ -257,11 +224,7 @@ export const Sidebar = ({
 
       <div className="shrink-0 space-y-3 border-t border-border p-2.5">
         <SettingsLink collapsed={compact} onNavigate={onNavigate} />
-        <UserMenu
-          collapsed={compact}
-          mobile={mobile}
-          menuContainer={menuContainer}
-        />
+        <UserMenu collapsed={compact} mobile={mobile} menuContainer={menuContainer} />
       </div>
     </aside>
   );

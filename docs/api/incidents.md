@@ -77,10 +77,10 @@ An `incident.created` event is appended to the timeline as a side effect.
 
 **Errors**
 
-| Status | Code                 | Meaning                                          |
-| ------ | -------------------- | ------------------------------------------------- |
-| 400    | (validation)         | malformed body                                    |
-| 404    | `SERVICE_NOT_FOUND`  | `serviceId` doesn't exist in this organization    |
+| Status | Code                | Meaning                                        |
+| ------ | ------------------- | ---------------------------------------------- |
+| 400    | (validation)        | malformed body                                 |
+| 404    | `SERVICE_NOT_FOUND` | `serviceId` doesn't exist in this organization |
 
 ---
 
@@ -98,7 +98,7 @@ shape as `POST`'s response.
 **Errors**
 
 | Status | Code              | Meaning                         |
-| ------ | ----------------- | -------------------------------- |
+| ------ | ----------------- | ------------------------------- |
 | 400    | `INVALID_REQUEST` | malformed pagination parameters |
 
 ---
@@ -111,7 +111,7 @@ shape as `POST`'s response.
 
 **Errors**
 
-| Status | Code                 | Meaning                                                                                                                                 |
+| Status | Code                 | Meaning                                                                                                                               |
 | ------ | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | 404    | `INCIDENT_NOT_FOUND` | no incident with this ID exists in this organization (also returned if the incident exists but belongs to a _different_ organization) |
 
@@ -143,10 +143,10 @@ changed field (`status`, `severity`, `commanderId`) appends its own
 
 **Errors**
 
-| Status | Code                  | Meaning                                              |
-| ------ | --------------------- | ----------------------------------------------------- |
-| 400    | (validation)          | malformed body                                       |
-| 404    | `INCIDENT_NOT_FOUND`  | same meaning as `GET`                                |
+| Status | Code                  | Meaning                                                |
+| ------ | --------------------- | ------------------------------------------------------ |
+| 400    | (validation)          | malformed body                                         |
+| 404    | `INCIDENT_NOT_FOUND`  | same meaning as `GET`                                  |
 | 404    | `COMMANDER_NOT_FOUND` | `commanderId` was given but isn't a member of this org |
 
 ---
@@ -184,9 +184,9 @@ Ordered oldest-first (chronological timeline order).
 
 **Errors**
 
-| Status | Code                 | Meaning                           |
-| ------ | -------------------- | ---------------------------------- |
-| 400    | `INVALID_REQUEST`    | malformed pagination parameters   |
+| Status | Code                 | Meaning                               |
+| ------ | -------------------- | ------------------------------------- |
+| 400    | `INVALID_REQUEST`    | malformed pagination parameters       |
 | 404    | `INCIDENT_NOT_FOUND` | same meaning as `GET` on the incident |
 
 ---
@@ -216,7 +216,7 @@ events list above.
 
 **Errors**
 
-| Status | Code                 | Meaning                |
-| ------ | -------------------- | ------------------------ |
-| 400    | (validation)         | malformed body          |
-| 404    | `INCIDENT_NOT_FOUND` | same meaning as `GET`   |
+| Status | Code                 | Meaning               |
+| ------ | -------------------- | --------------------- |
+| 400    | (validation)         | malformed body        |
+| 404    | `INCIDENT_NOT_FOUND` | same meaning as `GET` |

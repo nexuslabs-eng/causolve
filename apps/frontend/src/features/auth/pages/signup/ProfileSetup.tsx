@@ -1,5 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ProfileSetupRequestSchema, type ProfileSetupRequest } from "contracts/onboarding/profile-setup.schema";
+import {
+  ProfileSetupRequestSchema,
+  type ProfileSetupRequest,
+} from "contracts/onboarding/profile-setup.schema";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
@@ -42,7 +45,7 @@ const ProfileSetup = () => {
       const session = await refreshAuthSession();
 
       if (session.authenticated && session.onboarding.nextStep === "COMPLETE") {
-        navigate("/signup/complete", { replace: true });
+        await navigate("/signup/complete", { replace: true });
       }
     } catch {
       setError("root", {
@@ -53,10 +56,7 @@ const ProfileSetup = () => {
 
   return (
     <>
-      <AuthBackButton
-        disabled={isSubmitting}
-        onClick={() => navigate("/signup/workspace")}
-      />
+      <AuthBackButton disabled={isSubmitting} onClick={() => navigate("/signup/workspace")} />
       <AuthStepProgress currentStep={3} totalSteps={3} label="Profile" />
 
       <AuthFormHeader
@@ -85,10 +85,7 @@ const ProfileSetup = () => {
                   value={field.value ?? null}
                   onValueChange={field.onChange}
                 >
-                  <SelectTrigger
-                    className="w-full"
-                    aria-invalid={Boolean(errors.jobRole)}
-                  >
+                  <SelectTrigger className="w-full" aria-invalid={Boolean(errors.jobRole)}>
                     <SelectValue placeholder="Select your professional role" />
                   </SelectTrigger>
 
@@ -103,17 +100,11 @@ const ProfileSetup = () => {
               )}
             />
 
-            <FieldError match={Boolean(errors.jobRole)}>
-              {errors.jobRole?.message}
-            </FieldError>
+            <FieldError match={Boolean(errors.jobRole)}>{errors.jobRole?.message}</FieldError>
           </Field>
         </div>
 
-        <AuthSubmitButton
-          disabled={!isValid}
-          loading={isSubmitting}
-          loadingLabel="Saving profile"
-        >
+        <AuthSubmitButton disabled={!isValid} loading={isSubmitting} loadingLabel="Saving profile">
           Complete setup
         </AuthSubmitButton>
       </form>

@@ -3,10 +3,7 @@ import cors from "cors";
 import { env } from "./infrastructure/keys.js";
 import { createSessionMiddleware } from "./infrastructure/session.js";
 import { httpLogger } from "./middleware/httpLogger.middleware.js";
-import {
-  appErrorHandler,
-  notFoundRoutes,
-} from "./middleware/error.middleware.js";
+import { appErrorHandler, notFoundRoutes } from "./middleware/error.middleware.js";
 import { globalLimiter } from "./middleware/rateLimit.middleware.js";
 
 import authRouter from "./modules/auth/auth.routes.js";

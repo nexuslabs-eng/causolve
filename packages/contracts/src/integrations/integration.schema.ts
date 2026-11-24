@@ -15,11 +15,7 @@ export const IntegrationProviderSchema = z.enum([
   "AZURE",
 ]);
 
-export const IntegrationStatusSchema = z.enum([
-  "CONNECTED",
-  "DISCONNECTED",
-  "ERROR",
-]);
+export const IntegrationStatusSchema = z.enum(["CONNECTED", "DISCONNECTED", "ERROR"]);
 
 export const IntegrationSchema = z.object({
   id: IdSchema,
@@ -45,12 +41,6 @@ export const DisconnectIntegrationResponseSchema = z.object({
 export type IntegrationProvider = z.infer<typeof IntegrationProviderSchema>;
 export type IntegrationStatus = z.infer<typeof IntegrationStatusSchema>;
 export type Integration = z.infer<typeof IntegrationSchema>;
-export type IntegrationListResponse = z.infer<
-  typeof IntegrationListResponseSchema
->;
-export type ConnectIntegrationResponse = z.infer<
-  typeof ConnectIntegrationResponseSchema
->;
-export type DisconnectIntegrationResponse = z.infer<
-  typeof DisconnectIntegrationResponseSchema
->;
+export type IntegrationListResponse = z.infer<typeof IntegrationListResponseSchema>;
+export type ConnectIntegrationResponse = z.infer<typeof ConnectIntegrationResponseSchema>;
+export type DisconnectIntegrationResponse = z.infer<typeof DisconnectIntegrationResponseSchema>;

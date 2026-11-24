@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
-import { afterAll, afterEach, beforeAll } from "vitest";
+import { afterAll, afterEach, beforeAll } from "vite-plus/test";
 import { queryClient } from "@/lib/query-client";
 import { server } from "@/mocks/server";
 import { resetMockState } from "@/mocks/utils";

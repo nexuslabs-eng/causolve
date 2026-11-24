@@ -25,13 +25,10 @@ const MembersSettings = () => {
     <div className="min-w-0">
       <header className="flex min-w-0 items-start justify-between gap-4 border-b border-border pb-5">
         <div className="min-w-0 flex-1">
-          <h1 className="mt-2 text-2xl font-semibold text-foreground">
-            Members & roles
-          </h1>
+          <h1 className="mt-2 text-2xl font-semibold text-foreground">Members & roles</h1>
 
           <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-            Manage workspace invitations and the roles assigned to invited
-            members.
+            Manage workspace invitations and the roles assigned to invited members.
           </p>
         </div>
 

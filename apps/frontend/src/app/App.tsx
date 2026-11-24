@@ -24,13 +24,7 @@ const App = () => {
 
       <Suspense
         key={pathname}
-        fallback={
-          enteringWorkspace ? (
-            <AppLoading />
-          ) : (
-            <RouteLoading className="min-h-screen" />
-          )
-        }
+        fallback={enteringWorkspace ? <AppLoading /> : <RouteLoading className="min-h-screen" />}
       >
         <Outlet />
       </Suspense>

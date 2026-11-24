@@ -5,22 +5,16 @@ import { google } from "../../infrastructure/googleOAuth.js";
 import { env } from "../../infrastructure/keys.js";
 import { prisma } from "@causolve/database";
 
-export const googleSignIn = tryCatchWrapper(
-  async (req: Request, res: Response): Promise<void> => {
-    const state = generateState();
-    const codeVerifier = generateCodeVerifier();
+export const googleSignIn = tryCatchWrapper(async (req: Request, res: Response): Promise<void> => {
+  const state = generateState();
+  const codeVerifier = generateCodeVerifier();
 
-    const url = google.createAuthorizationURL(state, codeVerifier, [
-      "openid",
-      "email",
-      "profile",
-    ]);
-    req.session.oauthState = state;
-    req.session.oauthCodeVerifier = codeVerifier;
+  const url = google.createAuthorizationURL(state, codeVerifier, ["openid", "email", "profile"]);
+  req.session.oauthState = state;
+  req.session.oauthCodeVerifier = codeVerifier;
 
-    res.redirect(url.toString());
-  },
-);
+  res.redirect(url.toString());
+});
 
 export const googleCallBack = tryCatchWrapper(
   async (req: Request, res: Response): Promise<void> => {
@@ -51,10 +45,9 @@ export const googleCallBack = tryCatchWrapper(
       res.redirect(`${env.CLIENT_URL}/login`);
       return;
     }
-    const userInfoResponse = await fetch(
-      "https://openidconnect.googleapis.com/v1/userinfo",
-      { headers: { Authorization: `Bearer ${tokens.accessToken()}` } },
-    );
+    const userInfoResponse = await fetch("https://openidconnect.googleapis.com/v1/userinfo", {
+      headers: { Authorization: `Bearer ${tokens.accessToken()}` },
+    });
     const googleUser = (await userInfoResponse.json()) as {
       email: string;
       email_verified: boolean;

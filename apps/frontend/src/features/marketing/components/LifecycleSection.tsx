@@ -17,7 +17,10 @@ export const LifecycleSection = () => {
           />
           <ul className="flex flex-wrap gap-x-5 gap-y-2 lg:justify-end">
             {(Object.keys(ACTOR_STYLE) as Actor[]).map((actor) => (
-              <li key={actor} className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
+              <li
+                key={actor}
+                className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground"
+              >
                 <span className={cn("h-1.5 w-1.5 rounded-full", ACTOR_STYLE[actor].dot)} />
                 {ACTOR_STYLE[actor].label}
               </li>
@@ -28,7 +31,7 @@ export const LifecycleSection = () => {
         <div ref={ref} className="relative mt-12">
           {/* horizontal rail on large screens */}
           <div className="pointer-events-none absolute left-0 right-0 top-2.75 hidden h-px bg-border-strong lg:block" />
-          
+
           <div
             className={cn(
               "pointer-events-none absolute left-0 top-2.75 hidden h-px bg-primary transition-[width] duration-1600 ease-out lg:block",
@@ -60,7 +63,9 @@ export const LifecycleSection = () => {
                     <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
                       {String(i + 1).padStart(2, "0")}
                     </p>
-                    <h3 className={cn("mt-1 text-[14px] font-medium", style.text)}>{stage.label}</h3>
+                    <h3 className={cn("mt-1 text-[14px] font-medium", style.text)}>
+                      {stage.label}
+                    </h3>
                     <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">
                       {stage.body}
                     </p>
@@ -73,4 +78,4 @@ export const LifecycleSection = () => {
       </div>
     </section>
   );
-}
+};

@@ -24,16 +24,10 @@ export const AuditSettingsSchema = z.object({
 
 export const UpdateAuditSettingsRequestSchema = AuditSettingsSchema;
 
-export type AuditExportPermission = z.infer<
-  typeof AuditExportPermissionSchema
->;
+export type AuditExportPermission = z.infer<typeof AuditExportPermissionSchema>;
 
-export type AuditEventCategory = z.infer<
-  typeof AuditEventCategorySchema
->;
+export type AuditEventCategory = z.infer<typeof AuditEventCategorySchema>;
 
 export type AuditSettings = z.infer<typeof AuditSettingsSchema>;
 
-export type UpdateAuditSettingsRequest = z.infer<
-  typeof UpdateAuditSettingsRequestSchema
->;
+export type UpdateAuditSettingsRequest = z.infer<typeof UpdateAuditSettingsRequestSchema>;

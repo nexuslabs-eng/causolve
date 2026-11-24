@@ -1,122 +1,122 @@
 [
-    {
-        "model": "request",
-        "path": ["incident", "description"],
-        "remove": true
-    },
-    {
-        "model": "request",
-        "path": ["investigationId"],
-        "value": "not-a-uuid"
-    },
-    {
-        "model": "request",
-        "path": ["capabilityStates", 0, "freshness"],
-        "value": true
-    },
-    {
-        "model": "request",
-        "path": ["capabilityStates", 0, "freshness"],
-        "value": "50"
-    },
-    {
-        "model": "request",
-        "path": ["capabilityStates", 0, "freshness"],
-        "value": 101
-    },
-    {
-        "model": "request",
-        "path": ["capabilityStates", 0, "updatedAt"],
-        "value": "2026-09-17T12:00:00+00:00"
-    },
-    {
-        "model": "request",
-        "path": ["capabilityStates", 0, "updatedAt"],
-        "value": "2026-02-30T12:00:00Z"
-    },
-    {
-        "model": "request",
-        "path": ["capabilityStates", 0, "capability"],
-        "value": "SERVICE_HEALTH"
-    },
-    {
-        "model": "result",
-        "path": ["hypothesisProposals"],
-        "remove": true
-    },
-    {
-        "model": "result",
-        "path": ["hypothesisProposals", 0, "reference"],
-        "value": "H-invalid"
-    },
-    {
-        "model": "result",
-        "path": ["hypothesisProposals", 0, "statement"],
-        "value": "   "
-    },
-    {
-        "model": "result",
-        "path": ["evidenceInterpretations"],
-        "remove": true
-    },
-    {
-        "model": "result",
-        "path": ["evidenceInterpretations", 0, "evidenceId"],
-        "value": "not-a-uuid"
-    },
-    {
-        "model": "result",
-        "path": ["evidenceInterpretations", 0, "hypothesisReference"],
-        "value": "invalid"
-    },
-    {
-        "model": "result",
-        "path": ["evidenceInterpretations", 0, "relation"],
-        "value": "INVALIDATES"
-    },
-    {
-        "model": "result",
-        "path": ["evidenceInterpretations", 0, "reasoning"],
-        "value": "\t\n"
-    },
-    {
-        "model": "result",
-        "path": ["recommendationProposal"],
-        "remove": true
-    },
-    {
-        "model": "result",
-        "path": ["recommendationProposal", "actionType"],
-        "value": "DELETE_SERVICE"
-    },
-    {
-        "model": "result",
-        "path": ["recommendationProposal", "summary"],
-        "value": ""
-    },
-    {
-        "model": "result",
-        "path": ["recommendationProposal", "reasoning"],
-        "value": "   "
-    },
-    {
-        "model": "result",
-        "path": ["recommendationProposal", "technicalRisk"],
-        "value": "CRITICAL"
-    },
-    {
-        "model": "result",
-        "path": ["recommendationProposal", "contradictingEvidenceIds", 0],
-        "value": "not-a-uuid"
-    },
-    {
-        "model": "result",
-        "path": ["error"],
-        "remove": true
-    },
-    {
-        "model": "result",
-        "path": ["status"],
-        "value": "RUNNING"
-    }
+  {
+    "model": "request",
+    "path": ["incident", "description"],
+    "remove": true
+  },
+  {
+    "model": "request",
+    "path": ["investigationId"],
+    "value": "not-a-uuid"
+  },
+  {
+    "model": "request",
+    "path": ["capabilityStates", 0, "freshness"],
+    "value": true
+  },
+  {
+    "model": "request",
+    "path": ["capabilityStates", 0, "freshness"],
+    "value": "50"
+  },
+  {
+    "model": "request",
+    "path": ["capabilityStates", 0, "freshness"],
+    "value": 101
+  },
+  {
+    "model": "request",
+    "path": ["capabilityStates", 0, "updatedAt"],
+    "value": "2026-09-17T12:00:00+00:00"
+  },
+  {
+    "model": "request",
+    "path": ["capabilityStates", 0, "updatedAt"],
+    "value": "2026-02-30T12:00:00Z"
+  },
+  {
+    "model": "request",
+    "path": ["capabilityStates", 0, "capability"],
+    "value": "SERVICE_HEALTH"
+  },
+  {
+    "model": "result",
+    "path": ["hypothesisProposals"],
+    "remove": true
+  },
+  {
+    "model": "result",
+    "path": ["hypothesisProposals", 0, "reference"],
+    "value": "H-invalid"
+  },
+  {
+    "model": "result",
+    "path": ["hypothesisProposals", 0, "statement"],
+    "value": "   "
+  },
+  {
+    "model": "result",
+    "path": ["evidenceInterpretations"],
+    "remove": true
+  },
+  {
+    "model": "result",
+    "path": ["evidenceInterpretations", 0, "evidenceId"],
+    "value": "not-a-uuid"
+  },
+  {
+    "model": "result",
+    "path": ["evidenceInterpretations", 0, "hypothesisReference"],
+    "value": "invalid"
+  },
+  {
+    "model": "result",
+    "path": ["evidenceInterpretations", 0, "relation"],
+    "value": "INVALIDATES"
+  },
+  {
+    "model": "result",
+    "path": ["evidenceInterpretations", 0, "reasoning"],
+    "value": "\t\n"
+  },
+  {
+    "model": "result",
+    "path": ["recommendationProposal"],
+    "remove": true
+  },
+  {
+    "model": "result",
+    "path": ["recommendationProposal", "actionType"],
+    "value": "DELETE_SERVICE"
+  },
+  {
+    "model": "result",
+    "path": ["recommendationProposal", "summary"],
+    "value": ""
+  },
+  {
+    "model": "result",
+    "path": ["recommendationProposal", "reasoning"],
+    "value": "   "
+  },
+  {
+    "model": "result",
+    "path": ["recommendationProposal", "technicalRisk"],
+    "value": "CRITICAL"
+  },
+  {
+    "model": "result",
+    "path": ["recommendationProposal", "contradictingEvidenceIds", 0],
+    "value": "not-a-uuid"
+  },
+  {
+    "model": "result",
+    "path": ["error"],
+    "remove": true
+  },
+  {
+    "model": "result",
+    "path": ["status"],
+    "value": "RUNNING"
+  }
 ]
