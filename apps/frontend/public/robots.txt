@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /password-updated
+Disallow: /check-email
+Disallow: /invite
+Disallow: /workspace
+Disallow: /settings
+
+Sitemap: https://causolve.vercel.app/sitemap.xml
