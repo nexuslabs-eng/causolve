@@ -1,34 +1,15 @@
 import { lazy } from "react";
-import { createBrowserRouter, redirect } from "react-router-dom";
+import {
+  createBrowserRouter,
+  // redirect
+} from "react-router-dom";
 import App from "@/app/App";
 import { AppLoading } from "@/components/loading/AppLoading";
 import RouteErrorBoundary from "@/features/errors/pages/RouteErrorBoundary";
 import { publicAuthRoutes, protectedOnboardingRoutes } from "@/app/router/auth";
 import { PublicRoute } from "@/app/routes/PublicRoute";
 import { ProtectedRoute } from "@/app/routes/ProtectedRoute";
-import { onboardingRoutes } from "@/app/routes/constants";
-import { authSessionQueryOptions } from "@/features/auth/queries/auth-session-query-options";
-import { queryClient } from "@/lib/query-client";
-
 import { personalRoutes, workspaceRoutes } from "@/app/routes/setting-routes";
-
-const landingLoader = async () => {
-  try {
-    const session = await queryClient.ensureQueryData(authSessionQueryOptions());
-
-    if (!session.authenticated) {
-      return null;
-    }
-
-    if (session.onboarding.status === "COMPLETED") {
-      return redirect("/workspace");
-    }
-
-    return redirect(onboardingRoutes[session.onboarding.nextStep]);
-  } catch {
-    return null;
-  }
-};
 
 export const router = createBrowserRouter([
   {
@@ -48,7 +29,6 @@ export const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                loader: landingLoader,
                 lazy: async () => {
                   const module = await import("@/features/marketing/pages/HomePage");
                   return { Component: module.default };

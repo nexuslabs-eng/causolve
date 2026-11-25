@@ -93,6 +93,21 @@ export default defineConfig({
 
       workbox: {
         navigateFallback: "/index.html",
+
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) =>
+              request.destination === "image" || request.destination === "font",
+            handler: "CacheFirst",
+            options: {
+              cacheName: "causolve-static-assets",
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+            },
+          },
+        ],
       },
     }),
   ]),
