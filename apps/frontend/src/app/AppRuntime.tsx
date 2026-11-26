@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "@/app/router/router";
 import { queryClient } from "@/lib/query-client";
 import { Toaster } from "@/components/ui/sonner";
+import { scheduleIdle } from "@/app/utils";
 
 const DeferredDevtools = lazy(async () => {
   const module = await import("@tanstack/react-query-devtools");
@@ -34,11 +35,9 @@ const AppRuntime = () => {
   const [loadDeferredFeatures, setLoadDeferredFeatures] = useState(false);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => {
+    return scheduleIdle(() => {
       setLoadDeferredFeatures(true);
-    }, 1000);
-
-    return () => window.clearTimeout(timer);
+    });
   }, []);
 
   return (
