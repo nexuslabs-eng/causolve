@@ -1,10 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, BookText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { IncidentCommandCenter } from "@/features/marketing/components/incident-command-center";
+import { lazy, Suspense, useEffect, useState } from "react";
+
+const IncidentCommandCenter = lazy(async () => {
+  const module = await import("@/features/marketing/components/incident-command-center/");
+
+  return { default: module.IncidentCommandCenter };
+});
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [showIncidentPreview, setShowIncidentPreview] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setShowIncidentPreview(true);
+    }, 800);
+
+    return () => window.clearTimeout(timer);
+  }, []);
 
   return (
     <section id="top" className="relative overflow-hidden">
@@ -12,7 +27,9 @@ const Hero = () => {
 
       <div
         className="pointer-events-none absolute left-1/2 -top-72 h-136 w-5xl -translate-x-1/2 rounded-full opacity-[0.16] blur-3xl"
-        style={{ background: "radial-gradient(closest-side, var(--primary), transparent)" }}
+        style={{
+          background: "radial-gradient(closest-side, var(--primary), transparent)",
+        }}
       />
 
       <div className="relative mx-auto w-full max-w-310 px-5 pb-20 pt-16 sm:px-8 sm:pt-24 lg:pb-28">
@@ -55,7 +72,23 @@ const Hero = () => {
         </div>
 
         <div className="mx-auto mt-14 max-w-5xl sm:mt-16">
-          <IncidentCommandCenter />
+          {showIncidentPreview ? (
+            <Suspense
+              fallback={
+                <div
+                  aria-hidden="true"
+                  className="min-h-96 rounded-xl border border-border bg-surface"
+                />
+              }
+            >
+              <IncidentCommandCenter />
+            </Suspense>
+          ) : (
+            <div
+              aria-hidden="true"
+              className="min-h-96 rounded-xl border border-border bg-surface"
+            />
+          )}
         </div>
       </div>
     </section>

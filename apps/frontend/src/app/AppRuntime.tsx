@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "react-router-dom";
 
@@ -30,19 +30,37 @@ const DeferredPWAInstallPrompt = lazy(async () => {
   };
 });
 
-const AppRuntime = () => (
-  <QueryClientProvider client={queryClient}>
-    <RouterProvider router={router} />
+const AppRuntime = () => {
+  const [loadDeferredFeatures, setLoadDeferredFeatures] = useState(false);
 
-    <Toaster />
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setLoadDeferredFeatures(true);
+    }, 1000);
 
-    <Suspense fallback={null}>
-      {import.meta.env.DEV && <DeferredDevtools initialIsOpen={false} />}
+    return () => window.clearTimeout(timer);
+  }, []);
 
-      <DeferredPWAUpdatePrompt />
-      <DeferredPWAInstallPrompt />
-    </Suspense>
-  </QueryClientProvider>
-);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+
+      <Toaster />
+
+      {import.meta.env.DEV && (
+        <Suspense fallback={null}>
+          <DeferredDevtools initialIsOpen={false} />
+        </Suspense>
+      )}
+
+      {loadDeferredFeatures && (
+        <Suspense fallback={null}>
+          <DeferredPWAUpdatePrompt />
+          <DeferredPWAInstallPrompt />
+        </Suspense>
+      )}
+    </QueryClientProvider>
+  );
+};
 
 export default AppRuntime;
