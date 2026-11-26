@@ -9,6 +9,7 @@ const App = () => {
   const { pathname } = useLocation();
   const session = useAuthSession();
   const enteringWorkspace = pathname.startsWith("/data-flow-test/");
+  const initialMarketingRoute = pathname === "/";
 
   if (session.isPending) {
     return <AppLoading />;
@@ -24,7 +25,13 @@ const App = () => {
 
       <Suspense
         key={pathname}
-        fallback={enteringWorkspace ? <AppLoading /> : <RouteLoading className="min-h-screen" />}
+        fallback={
+          initialMarketingRoute || enteringWorkspace ? (
+            <AppLoading />
+          ) : (
+            <RouteLoading className="min-h-screen" />
+          )
+        }
       >
         <Outlet />
       </Suspense>

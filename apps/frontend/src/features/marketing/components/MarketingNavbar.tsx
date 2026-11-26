@@ -51,7 +51,7 @@ const MarketingNavbar = () => {
               : "border-border bg-surface/55 backdrop-blur-md",
           )}
         >
-          <div className="flex h-14 items-center gap-6 px-3 pr-2 sm:px-4 sm:pr-3">
+          <div className="flex h-14 items-center gap-6 px-3 pr-2 sm:px-4 sm:pr-3 max-md:justify-between">
             <a href="#top" className="flex shrink-0 items-center gap-2.5 text-primary-bright">
               <ResolutionNode className="h-6" title="Causolve" />
               <span className="text-[15px] font-semibold tracking-[-0.02em] text-foreground">

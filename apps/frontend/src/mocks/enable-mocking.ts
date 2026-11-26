@@ -1,5 +1,7 @@
 export const enableMocking = async () => {
-  if (!import.meta.env.DEV || import.meta.env.VITE_ENABLE_MSW === "false") {
+  const shouldEnableMocking = import.meta.env.DEV || import.meta.env.VITE_ENABLE_MSW === "true";
+
+  if (!shouldEnableMocking) {
     return;
   }
 
