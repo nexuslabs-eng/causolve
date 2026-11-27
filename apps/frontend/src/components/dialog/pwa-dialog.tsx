@@ -27,8 +27,8 @@ export const PWAInstall = ({
 }: PWAInstallProps) => (
   <Dialog open={open} onOpenChange={(nextOpen) => !nextOpen && onClose()}>
     <DialogPortal>
-      <DialogBackdrop />
-      <DialogContent className="relative z-51 max-w-md overflow-hidden p-0">
+      <DialogBackdrop className="z-90" />
+      <DialogContent className="fixed left-1/2 top-1/2 z-100 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-y-auto p-0">
         <header className="flex items-start gap-4 border-b border-border px-5 py-5 sm:px-6">
           <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-info-soft text-primary">
             <Download aria-hidden="true" />
@@ -37,8 +37,8 @@ export const PWAInstall = ({
           <div className="min-w-0">
             <DialogTitle className="text-lg">
               {requiresIosInstructions
-                ? "Install Causolve on your iPhone or iPad"
-                : "Install Causolve"}
+                ? "Install Causolve on this Apple device"
+                : "Install Causolve on this device"}
             </DialogTitle>
             <DialogDescription>
               {requiresIosInstructions
