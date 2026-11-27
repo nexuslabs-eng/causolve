@@ -1,13 +1,12 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "react-router-dom";
 
 import { router } from "@/app/router/router";
 import { queryClient } from "@/lib/query-client";
 import { Toaster } from "@/components/ui/sonner";
-import { scheduleIdle } from "@/app/utils";
 
-const DeferredDevtools = lazy(async () => {
+const ReactQueryDevtools = lazy(async () => {
   const module = await import("@tanstack/react-query-devtools");
 
   return {
@@ -15,7 +14,7 @@ const DeferredDevtools = lazy(async () => {
   };
 });
 
-const DeferredPWAUpdatePrompt = lazy(async () => {
+const PWAUpdatePrompt = lazy(async () => {
   const module = await import("@/components/pwa/PWAUpdatePrompt");
 
   return {
@@ -23,7 +22,7 @@ const DeferredPWAUpdatePrompt = lazy(async () => {
   };
 });
 
-const DeferredPWAInstallPrompt = lazy(async () => {
+const PWAInstallPrompt = lazy(async () => {
   const module = await import("@/components/pwa/PWAInstallPrompt");
 
   return {
@@ -32,14 +31,6 @@ const DeferredPWAInstallPrompt = lazy(async () => {
 });
 
 const AppRuntime = () => {
-  const [loadDeferredFeatures, setLoadDeferredFeatures] = useState(false);
-
-  useEffect(() => {
-    return scheduleIdle(() => {
-      setLoadDeferredFeatures(true);
-    });
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
@@ -48,16 +39,14 @@ const AppRuntime = () => {
 
       {import.meta.env.DEV && (
         <Suspense fallback={null}>
-          <DeferredDevtools initialIsOpen={false} />
+          <ReactQueryDevtools initialIsOpen={false} />
         </Suspense>
       )}
 
-      {loadDeferredFeatures && (
-        <Suspense fallback={null}>
-          <DeferredPWAUpdatePrompt />
-          <DeferredPWAInstallPrompt />
-        </Suspense>
-      )}
+      <Suspense fallback={null}>
+        <PWAUpdatePrompt />
+        <PWAInstallPrompt />
+      </Suspense>
     </QueryClientProvider>
   );
 };

@@ -7,7 +7,7 @@
     "dev": "vp dev --host",
     "build": "tsc -b && vp build",
     "lint": "vp lint",
-    "preview": "vp preview",
+    "preview": "vp preview --host",
     "test": "vp test run",
     "test:watch": "vp test",
     "test:e2e": "playwright test",
