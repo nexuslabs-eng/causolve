@@ -26,7 +26,7 @@ const DialogContent = forwardRef<HTMLDivElement, ComponentProps<typeof BaseDialo
     <BaseDialog.Popup
       ref={ref}
       className={cn(
-        "w-full max-w-sm rounded-lg border border-border bg-surface-raised p-5 text-foreground shadow-xl outline-none",
+        "z-60 w-full max-w-sm rounded-lg border border-border bg-surface-raised p-5 text-foreground shadow-xl outline-none",
         "data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95",
         className,
       )}
