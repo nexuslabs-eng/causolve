@@ -28,7 +28,7 @@ export const PWAInstall = ({
   <Dialog open={open} onOpenChange={(nextOpen) => !nextOpen && onClose()}>
     <DialogPortal>
       <DialogBackdrop />
-      <DialogContent className="max-w-md overflow-hidden p-0">
+      <DialogContent className="relative z-51 max-w-md overflow-hidden p-0">
         <header className="flex items-start gap-4 border-b border-border px-5 py-5 sm:px-6">
           <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-info-soft text-primary">
             <Download aria-hidden="true" />

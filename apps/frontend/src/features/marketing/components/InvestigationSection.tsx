@@ -15,7 +15,7 @@ export const InvestigationSection = () => {
     if (!inView || reduced) return;
 
     const resetTimer = window.setTimeout(() => setDone(0), 0);
-    const timers = TOOLS.map((_, i) => window.setTimeout(() => setDone(i + 1), 1240 * (i + 1)));
+    const timers = TOOLS.map((_, i) => window.setTimeout(() => setDone(i + 1), 940 * (i + 1)));
 
     return () => {
       window.clearTimeout(resetTimer);

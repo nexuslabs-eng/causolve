@@ -12,11 +12,16 @@ export const authSessionQueryOptions = () =>
     retry: false,
   });
 
-export const refreshAuthSession = () =>
-  queryClient.query({
+export const refreshAuthSession = async () => {
+  await queryClient.cancelQueries({
+    queryKey: authSessionQueryKey,
+  });
+
+  return queryClient.query({
     ...authSessionQueryOptions(),
     staleTime: 0,
   });
+};
 
 export const clearOAuthError = () => {
   queryClient.setQueryData<AuthSession>(authSessionQueryKey, (session) => {

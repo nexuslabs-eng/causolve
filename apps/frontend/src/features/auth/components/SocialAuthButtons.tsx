@@ -49,7 +49,7 @@ export const SocialAuthButtons = ({
           ) : (
             <>
               <Google aria-hidden="true" />
-              {action} with Google
+              <span className="max-sm:hidden">{action} with</span> Google
             </>
           )}
         </Button>
@@ -70,7 +70,7 @@ export const SocialAuthButtons = ({
           ) : (
             <>
               <Github aria-hidden="true" />
-              {action} with GitHub
+              <span className="max-sm:hidden">{action} with</span> GitHub
             </>
           )}
         </Button>
