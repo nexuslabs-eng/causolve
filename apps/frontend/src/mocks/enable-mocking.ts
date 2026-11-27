@@ -1,13 +1,16 @@
 export const enableMocking = async () => {
-  const shouldEnableMocking = import.meta.env.DEV || import.meta.env.VITE_ENABLE_MSW === "true";
+  const explicitlyDisabled = import.meta.env.VITE_ENABLE_MSW === "false";
 
-  if (!shouldEnableMocking) {
+  const shouldEnable =
+    !explicitlyDisabled && (import.meta.env.DEV || import.meta.env.VITE_ENABLE_MSW === "true");
+
+  if (!shouldEnable) {
     return;
   }
 
   const { worker } = await import("./browser");
 
-  return worker.start({
+  await worker.start({
     onUnhandledRequest: "bypass",
   });
 };

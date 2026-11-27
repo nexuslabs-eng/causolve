@@ -28,7 +28,9 @@ export const InstallBanner = ({
       </span>
       <div className="min-w-0 flex-1">
         <h2 id="pwa-install-banner-title" className="text-sm font-semibold">
-          {requiresIosInstructions ? "Add Causolve to your Home Screen" : "Install Causolve"}
+          {requiresIosInstructions
+            ? "Install Causolve on your Apple device"
+            : "Install Causolve on this device"}
         </h2>
         <p className="mt-1 text-xs leading-5 text-muted-foreground">
           {requiresIosInstructions
