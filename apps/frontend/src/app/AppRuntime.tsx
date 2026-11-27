@@ -4,7 +4,8 @@ import { RouterProvider } from "react-router-dom";
 
 import { router } from "@/app/router/router";
 import { queryClient } from "@/lib/query-client";
-import { Toaster } from "@/components/ui/sonner";
+
+import { PWAInstallPrompt } from "@/components/pwa/PWAInstallPrompt";
 
 const ReactQueryDevtools = lazy(async () => {
   const module = await import("@tanstack/react-query-devtools");
@@ -22,12 +23,10 @@ const PWAUpdatePrompt = lazy(async () => {
   };
 });
 
-const PWAInstallPrompt = lazy(async () => {
-  const module = await import("@/components/pwa/PWAInstallPrompt");
+const Toaster = lazy(async () => {
+  const module = await import("@/components/ui/sonner");
 
-  return {
-    default: module.PWAInstallPrompt,
-  };
+  return { default: module.Toaster };
 });
 
 const AppRuntime = () => {
@@ -35,7 +34,9 @@ const AppRuntime = () => {
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
 
-      <Toaster />
+      <Suspense fallback={null}>
+        <Toaster />
+      </Suspense>
 
       {import.meta.env.DEV && (
         <Suspense fallback={null}>
